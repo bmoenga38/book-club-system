@@ -1,0 +1,105 @@
+# generated: 2026-02-26
+# project: bookclub
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-02-26
+project: bookclub
+project_key: NOKEY
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  # Epic 1: Project Foundation & User Authentication
+  epic-1: in-progress
+  1-1-project-initialization-and-configuration: done
+  1-2-database-schema-and-auth-infrastructure: done
+  1-3-phone-registration-and-otp-delivery: done
+  1-4-otp-login-and-session-management: ready-for-dev
+  1-5-member-verification-queue: backlog
+  1-6-role-management: backlog
+  1-7-member-profile: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: Book Catalog & Inventory Management
+  epic-2: backlog
+  2-1-book-catalog-browsing-and-search: backlog
+  2-2-book-detail-page: backlog
+  2-3-add-new-books-to-catalog: backlog
+  2-4-edit-and-remove-books: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Borrowing & Returns
+  epic-3: backlog
+  3-1-borrow-request-flow-a: backlog
+  3-2-request-approval-and-decline: backlog
+  3-3-direct-issue-flow-b: backlog
+  3-4-return-processing: backlog
+  3-5-borrowing-rules-engine: backlog
+  3-6-member-active-borrowings-view: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Trust Progression & Penalty Automation
+  epic-4: backlog
+  4-1-trust-tracking-and-auto-upgrade: backlog
+  4-2-sms-notification-queue-and-batch-processing: backlog
+  4-3-penalty-escalation-cron: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Gamification & Engagement
+  epic-5: backlog
+  5-1-achievement-badges-and-award-engine: backlog
+  5-2-reading-streaks-and-leaderboard: backlog
+  5-3-xp-points-engine-and-level-display: backlog
+  epic-5-retrospective: optional
+
+  # Epic 6: Evangelist Dashboard & Reporting
+  epic-6: backlog
+  6-1-dashboard-overview-and-key-metrics: backlog
+  6-2-overdue-and-at-risk-member-tracking: backlog
+  6-3-borrowing-activity-reports: backlog
+  6-4-book-inventory-report-and-low-stock-alerts: backlog
+  epic-6-retrospective: optional
+
+  # Epic 7: Church Administration
+  epic-7: backlog
+  7-1-church-registration-and-configuration: backlog
+  7-2-evangelist-management-and-cross-church-oversight: backlog
+  epic-7-retrospective: optional
+
+  # Epic 8: PWA & Offline Experience
+  epic-8: backlog
+  8-1-pwa-shell-and-install-experience: backlog
+  8-2-offline-catalog-browsing: backlog
+  8-3-offline-action-queue-and-sync: backlog
+  epic-8-retrospective: optional

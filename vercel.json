@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/penalty-check",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/sms-batch",
+      "schedule": "0 * * * *"
+    }
+  ]
+}

@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Borrowed Books - Book Club Professional</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.3/sweetalert2.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #dc2626;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --dark-color: #1f2937;
+            --light-bg: #f9fafb;
+            --gray-light: #f3f4f6;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            background: var(--light-bg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* Enhanced Navbar */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 18px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            border-bottom: 4px solid #f59e0b;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 800;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar-brand i {
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 600;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: white;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-logout:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        /* Hero Section with Animation */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 80px 0;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-30px, -30px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: -1px;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 30px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .hero-stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: -60px auto 50px;
+            padding: 0 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .filter-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-header i {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .filter-header h3 {
+            margin: 0;
+            font-weight: 800;
+            color: var(--dark-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: var(--gray-light);
+            color: var(--dark-color);
+            border: 2px solid var(--border-color);
+            padding: 12px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-tab:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+        }
+
+        .filter-tab.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+        }
+
+        .filter-tab i {
+            font-size: 1.1rem;
+        }
+
+        /* Borrow Cards */
+        .borrows-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .borrow-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .borrow-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .borrow-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .borrow-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .borrow-card-header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            padding: 30px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .book-icon {
+            width: 100px;
+            height: 130px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        .book-info {
+            flex: 1;
+        }
+
+        .book-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .book-author {
+            font-size: 1rem;
+            color: #6b7280;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .book-author i {
+            color: var(--secondary-color);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.borrowed {
+            background: #dbeafe;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .status-badge.overdue {
+            background: #fee2e2;
+            color: var(--danger-color);
+            border: 2px solid var(--danger-color);
+        }
+
+        .status-badge.returned {
+            background: #dcfce7;
+            color: var(--success-color);
+            border: 2px solid var(--success-color);
+        }
+
+        .borrow-card-body {
+            padding: 30px;
+        }
+
+        .borrow-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .info-item {
+            background: var(--gray-light);
+            padding: 18px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            background: #e5e7eb;
+            transform: translateX(4px);
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-label i {
+            color: var(--primary-color);
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: var(--dark-color);
+            font-weight: 700;
+        }
+
+        .due-warning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border-left: 5px solid var(--warning-color);
+            padding: 18px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .due-warning i {
+            font-size: 2rem;
+            color: var(--warning-color);
+        }
+
+        .due-warning-text {
+            flex: 1;
+        }
+
+        .due-warning-title {
+            font-weight: 800;
+            color: #92400e;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        .due-warning-desc {
+            color: #b45309;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .overdue-warning {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 5px solid var(--danger-color);
+        }
+
+        .overdue-warning i {
+            color: var(--danger-color);
+        }
+
+        .overdue-warning-title {
+            color: #991b1b;
+        }
+
+        .overdue-warning-desc {
+            color: #dc2626;
+        }
+
+        .borrow-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-return {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            flex: 1;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-return:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-renew {
+            background: linear-gradient(135deg, var(--warning-color), #d97706);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-renew:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-renew:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-cancel-borrow {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-cancel-borrow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 100px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty-state i {
+            font-size: 6rem;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+        }
+
+        .empty-state h3 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-weight: 800;
+            font-size: 2rem;
+        }
+
+        .empty-state p {
+            color: #6b7280;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-browse {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-browse:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                gap: 20px;
+            }
+
+            .hero-stat {
+                padding: 15px 25px;
+            }
+
+            .borrows-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .borrow-card-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .borrow-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .borrow-actions {
+                flex-direction: column;
+            }
+
+            .filter-tabs {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Enhanced Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <i class="fas fa-book-reader"></i>
+                <span>Book Club</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./book-details.html">
+                            <i class="fas fa-book"></i> Books
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./my-borrows.html">
+                            <i class="fas fa-bookmark"></i> My Borrows
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./profile.html">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn-logout" onclick="handleLogout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Animated Background -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1><i class="fas fa-bookmark"></i> My Borrowed Books</h1>
+                <p>Track and manage your current and past book borrowings</p>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" id="totalBorrowed">0</span>
+                        <span class="hero-stat-label">Total Borrowed</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" id="currentlyBorrowed">0</span>
+                        <span class="hero-stat-label">Currently Reading</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" id="totalReturned">0</span>
+                        <span class="hero-stat-label">Returned</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-header">
+                <i class="fas fa-filter"></i>
+                <h3>Filter Books</h3>
+            </div>
+            <div class="filter-tabs">
+                <div class="filter-tab active" onclick="filterBorrows('all')">
+                    <i class="fas fa-list"></i>
+                    All Books
+                </div>
+                <div class="filter-tab" onclick="filterBorrows('borrowed')">
+                    <i class="fas fa-book-open"></i>
+                    Currently Borrowed
+                </div>
+                <div class="filter-tab" onclick="filterBorrows('overdue')">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Overdue
+                </div>
+                <div class="filter-tab" onclick="filterBorrows('returned')">
+                    <i class="fas fa-check-circle"></i>
+                    Returned
+                </div>
+            </div>
+        </div>
+
+        <!-- Borrows Grid -->
+        <div class="borrows-grid" id="borrowsGrid">
+            <!-- Borrow cards will be loaded here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <i class="fas fa-book-open"></i>
+            <h3>No Books Found</h3>
+            <p>You haven't borrowed any books yet. Start exploring our collection!</p>
+            <a href="./book-details.html" class="btn-browse">
+                <i class="fas fa-search"></i> Browse Books
+            </a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.3/sweetalert2.min.js"></script>
+
+    <script>
+        // ============================================================
+        // GLOBAL VARIABLES
+        // ============================================================
+        let allBorrowings = [];
+        let currentFilter = 'all';
+        const RENEWAL_DAYS = 14;
+        const MAX_RENEWALS = 2;
+        const RENEWAL_WINDOW_DAYS = 7;
+
+        function getRenewalCount(borrow) {
+            const count = Number(borrow?.renewCount || 0);
+            return Number.isFinite(count) && count >= 0 ? count : 0;
+        }
+
+        function getRenewalState(borrow) {
+            if (!borrow) {
+                return { canRenew: false, reason: 'Borrow record not found.' };
+            }
+
+            if (borrow.status !== 'Borrowed') {
+                return { canRenew: false, reason: 'Only currently borrowed books can be renewed.' };
+            }
+
+            const dueDate = new Date(borrow.dueDate);
+            if (Number.isNaN(dueDate.getTime())) {
+                return { canRenew: false, reason: 'This borrow has an invalid due date.' };
+            }
+
+            const now = new Date();
+            const daysUntilDue = Math.ceil((dueDate - now) / (1000 * 60 * 60 * 24));
+            if (daysUntilDue < 0) {
+                return { canRenew: false, reason: 'Overdue books cannot be renewed. Please return it first.' };
+            }
+
+            const renewCount = getRenewalCount(borrow);
+            if (renewCount >= MAX_RENEWALS) {
+                return { canRenew: false, reason: `Renewal limit reached (${MAX_RENEWALS} max per borrow).` };
+            }
+
+            if (daysUntilDue > RENEWAL_WINDOW_DAYS) {
+                return {
+                    canRenew: false,
+                    reason: `Renewal is available only within ${RENEWAL_WINDOW_DAYS} days before the due date.`
+                };
+            }
+
+            return {
+                canRenew: true,
+                daysUntilDue,
+                renewCount,
+                renewalsLeft: MAX_RENEWALS - renewCount
+            };
+        }
+
+        // ============================================================
+        // CHECK AUTHENTICATION
+        // ============================================================
+        // function checkAuth() {
+        //     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        //     if (!currentUser) {
+        //         window.location.href = 'login.html';
+        //         return null;
+        //     }
+        //     return currentUser;
+        // }
+
+        // ============================================================
+        // LOAD BORROWINGS
+        // ============================================================
+        function loadBorrowings() {
+            const user = checkAuth();
+            if (!user) return;
+
+            const allBorrows = JSON.parse(localStorage.getItem('borrowings')) || [];
+            allBorrowings = allBorrows.filter(b => b.userId === user.userId);
+
+            displayBorrowings(allBorrowings);
+            updateStatistics();
+        }
+
+        // ============================================================
+        // DISPLAY BORROWINGS
+        // ============================================================
+        function displayBorrowings(borrowings) {
+            const grid = document.getElementById('borrowsGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (borrowings.length === 0) {
+                grid.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            grid.innerHTML = borrowings.map(borrow => {
+                const borrowDate = new Date(borrow.borrowDate);
+                const dueDate = new Date(borrow.dueDate);
+                const today = new Date();
+                const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+                const isOverdue = daysUntilDue < 0 && borrow.status === 'Borrowed';
+                const isDueSoon = daysUntilDue <= 3 && daysUntilDue >= 0 && borrow.status === 'Borrowed';
+                const renewalState = getRenewalState(borrow);
+                const renewCount = getRenewalCount(borrow);
+
+                let statusBadgeClass = 'borrowed';
+                let statusText = 'Currently Borrowed';
+                let statusIcon = 'book-open';
+
+                if (borrow.status === 'Returned') {
+                    statusBadgeClass = 'returned';
+                    statusText = 'Returned';
+                    statusIcon = 'check-circle';
+                } else if (borrow.status === 'Canceled') {
+                    statusBadgeClass = 'overdue';
+                    statusText = 'Canceled';
+                    statusIcon = 'ban';
+                } else if (isOverdue) {
+                    statusBadgeClass = 'overdue';
+                    statusText = 'Overdue';
+                    statusIcon = 'exclamation-triangle';
+                }
+
+                let warningSection = '';
+                if (isOverdue) {
+                    warningSection = `
+                        <div class="overdue-warning">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div class="due-warning-text">
+                                <div class="overdue-warning-title">Book is Overdue!</div>
+                                <div class="overdue-warning-desc">This book was due ${Math.abs(daysUntilDue)} days ago. Please return it as soon as possible.</div>
+                            </div>
+                        </div>
+                    `;
+                } else if (isDueSoon) {
+                    warningSection = `
+                        <div class="due-warning">
+                            <i class="fas fa-clock"></i>
+                            <div class="due-warning-text">
+                                <div class="due-warning-title">Due Soon!</div>
+                                <div class="due-warning-desc">This book is due in ${daysUntilDue} day${daysUntilDue !== 1 ? 's' : ''}. Consider renewing or returning it.</div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                const returnDate = borrow.returnDate ? new Date(borrow.returnDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A';
+                const canceledDate = borrow.canceledDate ? new Date(borrow.canceledDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A';
+
+                return `
+                    <div class="borrow-card">
+                        <div class="borrow-card-header">
+                            <div class="book-icon">📚</div>
+                            <div class="book-info">
+                                <h3 class="book-title">${borrow.bookTitle}</h3>
+                                <div class="book-author">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Borrowed on ${borrowDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                </div>
+                                <span class="status-badge ${statusBadgeClass}">
+                                    <i class="fas fa-${statusIcon}"></i>
+                                    ${statusText}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="borrow-card-body">
+                            ${warningSection}
+                            <div class="borrow-info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fas fa-calendar-check"></i>
+                                        Due Date
+                                    </div>
+                                    <div class="info-value">${dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fas fa-clock"></i>
+                                        ${borrow.status === 'Returned' ? 'Return Date' : (borrow.status === 'Canceled' ? 'Canceled Date' : 'Days Until Due')}
+                                    </div>
+                                    <div class="info-value">${borrow.status === 'Returned' ? returnDate : (borrow.status === 'Canceled' ? canceledDate : (isOverdue ? `${Math.abs(daysUntilDue)} days overdue` : `${daysUntilDue} days`))}</div>
+                                </div>
+                            </div>
+                            ${borrow.status === 'Borrowed' ? `
+                                <div style="margin-bottom: 15px; color: #6b7280; font-weight: 600; font-size: 0.9rem;">
+                                    Renewals used: ${renewCount}/${MAX_RENEWALS}
+                                </div>
+                            ` : ''}
+                            ${borrow.status === 'Borrowed' ? `
+                                <div class="borrow-actions">
+                                    <button class="btn-return" onclick="returnBook(${borrow.borrowingId})">
+                                        <i class="fas fa-undo"></i> Return Book
+                                    </button>
+                                    <button class="btn-renew" onclick="renewBook(${borrow.borrowingId})" ${renewalState.canRenew ? '' : 'disabled'} title="${renewalState.canRenew ? '' : renewalState.reason}">
+                                        <i class="fas fa-sync-alt"></i> Renew
+                                    </button>
+                                    <button class="btn-cancel-borrow" onclick="cancelBorrow(${borrow.borrowingId})">
+                                        <i class="fas fa-ban"></i> Cancel Borrow
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ============================================================
+        // UPDATE STATISTICS
+        // ============================================================
+        function updateStatistics() {
+            const totalBorrowed = allBorrowings.length;
+            const currentlyBorrowed = allBorrowings.filter(b => b.status === 'Borrowed').length;
+            const totalReturned = allBorrowings.filter(b => b.status === 'Returned').length;
+
+            animateValue('totalBorrowed', 0, totalBorrowed, 1000);
+            animateValue('currentlyBorrowed', 0, currentlyBorrowed, 1000);
+            animateValue('totalReturned', 0, totalReturned, 1000);
+        }
+
+        function animateValue(id, start, end, duration) {
+            const element = document.getElementById(id);
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.round(current);
+            }, 16);
+        }
+
+        // ============================================================
+        // FILTER BORROWINGS
+        // ============================================================
+        function filterBorrows(filter) {
+            currentFilter = filter;
+
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.closest('.filter-tab').classList.add('active');
+
+            let filtered = allBorrowings;
+
+            switch (filter) {
+                case 'borrowed':
+                    filtered = allBorrowings.filter(b => b.status === 'Borrowed');
+                    break;
+                case 'overdue':
+                    filtered = allBorrowings.filter(b => {
+                        if (b.status !== 'Borrowed') return false;
+                        const dueDate = new Date(b.dueDate);
+                        const today = new Date();
+                        return dueDate < today;
+                    });
+                    break;
+                case 'returned':
+                    filtered = allBorrowings.filter(b => b.status === 'Returned');
+                    break;
+            }
+
+            displayBorrowings(filtered);
+        }
+
+        // ============================================================
+        // RETURN BOOK
+        // ============================================================
+        function returnBook(borrowingId) {
+            Swal.fire({
+                title: 'Confirm Return',
+                text: 'Are you sure you want to return this book?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#10b981',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '<i class="fas fa-check"></i> Yes, Return It',
+                cancelButtonText: '<i class="fas fa-times"></i> Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Update borrowing record
+                    const borrowings = JSON.parse(localStorage.getItem('borrowings')) || [];
+                    const borrowIndex = borrowings.findIndex(b => b.borrowingId === borrowingId);
+
+                    if (borrowIndex !== -1) {
+                        const borrow = borrowings[borrowIndex];
+                        borrowings[borrowIndex].status = 'Returned';
+                        borrowings[borrowIndex].returnDate = new Date().toISOString();
+                        localStorage.setItem('borrowings', JSON.stringify(borrowings));
+
+                        // Update book availability
+                        const books = JSON.parse(localStorage.getItem('allBooks')) || [];
+                        const bookIndex = books.findIndex(b => b.bookId === borrow.bookId);
+                        if (bookIndex !== -1) {
+                            books[bookIndex].availableCopies++;
+                            localStorage.setItem('allBooks', JSON.stringify(books));
+                        }
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Book Returned!',
+                            text: 'Thank you for returning the book on time.',
+                            confirmButtonColor: '#10b981',
+                            timer: 2000
+                        }).then(() => {
+                            loadBorrowings();
+                        });
+                    }
+                }
+            });
+        }
+
+        // ============================================================
+        // RENEW BOOK
+        // ============================================================
+        function renewBook(borrowingId) {
+            const borrowings = JSON.parse(localStorage.getItem('borrowings')) || [];
+            const borrowIndex = borrowings.findIndex(b => b.borrowingId === borrowingId);
+            if (borrowIndex === -1) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Borrow Not Found',
+                    text: 'Unable to locate this borrowing record.',
+                    confirmButtonColor: '#ef4444'
+                });
+                return;
+            }
+
+            const targetBorrow = borrowings[borrowIndex];
+            const renewalState = getRenewalState(targetBorrow);
+            if (!renewalState.canRenew) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Cannot Renew',
+                    text: renewalState.reason,
+                    confirmButtonColor: '#f59e0b'
+                });
+                return;
+            }
+
+            const currentDueDate = new Date(targetBorrow.dueDate);
+            const newDueDate = new Date(currentDueDate.getTime() + RENEWAL_DAYS * 24 * 60 * 60 * 1000);
+
+            Swal.fire({
+                title: 'Renew Book',
+                html: `
+                    <div style="text-align: left;">
+                        <p>Extend your borrowing period by ${RENEWAL_DAYS} days?</p>
+                        <p><strong>Current due:</strong> ${currentDueDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                        <p><strong>New due:</strong> ${newDueDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                        <p><strong>Renewals left after this:</strong> ${Math.max(renewalState.renewalsLeft - 1, 0)}</p>
+                    </div>
+                `,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#f59e0b',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '<i class="fas fa-sync-alt"></i> Yes, Renew',
+                cancelButtonText: '<i class="fas fa-times"></i> Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    borrowings[borrowIndex].dueDate = newDueDate.toISOString();
+                    borrowings[borrowIndex].renewCount = getRenewalCount(targetBorrow) + 1;
+                    borrowings[borrowIndex].lastRenewedAt = new Date().toISOString();
+                    localStorage.setItem('borrowings', JSON.stringify(borrowings));
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Book Renewed!',
+                        html: `
+                            New due date: <strong>${newDueDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</strong><br>
+                            Renewals used: <strong>${borrowings[borrowIndex].renewCount}/${MAX_RENEWALS}</strong>
+                        `,
+                        confirmButtonColor: '#10b981',
+                        timer: 2200
+                    }).then(() => {
+                        loadBorrowings();
+                    });
+                }
+            });
+        }
+
+        // ============================================================
+        // CANCEL BORROW
+        // ============================================================
+        function cancelBorrow(borrowingId) {
+            Swal.fire({
+                title: 'Cancel Borrow',
+                text: 'Cancel this borrowed book record?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '<i class="fas fa-ban"></i> Yes, Cancel',
+                cancelButtonText: '<i class="fas fa-times"></i> Keep It'
+            }).then((result) => {
+                if (!result.isConfirmed) {
+                    return;
+                }
+
+                const borrowings = JSON.parse(localStorage.getItem('borrowings')) || [];
+                const borrowIndex = borrowings.findIndex(b => b.borrowingId === borrowingId);
+
+                if (borrowIndex === -1) {
+                    Swal.fire('Not Found', 'Borrowing record not found.', 'error');
+                    return;
+                }
+
+                const target = borrowings[borrowIndex];
+                if (target.status !== 'Borrowed') {
+                    Swal.fire('Cannot Cancel', 'Only currently borrowed records can be canceled.', 'warning');
+                    return;
+                }
+
+                target.status = 'Canceled';
+                target.canceledDate = new Date().toISOString();
+                localStorage.setItem('borrowings', JSON.stringify(borrowings));
+
+                const books = JSON.parse(localStorage.getItem('allBooks')) || [];
+                const bookIndex = books.findIndex(b => b.bookId === target.bookId);
+                if (bookIndex !== -1) {
+                    books[bookIndex].availableCopies = Math.min(
+                        Number(books[bookIndex].totalCopies) || 0,
+                        (Number(books[bookIndex].availableCopies) || 0) + 1
+                    );
+                    localStorage.setItem('allBooks', JSON.stringify(books));
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Borrow Canceled',
+                    text: 'The record was canceled and the book copy has been restored.',
+                    confirmButtonColor: '#10b981'
+                }).then(() => {
+                    loadBorrowings();
+                });
+            });
+        }
+
+        // ============================================================
+        // LOGOUT
+        // ============================================================
+        function handleLogout() {
+            Swal.fire({
+                title: 'Logout Confirmation',
+                text: 'Are you sure you want to logout?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '<i class="fas fa-sign-out-alt"></i> Yes, Logout',
+                cancelButtonText: '<i class="fas fa-times"></i> Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem('currentUser');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Logged Out',
+                        text: 'You have been logged out successfully',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.href = 'login.html';
+                    });
+                }
+            });
+        }
+
+        // ============================================================
+        // DOCUMENT READY
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuth();
+            loadBorrowings();
+            console.log('📚 Book Club - My Borrows Page Loaded');
+        });
+    </script>
+    <script src="../assets/js/app.js"></script>
+
+</body>
+
+</html>

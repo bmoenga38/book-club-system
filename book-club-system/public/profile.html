@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Book Club Professional</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.3/sweetalert2.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #dc2626;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --dark-color: #1f2937;
+            --light-bg: #f9fafb;
+            --gray-light: #f3f4f6;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            background: var(--light-bg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* Enhanced Navbar */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 18px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            border-bottom: 4px solid #f59e0b;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 800;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar-brand i {
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 600;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: white;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-logout:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        /* Enhanced Profile Container */
+        .profile-container {
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 0 30px;
+        }
+
+        /* Professional Profile Header */
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 20px;
+            padding: 0;
+            color: white;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-20px, -20px);
+            }
+        }
+
+        .profile-header-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+            padding: 50px;
+        }
+
+        .profile-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .avatar-status {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 25px;
+            height: 25px;
+            background: var(--success-color);
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: -0.5px;
+        }
+
+        .profile-email {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .meta-item i {
+            font-size: 1.1rem;
+        }
+
+        .profile-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .profile-badge.admin {
+            background: rgba(220, 38, 38, 0.4);
+            border-color: rgba(220, 38, 38, 0.6);
+        }
+
+        /* Enhanced Card Styling */
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 24px 30px;
+            border: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-header i {
+            font-size: 1.4rem;
+        }
+
+        .card-body {
+            padding: 35px;
+        }
+
+        /* Enhanced Info Groups */
+        .info-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #6b7280;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-label i {
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        .info-value {
+            font-size: 1.15rem;
+            color: var(--dark-color);
+            font-weight: 600;
+            padding: 16px 20px;
+            background: var(--gray-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .info-value:hover {
+            background: #e5e7eb;
+            transform: translateX(4px);
+        }
+
+        .info-value i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        /* Enhanced Buttons */
+        .btn-edit,
+        .btn-save {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+        }
+
+        .btn-edit:hover,
+        .btn-save:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
+        }
+
+        .btn-cancel {
+            background: #6b7280;
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-cancel:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
+        }
+
+        .btn-change-password {
+            background: var(--warning-color);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-change-password:hover {
+            background: #d97706;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Enhanced Form Controls */
+        .form-control,
+        .form-select {
+            border: 2px solid var(--border-color);
+            padding: 14px 18px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Statistics Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 16px;
+            text-align: center;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            filter: grayscale(0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover .stat-icon {
+            filter: grayscale(0);
+            transform: scale(1.1);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Edit Mode Styling */
+        .edit-mode .info-value {
+            display: none;
+        }
+
+        .view-mode .form-control,
+        .view-mode .form-select {
+            display: none;
+        }
+
+        /* Password Requirements */
+        .password-requirements {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.15);
+        }
+
+        .password-requirements strong {
+            display: block;
+            color: #92400e;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .requirements-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 0;
+        }
+
+        .requirements-list li {
+            color: #b45309;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .requirements-list li::before {
+            content: "✓";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #fbbf24;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            color: #92400e;
+            font-weight: bold;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        /* Quick Actions Enhancement */
+        .quick-actions .btn {
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        .quick-actions .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-header-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+
+            .profile-avatar {
+                margin: 0 auto;
+            }
+
+            .profile-name {
+                font-size: 2rem;
+            }
+
+            .profile-email {
+                font-size: 1rem;
+                justify-content: center;
+            }
+
+            .profile-meta {
+                justify-content: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-body {
+                padding: 25px;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        .skeleton {
+            animation: shimmer 2s infinite;
+            background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+            background-size: 1000px 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Enhanced Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <i class="fas fa-book-reader"></i>
+                <span>Book Club</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./book-details.html">
+                            <i class="fas fa-book"></i> Books
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./profile.html">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn-logout" onclick="handleLogout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <!-- Enhanced Profile Header -->
+        <div class="profile-header">
+            <div class="profile-header-content">
+                <div class="profile-avatar" id="profileAvatar">
+                    JD
+                    <div class="avatar-status"></div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name" id="profileName">John Doe</div>
+                    <div class="profile-email">
+                        <i class="fas fa-envelope"></i>
+                        <span id="profileEmail">john@example.com</span>
+                    </div>
+                    <div class="profile-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-building"></i>
+                            <span id="profileDept">Youth Department</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Member since <span id="profileMemberSince">Jan 2026</span></span>
+                        </div>
+                        <span class="profile-badge" id="profileBadge">
+                            <i class="fas fa-user-shield"></i>
+                            Member
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Personal Information -->
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-user-circle"></i>
+                        Personal Information
+                    </div>
+                    <div class="card-body view-mode" id="profileInfoSection">
+                        <div class="info-group">
+                            <div class="info-label">
+                                <i class="fas fa-user"></i>
+                                Full Name
+                            </div>
+                            <div class="info-value">
+                                <i class="fas fa-id-card"></i>
+                                <span id="displayName">John Doe</span>
+                            </div>
+                            <input type="text" class="form-control" id="editName" value="John Doe">
+                        </div>
+
+                        <div class="info-group">
+                            <div class="info-label">
+                                <i class="fas fa-envelope"></i>
+                                Email Address
+                            </div>
+                            <div class="info-value">
+                                <i class="fas fa-at"></i>
+                                <span id="displayEmail">john@example.com</span>
+                            </div>
+                            <input type="email" class="form-control" id="editEmail" value="john@example.com">
+                        </div>
+
+                        <div class="info-group">
+                            <div class="info-label">
+                                <i class="fas fa-phone"></i>
+                                Phone Number
+                            </div>
+                            <div class="info-value">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span id="displayPhone">254700000001</span>
+                            </div>
+                            <input type="tel" class="form-control" id="editPhone" value="254700000001">
+                        </div>
+
+                        <div class="info-group">
+                            <div class="info-label">
+                                <i class="fas fa-building"></i>
+                                Department
+                            </div>
+                            <div class="info-value">
+                                <i class="fas fa-sitemap"></i>
+                                <span id="displayDepartment">Youth</span>
+                            </div>
+                            <select class="form-select" id="editDepartment">
+                                <option value="Youth">Youth</option>
+                                <option value="Men">Men</option>
+                                <option value="Women">Women</option>
+                                <option value="Children">Children</option>
+                                <option value="Administration">Administration</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-4 d-flex gap-3 flex-wrap">
+                            <button class="btn-edit" id="editBtn" onclick="toggleEditMode()">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                            <button class="btn-save" id="saveBtn" onclick="saveProfile()" style="display: none;">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                            <button class="btn-cancel" id="cancelBtn" onclick="cancelEdit()" style="display: none;">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-shield-alt"></i>
+                        Security Settings
+                    </div>
+                    <div class="card-body">
+                        <button class="btn-change-password" onclick="showChangePasswordModal()">
+                            <i class="fas fa-lock"></i> Change Password
+                        </button>
+                        <div class="password-requirements">
+                            <strong><i class="fas fa-info-circle"></i> Password Security Requirements</strong>
+                            <ul class="requirements-list">
+                                <li>Minimum 12 characters length</li>
+                                <li>At least 1 UPPERCASE letter (A-Z)</li>
+                                <li>At least 1 lowercase letter (a-z)</li>
+                                <li>At least 1 number (0-9)</li>
+                                <li>At least 1 special character (@#$%^&*)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics & Quick Actions -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line"></i>
+                        Reading Statistics
+                    </div>
+                    <div class="card-body">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">📚</div>
+                                <div class="stat-value" id="statBorrowed">0</div>
+                                <div class="stat-label">Total Borrowed</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">✅</div>
+                                <div class="stat-value" id="statReturned">0</div>
+                                <div class="stat-label">Returned</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">📖</div>
+                                <div class="stat-value" id="statActive">0</div>
+                                <div class="stat-label">Currently Reading</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-bolt"></i>
+                        Quick Actions
+                    </div>
+                    <div class="card-body quick-actions">
+                        <div class="d-grid gap-3">
+                            <a href="/index.html" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Browse Books
+                            </a>
+                            <a href="./my-borrows.html" class="btn btn-info">
+                                <i class="fas fa-book-open"></i> My Books
+                            </a>
+                            <a href="./my-borrows.html" class="btn btn-secondary">
+                                <i class="fas fa-history"></i> History
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.3/sweetalert2.min.js"></script>
+
+    <script>
+        // ============================================================
+        // CHECK AUTHENTICATION
+        // ============================================================
+
+        // function checkAuth() {
+        //     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        //     if (!currentUser) {
+        //         window.location.href = 'login.html';
+        //         return null;
+        //     }
+        //     return currentUser;
+        // }
+
+        // ============================================================
+        // LOAD PROFILE DATA
+        // ============================================================
+
+        function loadProfile() {
+            const user = checkAuth();
+            if (!user) return;
+
+            // Set profile header
+            const initials = user.fullName.split(' ').map(n => n[0]).join('').toUpperCase();
+            document.getElementById('profileAvatar').innerHTML = `${initials}<div class="avatar-status"></div>`;
+            document.getElementById('profileName').textContent = user.fullName;
+            document.getElementById('profileEmail').textContent = user.email;
+            document.getElementById('profileDept').textContent = user.department + ' Department';
+
+            // Set badge
+            const badge = document.getElementById('profileBadge');
+            if (user.isAdmin) {
+                badge.innerHTML = '<i class="fas fa-crown"></i> Administrator';
+                badge.classList.add('admin');
+            } else {
+                badge.innerHTML = '<i class="fas fa-user-shield"></i> Member';
+            }
+
+            // Set personal information
+            document.getElementById('displayName').textContent = user.fullName;
+            document.getElementById('displayEmail').textContent = user.email;
+            document.getElementById('displayPhone').textContent = user.phone;
+            document.getElementById('displayDepartment').textContent = user.department;
+
+            // Set edit fields
+            document.getElementById('editName').value = user.fullName;
+            document.getElementById('editEmail').value = user.email;
+            document.getElementById('editPhone').value = user.phone;
+            document.getElementById('editDepartment').value = user.department;
+
+            // Set member since
+            if (user.registeredAt) {
+                const date = new Date(user.registeredAt);
+                const monthYear = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                document.getElementById('profileMemberSince').textContent = monthYear;
+            }
+
+            // Load statistics
+            loadStatistics(user.userId);
+        }
+
+        // ============================================================
+        // LOAD STATISTICS
+        // ============================================================
+
+        function loadStatistics(userId) {
+            const borrowings = JSON.parse(localStorage.getItem('borrowings')) || [];
+            const userBorrowings = borrowings.filter(b => b.userId === userId);
+
+            const borrowed = userBorrowings.length;
+            const returned = userBorrowings.filter(b => b.status === 'Returned').length;
+            const active = userBorrowings.filter(b => b.status === 'Borrowed').length;
+
+            // Animate numbers
+            animateValue('statBorrowed', 0, borrowed, 1000);
+            animateValue('statReturned', 0, returned, 1000);
+            animateValue('statActive', 0, active, 1000);
+        }
+
+        function animateValue(id, start, end, duration) {
+            const element = document.getElementById(id);
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.round(current);
+            }, 16);
+        }
+
+        // ============================================================
+        // TOGGLE EDIT MODE
+        // ============================================================
+
+        function toggleEditMode() {
+            const section = document.getElementById('profileInfoSection');
+            section.classList.remove('view-mode');
+            section.classList.add('edit-mode');
+
+            document.getElementById('editBtn').style.display = 'none';
+            document.getElementById('saveBtn').style.display = 'inline-block';
+            document.getElementById('cancelBtn').style.display = 'inline-block';
+        }
+
+        function cancelEdit() {
+            const section = document.getElementById('profileInfoSection');
+            section.classList.remove('edit-mode');
+            section.classList.add('view-mode');
+
+            document.getElementById('editBtn').style.display = 'inline-block';
+            document.getElementById('saveBtn').style.display = 'none';
+            document.getElementById('cancelBtn').style.display = 'none';
+
+            loadProfile();
+        }
+
+        // ============================================================
+        // SAVE PROFILE
+        // ============================================================
+
+        function saveProfile() {
+            //const currentUser = checkAuth();
+            if (!currentUser) return;
+
+            const newName = document.getElementById('editName').value.trim();
+            const newEmail = document.getElementById('editEmail').value.trim().toLowerCase();
+            const newPhone = document.getElementById('editPhone').value.trim();
+            const newDepartment = document.getElementById('editDepartment').value;
+
+            if (!newName || !newEmail || !newPhone || !newDepartment) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'All fields are required',
+                    confirmButtonColor: '#ef4444'
+                });
+                return;
+            }
+
+            if (newPhone.length !== 12 || !newPhone.startsWith('254')) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Phone Number',
+                    text: 'Phone number must be in format: 254700000000',
+                    confirmButtonColor: '#ef4444'
+                });
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('allUsers')) || [];
+
+            if (newEmail !== currentUser.email) {
+                const emailExists = users.some(u => u.email === newEmail && u.userId !== currentUser.userId);
+                if (emailExists) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Email Already Taken',
+                        text: 'This email is already registered to another user',
+                        confirmButtonColor: '#ef4444'
+                    });
+                    return;
+                }
+            }
+
+            const userIndex = users.findIndex(u => u.userId === currentUser.userId);
+            if (userIndex !== -1) {
+                users[userIndex].fullName = newName;
+                users[userIndex].email = newEmail;
+                users[userIndex].phone = newPhone;
+                users[userIndex].department = newDepartment;
+
+                localStorage.setItem('allUsers', JSON.stringify(users));
+
+                const updatedUser = {
+                    ...currentUser,
+                    fullName: newName,
+                    email: newEmail,
+                    phone: newPhone,
+                    department: newDepartment
+                };
+                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Profile Updated!',
+                    text: 'Your profile has been updated successfully',
+                    confirmButtonColor: '#10b981',
+                    timer: 2000
+                }).then(() => {
+                    cancelEdit();
+                    loadProfile();
+                });
+            }
+        }
+
+        // ============================================================
+        // CHANGE PASSWORD
+        // ============================================================
+
+        function showChangePasswordModal() {
+            Swal.fire({
+                title: '<strong>Change Password</strong>',
+                html: `
+                    <div style="text-align: left; padding: 10px;">
+                        <label style="font-weight: 700; margin-bottom: 8px; display: block; color: #374151;">
+                            <i class="fas fa-lock"></i> Current Password
+                        </label>
+                        <input type="password" id="currentPassword" class="swal2-input" placeholder="Enter current password" style="margin: 0 0 20px 0; width: 100%;">
+                        
+                        <label style="font-weight: 700; margin-bottom: 8px; display: block; color: #374151;">
+                            <i class="fas fa-key"></i> New Password
+                        </label>
+                        <input type="password" id="newPassword" class="swal2-input" placeholder="Enter new password" style="margin: 0 0 20px 0; width: 100%;">
+                        
+                        <label style="font-weight: 700; margin-bottom: 8px; display: block; color: #374151;">
+                            <i class="fas fa-check-circle"></i> Confirm New Password
+                        </label>
+                        <input type="password" id="confirmNewPassword" class="swal2-input" placeholder="Confirm new password" style="margin: 0; width: 100%;">
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: '<i class="fas fa-save"></i> Change Password',
+                confirmButtonColor: '#f59e0b',
+                cancelButtonText: '<i class="fas fa-times"></i> Cancel',
+                cancelButtonColor: '#6b7280',
+                width: '600px',
+                preConfirm: () => {
+                    const current = document.getElementById('currentPassword').value;
+                    const newPass = document.getElementById('newPassword').value;
+                    const confirm = document.getElementById('confirmNewPassword').value;
+
+                    if (!current || !newPass || !confirm) {
+                        Swal.showValidationMessage('All fields are required');
+                        return false;
+                    }
+
+                    if (newPass !== confirm) {
+                        Swal.showValidationMessage('New passwords do not match');
+                        return false;
+                    }
+
+                    const validation = validatePasswordStrength(newPass);
+                    if (!validation.isValid) {
+                        Swal.showValidationMessage('New password does not meet security requirements');
+                        return false;
+                    }
+
+                    return { current, newPass };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    changePassword(result.value.current, result.value.newPass);
+                }
+            });
+        }
+
+        function validatePasswordStrength(password) {
+            const requirements = {
+                minLength: password.length >= 12,
+                hasUppercase: /[A-Z]/.test(password),
+                hasLowercase: /[a-z]/.test(password),
+                hasNumber: /[0-9]/.test(password),
+                hasSpecial: /[@#$%^&*]/.test(password)
+            };
+
+            return {
+                isValid: Object.values(requirements).every(req => req === true),
+                requirements: requirements
+            };
+        }
+
+        function changePassword(currentPassword, newPassword) {
+            const currentUser = checkAuth();
+            if (!currentUser) return;
+
+            const users = JSON.parse(localStorage.getItem('allUsers')) || [];
+            const user = users.find(u => u.userId === currentUser.userId);
+
+            if (!user) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'User not found',
+                    confirmButtonColor: '#ef4444'
+                });
+                return;
+            }
+
+            if (user.password !== currentPassword) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Incorrect Password',
+                    text: 'Current password is incorrect',
+                    confirmButtonColor: '#ef4444'
+                });
+                return;
+            }
+
+            const userIndex = users.findIndex(u => u.userId === currentUser.userId);
+            users[userIndex].password = newPassword;
+            localStorage.setItem('allUsers', JSON.stringify(users));
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Password Changed!',
+                text: 'Your password has been updated successfully',
+                confirmButtonColor: '#10b981',
+                timer: 2000
+            });
+        }
+
+        // ============================================================
+        // LOGOUT
+        // ============================================================
+
+        function handleLogout() {
+            Swal.fire({
+                title: 'Logout Confirmation',
+                text: 'Are you sure you want to logout?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '<i class="fas fa-sign-out-alt"></i> Yes, Logout',
+                cancelButtonText: '<i class="fas fa-times"></i> Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem('currentUser');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Logged Out',
+                        text: 'You have been logged out successfully',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.href = 'login.html';
+                    });
+                }
+            });
+        }
+
+        // ============================================================
+        // DOCUMENT READY
+        // ============================================================
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadProfile();
+            console.log('📚 Book Club - Professional Profile Page Loaded');
+        });
+    </script>
+
+</body>
+
+</html>

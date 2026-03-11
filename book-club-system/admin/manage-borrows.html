@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Borrows - Book Club Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+</head>
+<body class="d-flex align-items-center justify-content-center" style="min-height:100vh;">
+    <div class="text-center p-4">
+        <h3>Opening Borrow Requests...</h3>
+        <p class="mb-0">Redirecting to admin dashboard section.</p>
+    </div>
+
+    <script>
+        const user = JSON.parse(localStorage.getItem('currentUser')) || {};
+        if (!user.isAdmin) {
+            window.location.href = '../public/login.html';
+        } else {
+            window.location.replace('./dashboard.html#borrows');
+        }
+    </script>
+</body>
+</html>

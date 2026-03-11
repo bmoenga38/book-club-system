@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SDA Book Borrowing System</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.3/sweetalert2.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #5b21b6;
+            --secondary-color: #ec4899;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --light-bg: #f3f4f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+        }
+
+        /* Admin Navbar */
+        .admin-navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            color: white;
+        }
+
+        .admin-navbar .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Sidebar */
+        .admin-sidebar {
+            background: white;
+            min-height: 100vh;
+            padding: 30px 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 250px;
+            left: 0;
+            top: 60px;
+            overflow-y: auto;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 15px 25px;
+            color: #6b7280;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background-color: #ede9fe;
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .admin-content {
+            margin-left: 250px;
+            padding: 40px;
+            min-height: calc(100vh - 60px);
+        }
+
+        /* Cards */
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        /* Tables */
+        .data-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px;
+            margin-bottom: 0;
+        }
+
+        .table-header h4 {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            border-top: none;
+            background-color: #f9fafb;
+            border-bottom: 2px solid #e5e7eb;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        /* Buttons */
+        .btn-action {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            margin: 2px;
+        }
+
+        .btn-edit {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-delete {
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-confirm {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-action:hover {
+            opacity: 0.9;
+        }
+
+        /* Forms */
+        .form-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .form-card h5 {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ede9fe;
+            padding-bottom: 15px;
+        }
+
+        .form-control,
+        .form-select {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(91, 33, 182, 0.1);
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(91, 33, 182, 0.3);
+        }
+
+        /* Badge Styles */
+        .badge-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-confirmed {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-scheduled {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-returned {
+            background-color: #d1d5db;
+            color: #374151;
+        }
+
+        .badge-canceled {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Tabs */
+        .nav-tabs {
+            border-bottom: 0;
+            gap: 10px;
+        }
+
+        .nav-tabs .nav-link {
+            color: #334155 !important;
+            border: 1px solid #cbd5e1;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.45rem 0.95rem;
+            background: #f8fafc;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: var(--primary-color) !important;
+            border-color: #a5b4fc;
+            background: #eef2ff;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #ffffff !important;
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                position: relative;
+                width: 100%;
+                top: 0;
+                min-height: auto;
+                padding: 10px 0;
+            }
+
+            .admin-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .sidebar-menu a {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Admin Navbar -->
+    <nav class="admin-navbar sticky-top">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <a class="navbar-brand text-white" href="dashboard.html">
+                    <i class="fas fa-cogs"></i> Book Admin Panel
+                </a>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-white">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="adminName">Admin</span>
+                    </span>
+                    <button class="btn btn-danger btn-sm" onclick="adminLogout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#dashboard" class="sidebar-link active" onclick="showSection('dashboard', this)">
+                        <i class="fas fa-chart-line"></i> Dashboard
+                    </a></li>
+                <li><a href="#books" class="sidebar-link" onclick="showSection('books', this)">
+                        <i class="fas fa-book"></i> Manage Books
+                    </a></li>
+                <li><a href="#borrows" class="sidebar-link" onclick="showSection('borrows', this)">
+                        <i class="fas fa-list"></i> Borrow Requests
+                    </a></li>
+                <li><a href="#users" class="sidebar-link" onclick="showSection('users', this)">
+                        <i class="fas fa-users"></i> Users
+                    </a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="admin-content">
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="section-content">
+                <h2 style="color: var(--primary-color); margin-bottom: 30px;">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </h2>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <i class="fas fa-book"></i>
+                            <div class="stat-number" id="totalBooks">0</div>
+                            <div class="stat-label">Total Books</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <div class="stat-number" id="totalUsers">0</div>
+                            <div class="stat-label">Total Members</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <i class="fas fa-clock"></i>
+                            <div class="stat-number" id="pendingRequests">0</div>
+                            <div class="stat-label">Pending Requests</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="stat-number" id="overdueBooks">0</div>
+                            <div class="stat-label">Overdue Books</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h4>Recent Borrow Requests</h4>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Book</th>
+                                <th>Status</th>
+                                <th>Request Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentBorrows">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Books Management Section -->
+            <div id="books" class="section-content" style="display: none;">
+                <h2 style="color: var(--primary-color); margin-bottom: 30px;">
+                    <i class="fas fa-book"></i> Manage Books
+                </h2>
+
+                <!-- Add Book Form -->
+                <div class="form-card">
+                    <h5>Add New Book</h5>
+                    <form id="addBookForm" onsubmit="addBook(event)">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Book Title</label>
+                                <input type="text" class="form-control" id="bookTitle" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Author</label>
+                                <input type="text" class="form-control" id="bookAuthor" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">ISBN</label>
+                                <input type="text" class="form-control" id="bookISBN">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Category</label>
+                                <select class="form-select" id="bookCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Theology">Theology</option>
+                                    <option value="Biography">Biography</option>
+                                    <option value="Inspirational">Inspirational</option>
+                                    <option value="Children">Children</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Published Year</label>
+                                <input type="number" class="form-control" id="bookYear" min="1800">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Total Copies</label>
+                                <input type="number" class="form-control" id="bookCopies" min="1" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Publisher</label>
+                                <input type="text" class="form-control" id="bookPublisher">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Image URL</label>
+                            <input type="url" class="form-control" id="bookImage">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="bookDescription" rows="3"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary-custom">
+                            <i class="fas fa-plus"></i> Add Book
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Books Table -->
+                <div class="data-table">
+                    <div class="table-header">
+                        <h4>All Books</h4>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Category</th>
+                                <th>Total</th>
+                                <th>Available</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="booksTableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Borrow Requests Section -->
+            <div id="borrows" class="section-content" style="display: none;">
+                <h2 style="color: var(--primary-color); margin-bottom: 30px;">
+                    <i class="fas fa-list"></i> Borrow Requests
+                </h2>
+
+                <ul class="nav nav-tabs mb-4" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#pending" data-bs-toggle="tab"
+                            onclick="filterBorrows('Pending')">
+                            <i class="fas fa-clock"></i> Pending
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#confirmed" data-bs-toggle="tab" onclick="filterBorrows('Confirmed')">
+                            <i class="fas fa-check"></i> Confirmed
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#scheduled" data-bs-toggle="tab" onclick="filterBorrows('Scheduled')">
+                            <i class="fas fa-calendar"></i> Scheduled
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#all" data-bs-toggle="tab" onclick="filterBorrows('All')">
+                            <i class="fas fa-list"></i> All
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="data-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Book</th>
+                                <th>Status</th>
+                                <th>Request Date</th>
+                                <th>Return Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="borrowsTableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="users" class="section-content" style="display: none;">
+                <h2 style="color: var(--primary-color); margin-bottom: 30px;">
+                    <i class="fas fa-users"></i> Users
+                </h2>
+
+                <div class="data-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Department</th>
+                                <th>Member Since</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.3/sweetalert2.min.js"></script>
+    <script src="../assets/js/app.js"></script>
+
+    <script>
+        let editingBookId = null;
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const user = JSON.parse(localStorage.getItem('currentUser')) || {};
+
+            if (!user.isAdmin) {
+                window.location.href = '../public/login.html';
+                return;
+            }
+
+            document.getElementById('adminName').textContent = user.fullName || 'Admin';
+
+            loadDashboard();
+            loadBooks();
+            loadBorrows();
+            loadUsers();
+
+            const startSection = (window.location.hash || '#dashboard').replace('#', '');
+            showSection(startSection);
+        });
+
+        // Show/Hide Sections
+        function showSection(sectionId, trigger) {
+            const target = document.getElementById(sectionId) ? sectionId : 'dashboard';
+            document.querySelectorAll('.section-content').forEach(el => el.style.display = 'none');
+            document.getElementById(target).style.display = 'block';
+
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            if (trigger && trigger.classList.contains('sidebar-link')) {
+                trigger.classList.add('active');
+            } else {
+                const activeLink = document.querySelector(`.sidebar-link[href="#${target}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+            window.location.hash = target;
+        }
+
+        // Load Dashboard Stats
+        function loadDashboard() {
+            const books = JSON.parse(localStorage.getItem('allBooks')) || [];
+            const users = JSON.parse(localStorage.getItem('allUsers')) || [];
+            const borrows = getAllBorrows();
+
+            document.getElementById('totalBooks').textContent = books.length;
+            document.getElementById('totalUsers').textContent = users.filter(u => !u.isAdmin).length;
+            document.getElementById('pendingRequests').textContent = borrows.filter(b => b.status === 'Pending').length;
+            document.getElementById('overdueBooks').textContent = borrows.filter(b => b.status === 'Scheduled' && isOverdue(b)).length;
+
+            // Recent borrows
+            const recent = borrows.slice(-5).reverse();
+            let html = '';
+            recent.forEach(b => {
+                const book = books.find(bk => bk.bookId === b.bookId);
+                const member = users.find(u => u.userId === b.userId);
+                html += `
+                    <tr>
+                        <td>${member ? member.fullName : 'Unknown'}</td>
+                        <td>${book ? book.title : 'Unknown'}</td>
+                        <td><span class="badge badge-${b.status.toLowerCase()}">${b.status}</span></td>
+                        <td>${new Date(b.requestDate).toLocaleDateString()}</td>
+                        <td>
+                            <button class="btn-action btn-confirm btn-sm" onclick="confirmBorrow(${b.borrowId})">
+                                Confirm
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            document.getElementById('recentBorrows').innerHTML = html;
+        }
+
+        // Load Books
+        function loadBooks() {
+            const books = JSON.parse(localStorage.getItem('allBooks')) || [];
+            let html = '';
+            books.forEach(book => {
+                html += `
+                    <tr>
+                        <td><strong>${book.title}</strong></td>
+                        <td>${book.author}</td>
+                        <td><span class="badge bg-info">${book.category}</span></td>
+                        <td>${book.totalCopies}</td>
+                        <td>${book.availableCopies}</td>
+                        <td>
+                            <button class="btn-action btn-edit" onclick="editBook(${book.bookId})">
+                                Edit
+                            </button>
+                            <button class="btn-action btn-delete" onclick="deleteBook(${book.bookId})">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            document.getElementById('booksTableBody').innerHTML = html;
+        }
+
+        // Add Book
+        function addBook(e) {
+            e.preventDefault();
+            const books = JSON.parse(localStorage.getItem('allBooks')) || [];
+            const totalCopies = parseInt(document.getElementById('bookCopies').value);
+            const wasEditing = Boolean(editingBookId);
+
+            const newBook = {
+                bookId: editingBookId || Date.now(),
+                title: document.getElementById('bookTitle').value,
+                author: document.getElementById('bookAuthor').value,
+                description: document.getElementById('bookDescription').value,
+                imageUrl: document.getElementById('bookImage').value || 'https://via.placeholder.com/250x350?text=Book',
+                isbn: document.getElementById('bookISBN').value,
+                publisher: document.getElementById('bookPublisher').value,
+                publishedYear: parseInt(document.getElementById('bookYear').value) || new Date().getFullYear(),
+                totalCopies: totalCopies,
+                availableCopies: totalCopies,
+                category: document.getElementById('bookCategory').value
+            };
+
+            if (wasEditing) {
+                const index = books.findIndex(b => b.bookId === editingBookId);
+                if (index >= 0) {
+                    const previous = books[index];
+                    const borrowedCopies = Math.max((previous.totalCopies || 0) - (previous.availableCopies || 0), 0);
+                    newBook.availableCopies = Math.max(totalCopies - borrowedCopies, 0);
+                    books[index] = {
+                        ...previous,
+                        ...newBook
+                    };
+                }
+                editingBookId = null;
+                e.target.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-plus"></i> Add Book';
+            } else {
+                books.push(newBook);
+            }
+
+            localStorage.setItem('allBooks', JSON.stringify(books));
+
+            document.getElementById('addBookForm').reset();
+            loadBooks();
+            loadDashboard();
+
+            Swal.fire('Success', wasEditing ? 'Book updated successfully' : 'Book added successfully', 'success');
+        }
+
+        // Delete Book
+        function deleteBook(bookId) {
+            Swal.fire({
+                title: 'Delete Book?',
+                text: 'This action cannot be undone',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444'
+            }).then(result => {
+                if (result.isConfirmed) {
+                    let books = JSON.parse(localStorage.getItem('allBooks')) || [];
+                    books = books.filter(b => b.bookId !== bookId);
+                    localStorage.setItem('allBooks', JSON.stringify(books));
+                    loadBooks();
+                    loadDashboard();
+                    Swal.fire('Deleted', 'Book deleted successfully', 'success');
+                }
+            });
+        }
+
+        // Load Borrows
+        function loadBorrows() {
+            const borrows = getAllBorrows();
+            renderBorrows(borrows);
+        }
+
+        // Get All Borrows
+        function getAllBorrows() {
+            const users = JSON.parse(localStorage.getItem('allUsers')) || [];
+            let allBorrows = [];
+
+            users.forEach(user => {
+                const userBorrows = JSON.parse(localStorage.getItem('userBorrows_' + user.userId)) || [];
+                allBorrows = allBorrows.concat(userBorrows);
+            });
+
+            return allBorrows;
+        }
+
+        // Render Borrows
+        function renderBorrows(borrows) {
+            const books = JSON.parse(localStorage.getItem('allBooks')) || [];
+            const users = JSON.parse(localStorage.getItem('allUsers')) || [];
+
+            let html = '';
+            borrows.forEach(b => {
+                const book = books.find(bk => bk.bookId === b.bookId);
+                const member = users.find(u => u.userId === b.userId);
+                const returnDate = b.returnDate ? new Date(b.returnDate).toLocaleDateString() : '-';
+
+                html += `
+                    <tr>
+                        <td>${member ? member.fullName : 'Unknown'}</td>
+                        <td>${book ? book.title : 'Unknown'}</td>
+                        <td><span class="badge badge-${b.status.toLowerCase()}">${b.status}</span></td>
+                        <td>${new Date(b.requestDate).toLocaleDateString()}</td>
+                        <td>${returnDate}</td>
+                        <td>
+                            ${b.status === 'Pending' ? `<button class="btn-action btn-confirm btn-sm" onclick="confirmBorrow(${b.borrowId})">Confirm</button>` : ''}
+                            ${b.status === 'Confirmed' ? `<button class="btn-action btn-confirm btn-sm" onclick="issueBorrow(${b.borrowId})">Issue</button>` : ''}
+                            ${b.status === 'Scheduled' ? `<button class="btn-action btn-confirm btn-sm" onclick="returnBorrow(${b.borrowId})">Return</button>` : ''}
+                            <button class="btn-action btn-delete btn-sm" onclick="cancelBorrow(${b.borrowId})">Cancel</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('borrowsTableBody').innerHTML = html;
+        }
+
+        // Confirm Borrow
+        function confirmBorrow(borrowId) {
+            const users = JSON.parse(localStorage.getItem('allUsers')) || [];
+
+            users.forEach(user => {
+                const borrows = JSON.parse(localStorage.getItem('userBorrows_' + user.userId)) || [];
+                const borrow = borrows.find(b => b.borrowId === borrowId);
+
+                if (borrow && borrow.status === 'Pending') {
+                    borrow.status = 'Confirmed';
+                    localStorage.setItem('userBorrows_' + user.userId, JSON.stringify(borrows));
+                }
+            });
+
+            loadBorrows();
+            loadDashboard();
+            Swal.fire('Success', 'Borrow request confirmed.', 'success');
+        }
+
+        // Issue Borrow
+        function issueBorrow(borrowId) {
+            const users = JSON.parse(localStorage.getItem('allUsers')) || [];
+
+            users.forEach(user => {
+                const borrows = JSON.parse(localStorage.getItem('userBorrows_' + user.userId)) || [];
+                const borrow = borrows.find(b => b.borrowId === borrowId);
+
+                if (borrow && borrow.status === 'Confirmed') {
+                    const now = new Date();
+                    const dueDate = new Date(now);
+                    dueDate.setDate(dueDate.getDate() + 14);
+
+                    borrow.status = 'Scheduled';
+                    borrow.borrowDate = now.toISOString();
+                    borrow.returnDate = dueDate.toISOString();
+                    borrow.verificationCode = Math.random().toString(36).slice(2, 8).toUpperCase();
+
+                    localStorage.setItem('userBorrows_' + user.userId, JSON.stringify(borrows));
+                }
+            });
+
+            loadBorrows();
+            loadDashboard();
+            Swal.fire('Success', 'Book issued successfully.', 'success');
+        }
+
+        // Return Borrow
+        function returnBorrow(borrowId) {
+            const users = JSON.parse(localStorage.getItem('allUsers')) || [];
+
+            users.forEach(user => {
+                const borrows = JSON.parse(localStorage.getItem('userBorrows_' + user.userId)) || [];
+                const borrow = borrows.find(b => b.borrowId === borrowId);
+
+                if (borrow && borrow.status === 'Scheduled') {
+                    borrow.status = 'Returned';
+                    borrow.actualReturnDate = new Date().toISOString();
+                    localStorage.setItem('userBorrows_' + user.userId, JSON.stringify(borrows));
+
+                    // Increase available copies
+                    const books = JSON.parse(localStorage.getItem('allBooks')) || [];
+                    const book = books.find(b => b.bookId === borrow.bookId);
+                    if (book) {
+                        book.availableCopies++;
+                        localStorage.setItem('allBooks', JSON.stringify(books));
+                    }
+                }
+            });
+
+            loadBorrows();
+            loadBooks();
+            loadDashboard();
+            Swal.fire('Success', 'Book marked as returned', 'success');
+        }
+
+        // Cancel Borrow
+        function cancelBorrow(borrowId) {
+            Swal.fire({
+                title: 'Cancel Borrow?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                confirmButtonText: 'Yes, Cancel'
+            }).then(result => {
+                if (result.isConfirmed) {
+                    const users = JSON.parse(localStorage.getItem('allUsers')) || [];
+
+                    users.forEach(user => {
+                        const borrows = JSON.parse(localStorage.getItem('userBorrows_' + user.userId)) || [];
+                        const borrow = borrows.find(b => b.borrowId === borrowId);
+
+                        if (borrow && borrow.status !== 'Returned') {
+                            borrow.status = 'Canceled';
+                            localStorage.setItem('userBorrows_' + user.userId, JSON.stringify(borrows));
+
+                            // Increase available copies
+                            const books = JSON.parse(localStorage.getItem('allBooks')) || [];
+                            const book = books.find(b => b.bookId === borrow.bookId);
+                            if (book) {
+                                book.availableCopies++;
+                                localStorage.setItem('allBooks', JSON.stringify(books));
+                            }
+                        }
+                    });
+
+                    loadBorrows();
+                    loadBooks();
+                    loadDashboard();
+                    Swal.fire('Success', 'Borrow request canceled', 'success');
+                }
+            });
+        }
+
+        // Filter Borrows
+        function filterBorrows(status) {
+            let borrows = getAllBorrows();
+            if (status !== 'All') {
+                borrows = borrows.filter(b => b.status === status);
+            }
+            renderBorrows(borrows);
+        }
+
+        // Check if Overdue
+        function isOverdue(borrow) {
+            if (!borrow.returnDate || borrow.status !== 'Scheduled') return false;
+            return new Date(borrow.returnDate) < new Date();
+        }
+
+        // Load Users
+        function loadUsers() {
+            const users = JSON.parse(localStorage.getItem('allUsers')) || [];
+            let html = '';
+
+            users.filter(u => !u.isAdmin).forEach(user => {
+                const registeredDate = user.registeredDate
+                    ? new Date(user.registeredDate).toLocaleDateString()
+                    : '-';
+                html += `
+                    <tr>
+                        <td><strong>${user.fullName}</strong></td>
+                        <td>${user.email}</td>
+                        <td>${user.phone}</td>
+                        <td>${user.department}</td>
+                        <td>${registeredDate}</td>
+                        <td>
+                            <button class="btn-action btn-delete btn-sm" onclick="removeUser(${user.userId})">
+                                Remove
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('usersTableBody').innerHTML = html;
+        }
+
+        // Edit Book
+        function editBook(bookId) {
+            const books = JSON.parse(localStorage.getItem('allBooks')) || [];
+            const book = books.find(b => b.bookId === bookId);
+
+            if (!book) {
+                Swal.fire('Error', 'Book not found.', 'error');
+                return;
+            }
+
+            document.getElementById('bookTitle').value = book.title || '';
+            document.getElementById('bookAuthor').value = book.author || '';
+            document.getElementById('bookDescription').value = book.description || '';
+            document.getElementById('bookImage').value = book.imageUrl || '';
+            document.getElementById('bookISBN').value = book.isbn || '';
+            document.getElementById('bookPublisher').value = book.publisher || '';
+            document.getElementById('bookYear').value = book.publishedYear || '';
+            document.getElementById('bookCopies').value = book.totalCopies || 1;
+            document.getElementById('bookCategory').value = book.category || '';
+
+            editingBookId = bookId;
+            const submitButton = document.querySelector('#addBookForm button[type="submit"]');
+            if (submitButton) {
+                submitButton.innerHTML = '<i class="fas fa-save"></i> Update Book';
+            }
+            showSection('books');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            Swal.fire('Edit Mode', 'Update fields and submit to save changes.', 'info');
+        }
+
+        // Remove User
+        function removeUser(userId) {
+            Swal.fire({
+                title: 'Remove User?',
+                text: 'This user will be deleted',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444'
+            }).then(result => {
+                if (result.isConfirmed) {
+                    let users = JSON.parse(localStorage.getItem('allUsers')) || [];
+                    users = users.filter(u => u.userId !== userId);
+                    localStorage.setItem('allUsers', JSON.stringify(users));
+                    loadUsers();
+                    Swal.fire('Deleted', 'User removed successfully', 'success');
+                }
+            });
+        }
+
+        // Admin Logout
+        function adminLogout() {
+            Swal.fire({
+                title: 'Logout?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444'
+            }).then(result => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem('currentUser');
+                    window.location.href = '../public/login.html';
+                }
+            });
+        }
+    </script>
+
+</body>

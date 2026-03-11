@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx shadcn@latest init -y)",
+      "Bash(npx shadcn@latest init -d)",
+      "Bash(npm install @neondatabase/serverless drizzle-orm drizzle-zod)",
+      "Bash(npm install -D drizzle-kit)",
+      "Bash(npm install next-auth@beta)",
+      "Bash(npm install @serwist/next @serwist/precaching @serwist/sw idb)",
+      "Bash(npm install react-hook-form zod sonner next-themes)",
+      "Bash(npm install -D vitest @vitejs/plugin-react @testing-library/react @testing-library/jest-dom @testing-library/user-event jsdom)",
+      "Bash(npm install -D @playwright/test)",
+      "Bash(npm run lint)",
+      "Bash(npx next lint --dir src)",
+      "Bash(npx next lint)",
+      "Bash(npx next --help)",
+      "Bash(npm run typecheck)",
+      "Bash(npm run build)",
+      "Bash(npm install -D tsx)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "WebFetch(domain:orm.drizzle.team)",
+      "WebFetch(domain:authjs.dev)",
+      "Bash(npx drizzle-kit generate)",
+      "Bash(find c:UsersZaqDesktopBrycodebookclub_bmad-output -type f -name *.md)",
+      "Bash(npm install:*)",
+      "Bash(npx shadcn@latest add button input label card select -y)",
+      "Bash(ls c:/Users/Zaq/Desktop/Brycode/bookclub/.env*)",
+      "Bash(npx auth:*)",
+      "Bash(node -e \"console.log\\(require\\(''crypto''\\).randomBytes\\(32\\).toString\\(''base64url''\\)\\)\")",
+      "Bash(taskkill //F //IM node.exe)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\Zaq\\Desktop\\Brycode\\bookclub\\book-club-system\\.git",
+      "C:\\Users\\Zaq\\Desktop\\Brycode\\bookclub\\src\\app\\api\\auth"
+    ]
+  }
+}
