@@ -1,0 +1,32 @@
+name: Deploy Convex
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  deploy-convex:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+
+      - name: Deploy to Convex Development
+        if: github.ref == 'refs/heads/dev'
+        run: npx convex deploy --cmd 'npm run build'
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY_DEV }}
+
+      - name: Deploy to Convex Production
+        if: github.ref == 'refs/heads/main'
+        run: npx convex deploy --cmd 'npm run build'
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY_PROD }}
