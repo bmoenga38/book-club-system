@@ -30,3 +30,4 @@ jobs:
         run: npx convex deploy --cmd 'npm run build'
         env:
           CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY_PROD }}
+# trigger workflow
