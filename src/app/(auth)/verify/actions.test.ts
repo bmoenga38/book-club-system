@@ -54,7 +54,7 @@ describe("verifyOtp action", () => {
       phone: "+254712345678",
       code: "123456",
       name: "James",
-      churchId: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      churchId: "church-id-123",
       mode: "register",
     });
 
@@ -63,7 +63,7 @@ describe("verifyOtp action", () => {
     expect(mocks.createUser).toHaveBeenCalledWith({
       phone: "+254712345678",
       name: "James",
-      churchId: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      churchId: "church-id-123",
     });
     expect(mocks.signIn).toHaveBeenCalledWith("credentials", {
       phone: "+254712345678",
@@ -151,7 +151,7 @@ describe("verifyOtp action", () => {
       phone: "+254712345678",
       code: "123456",
       name: "James",
-      churchId: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      churchId: "church-id-123",
       mode: "register",
     });
 

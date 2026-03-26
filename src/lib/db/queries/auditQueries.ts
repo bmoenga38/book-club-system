@@ -1,11 +1,9 @@
 import "server-only";
 
-import { db } from "@/lib/db";
-import { auditLog } from "@/lib/db/schema";
-import { eq, and, desc } from "drizzle-orm";
+import { getConvexClient } from "@/lib/convex";
+import { api } from "../../../../convex/_generated/api";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
-// Using string unions (not pgEnum) for extensibility without migrations.
 
 export type AuditAction =
   | "VERIFY_MEMBER"
@@ -31,18 +29,14 @@ export async function logAudit(params: {
   entityId: string;
   metadata?: Record<string, unknown>;
 }) {
-  const [record] = await db
-    .insert(auditLog)
-    .values({
-      actorId: params.actorId,
-      action: params.action,
-      entityType: params.entityType,
-      entityId: params.entityId,
-      metadata: params.metadata ?? null,
-    })
-    .returning();
-
-  return record;
+  const client = getConvexClient();
+  return await client.mutation(api.audit.log, {
+    actorId: params.actorId as any, // Convex ID
+    action: params.action,
+    entityType: params.entityType,
+    entityId: params.entityId,
+    metadata: params.metadata ?? undefined,
+  });
 }
 
 // ─── Get Audit Trail ─────────────────────────────────────────────────────────
@@ -53,22 +47,11 @@ export async function getAuditTrail(filters?: {
   actorId?: string;
   limit?: number;
 }) {
-  const conditions = [];
-
-  if (filters?.entityType) {
-    conditions.push(eq(auditLog.entityType, filters.entityType));
-  }
-  if (filters?.entityId) {
-    conditions.push(eq(auditLog.entityId, filters.entityId));
-  }
-  if (filters?.actorId) {
-    conditions.push(eq(auditLog.actorId, filters.actorId));
-  }
-
-  return db
-    .select()
-    .from(auditLog)
-    .where(conditions.length > 0 ? and(...conditions) : undefined)
-    .orderBy(desc(auditLog.createdAt))
-    .limit(filters?.limit ?? 50);
+  const client = getConvexClient();
+  return await client.query(api.audit.getTrail, {
+    entityType: filters?.entityType,
+    entityId: filters?.entityId,
+    actorId: filters?.actorId as any,
+    limit: filters?.limit,
+  });
 }

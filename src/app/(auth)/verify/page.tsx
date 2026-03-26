@@ -17,7 +17,14 @@ export default async function VerifyPage({
   const phone = params.phone ?? "";
   const mode = (params.mode ?? "register") as "login" | "register";
 
-  const churches = mode === "register" ? await getChurches() : [];
+  // Auto-assign the first church (no dropdown needed)
+  let defaultChurchId = "";
+  if (mode === "register") {
+    const churches = await getChurches();
+    if (churches.length > 0) {
+      defaultChurchId = churches[0].id;
+    }
+  }
 
   return (
     <Card>
@@ -28,7 +35,11 @@ export default async function VerifyPage({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <VerifyForm phone={phone} mode={mode} churches={churches} />
+        <VerifyForm
+          phone={phone}
+          mode={mode}
+          defaultChurchId={defaultChurchId}
+        />
       </CardContent>
     </Card>
   );

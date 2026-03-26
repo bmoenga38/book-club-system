@@ -5,6 +5,7 @@ const mocks = vi.hoisted(() => ({
   createOtp: vi.fn().mockResolvedValue("123456"),
   getUserByPhone: vi.fn().mockResolvedValue(null),
   sendOtpSms: vi.fn().mockResolvedValue({ success: true, data: { messageId: "msg-1" } }),
+  signIn: vi.fn().mockResolvedValue(undefined),
 }));
 
 vi.mock("next-auth", () => ({ default: vi.fn() }));
@@ -23,7 +24,11 @@ vi.mock("@/lib/sms/service", () => ({
   sendOtp: mocks.sendOtpSms,
 }));
 
-import { sendOtp } from "./actions";
+vi.mock("@/lib/auth/config", () => ({
+  signIn: mocks.signIn,
+}));
+
+import { sendOtp, quickLogin } from "./actions";
 
 describe("sendOtp action", () => {
   beforeEach(() => {
@@ -91,6 +96,72 @@ describe("sendOtp action", () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.code).toBe("VALIDATION_ERROR");
+    }
+  });
+});
+
+describe("quickLogin action", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mocks.signIn.mockResolvedValue(undefined);
+  });
+
+  it("logs in existing user without OTP", async () => {
+    mocks.getUserByPhone.mockResolvedValue({
+      _id: "user-1",
+      phone: "+254712345678",
+      name: "James",
+      role: "member",
+      status: "active",
+    });
+
+    const result = await quickLogin({ phone: "+254712345678" });
+
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.redirectTo).toBe("/");
+    }
+    expect(mocks.signIn).toHaveBeenCalledWith("credentials", {
+      phone: "+254712345678",
+      redirect: false,
+    });
+  });
+
+  it("rejects non-existent user", async () => {
+    mocks.getUserByPhone.mockResolvedValue(null);
+
+    const result = await quickLogin({ phone: "+254712345678" });
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.code).toBe("NOT_FOUND");
+      expect(result.error.message).toContain("No account found");
+    }
+    expect(mocks.signIn).not.toHaveBeenCalled();
+  });
+
+  it("returns validation error for invalid phone", async () => {
+    const result = await quickLogin({ phone: "bad" });
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.code).toBe("VALIDATION_ERROR");
+    }
+  });
+
+  it("returns error when signIn fails", async () => {
+    mocks.getUserByPhone.mockResolvedValue({
+      _id: "user-1",
+      phone: "+254712345678",
+      name: "James",
+    });
+    mocks.signIn.mockRejectedValue(new Error("Auth failed"));
+
+    const result = await quickLogin({ phone: "+254712345678" });
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.code).toBe("UNAUTHORIZED");
     }
   });
 });

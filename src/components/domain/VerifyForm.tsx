@@ -9,13 +9,6 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { verifyOtpSchema, type VerifyOtpInput } from "@/app/(auth)/verify/schemas";
 import { verifyOtp } from "@/app/(auth)/verify/actions";
 import { sendOtp } from "@/app/(auth)/login/actions";
@@ -23,10 +16,10 @@ import { sendOtp } from "@/app/(auth)/login/actions";
 interface VerifyFormProps {
   phone: string;
   mode: "login" | "register";
-  churches: { id: string; name: string }[];
+  defaultChurchId: string;
 }
 
-export function VerifyForm({ phone, mode, churches }: VerifyFormProps) {
+export function VerifyForm({ phone, mode, defaultChurchId }: VerifyFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
@@ -34,11 +27,15 @@ export function VerifyForm({ phone, mode, churches }: VerifyFormProps) {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<VerifyOtpInput>({
     resolver: zodResolver(verifyOtpSchema),
-    defaultValues: { phone, mode, code: "" },
+    defaultValues: {
+      phone,
+      mode,
+      code: "",
+      churchId: defaultChurchId || undefined,
+    },
   });
 
   const onSubmit = async (data: VerifyOtpInput) => {
@@ -47,6 +44,7 @@ export function VerifyForm({ phone, mode, churches }: VerifyFormProps) {
       const result = await verifyOtp(data);
       if (result.success) {
         router.push(result.data.redirectTo);
+        router.refresh();
       } else {
         toast.error(result.error.message);
       }
@@ -73,47 +71,25 @@ export function VerifyForm({ phone, mode, churches }: VerifyFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <input type="hidden" {...register("phone")} />
       <input type="hidden" {...register("mode")} />
+      {defaultChurchId && (
+        <input type="hidden" {...register("churchId")} />
+      )}
 
       {mode === "register" && (
-        <>
-          <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
-            <Input
-              id="name"
-              placeholder="Your full name"
-              aria-describedby={errors.name ? "name-error" : undefined}
-              {...register("name")}
-            />
-            {errors.name && (
-              <p id="name-error" className="text-sm text-destructive" role="alert">
-                {errors.name.message}
-              </p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="churchId">Church</Label>
-            <Select
-              onValueChange={(value) => setValue("churchId", value)}
-            >
-              <SelectTrigger id="churchId" aria-describedby={errors.churchId ? "church-error" : undefined}>
-                <SelectValue placeholder="Select your church" />
-              </SelectTrigger>
-              <SelectContent>
-                {churches.map((church) => (
-                  <SelectItem key={church.id} value={church.id}>
-                    {church.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {errors.churchId && (
-              <p id="church-error" className="text-sm text-destructive" role="alert">
-                {errors.churchId.message}
-              </p>
-            )}
-          </div>
-        </>
+        <div className="space-y-2">
+          <Label htmlFor="name">Full Name</Label>
+          <Input
+            id="name"
+            placeholder="Your full name"
+            aria-describedby={errors.name ? "name-error" : undefined}
+            {...register("name")}
+          />
+          {errors.name && (
+            <p id="name-error" className="text-sm text-destructive" role="alert">
+              {errors.name.message}
+            </p>
+          )}
+        </div>
       )}
 
       <div className="space-y-2">

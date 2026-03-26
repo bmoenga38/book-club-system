@@ -1,10 +1,10 @@
 import "server-only";
 
-import { db } from "@/lib/db";
-import { churches } from "@/lib/db/schema";
+import { getConvexClient } from "@/lib/convex";
+import { api } from "../../../../convex/_generated/api";
 
 export async function getChurches(): Promise<{ id: string; name: string }[]> {
-  return db
-    .select({ id: churches.id, name: churches.name })
-    .from(churches);
+  const client = getConvexClient();
+  const churches = await client.query(api.churches.list, {});
+  return churches.map((c) => ({ id: c._id, name: c.name }));
 }

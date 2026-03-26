@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth/config";
 import { isPublicRoute, hasRouteAccess } from "@/lib/auth/rbac";
-import type { UserRole } from "@/types/auth";
+import type { UserRole, UserStatus } from "@/types/auth";
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
@@ -11,14 +11,31 @@ export default auth((req) => {
   // No session — redirect to login
   if (!req.auth) {
     const loginUrl = new URL("/login", req.url);
+    loginUrl.searchParams.set("callbackUrl", pathname);
     return Response.redirect(loginUrl);
   }
 
-  // RBAC check — verify role has access to this route
+  const userStatus = (req.auth.user as { status?: UserStatus }).status;
   const userRole = req.auth.user.role as UserRole;
+
+  // Suspended users — redirect to login with error
+  if (userStatus === "suspended") {
+    const loginUrl = new URL("/login", req.url);
+    loginUrl.searchParams.set("error", "suspended");
+    return Response.redirect(loginUrl);
+  }
+
+  // Pending verification — only allow /pending-verification and /profile
+  if (userStatus === "pending_verification") {
+    if (pathname !== "/pending-verification" && pathname !== "/profile") {
+      return Response.redirect(new URL("/pending-verification", req.url));
+    }
+    return;
+  }
+
+  // RBAC check — verify role has access to this route
   if (!hasRouteAccess(userRole, pathname)) {
-    const notFoundUrl = new URL("/not-found", req.url);
-    return Response.redirect(notFoundUrl);
+    return Response.redirect(new URL("/", req.url));
   }
 });
 

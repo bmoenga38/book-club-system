@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Sacred Archive - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#515e7e",
+              "inverse-on-surface": "#eff1f4",
+              "background": "#f7f9fc",
+              "on-tertiary": "#ffffff",
+              "tertiary-container": "#1d283d",
+              "on-secondary-fixed-variant": "#5b4300",
+              "surface-variant": "#e0e3e6",
+              "tertiary-fixed": "#d8e2fe",
+              "surface-container-highest": "#e0e3e6",
+              "secondary-container": "#fece65",
+              "on-tertiary-fixed-variant": "#3c475d",
+              "on-surface-variant": "#45464d",
+              "on-secondary-container": "#755700",
+              "on-primary-fixed-variant": "#3a4665",
+              "secondary-fixed": "#ffdf9f",
+              "on-primary-fixed": "#0d1b37",
+              "on-error-container": "#93000a",
+              "on-error": "#ffffff",
+              "surface-container-high": "#e6e8eb",
+              "surface-container-lowest": "#ffffff",
+              "primary": "#04122e",
+              "on-background": "#191c1e",
+              "on-primary": "#ffffff",
+              "secondary-fixed-dim": "#eec058",
+              "surface-container-low": "#f2f4f7",
+              "on-primary-container": "#828eb1",
+              "on-secondary": "#ffffff",
+              "inverse-primary": "#b9c6eb",
+              "on-tertiary-fixed": "#101b2f",
+              "primary-fixed-dim": "#b9c6eb",
+              "on-surface": "#191c1e",
+              "surface-dim": "#d8dadd",
+              "outline-variant": "#c5c6ce",
+              "on-secondary-fixed": "#261a00",
+              "primary-container": "#1a2744",
+              "error": "#ba1a1a",
+              "tertiary-fixed-dim": "#bcc6e1",
+              "outline": "#75777e",
+              "error-container": "#ffdad6",
+              "surface-bright": "#f7f9fc",
+              "inverse-surface": "#2d3133",
+              "on-tertiary-container": "#848fa8",
+              "primary-fixed": "#d9e2ff",
+              "tertiary": "#081327",
+              "surface-container": "#eceef1",
+              "surface": "#f7f9fc",
+              "secondary": "#795900"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1.25rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-background {
+            background: linear-gradient(135deg, #1a2744 0%, #0f1a2e 100%);
+        }
+        .asymmetric-grain {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen flex flex-col">
+<!-- Hero Background Layer -->
+<div class="fixed inset-0 glass-background z-0">
+<div class="absolute inset-0 asymmetric-grain"></div>
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-secondary/10 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-primary-container/30 rounded-full blur-[120px]"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 flex-grow flex items-center justify-center p-6 md:p-12">
+<div class="w-full max-w-md">
+<!-- Login Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-8 shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_10px_10px_-5px_rgba(0,0,0,0.04)]">
+<!-- Header Section -->
+<div class="flex flex-col items-center text-center mb-10">
+<div class="w-20 h-20 bg-secondary-fixed flex items-center justify-center rounded-full mb-6">
+<span class="material-symbols-outlined text-secondary text-[48px]" data-icon="menu_book">menu_book</span>
+</div>
+<h1 class="text-[28px] font-bold text-on-primary-fixed tracking-tight leading-none mb-2">Blessed Hope</h1>
+<p class="text-[14px] text-on-surface-variant tracking-wider uppercase font-medium">Church Library</p>
+</div>
+<!-- Form Section -->
+<form class="space-y-5" onsubmit="return false;">
+<div class="space-y-2">
+<label class="block text-[10px] font-bold text-secondary uppercase tracking-[0.1em] ml-1">Phone Number</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline text-[20px]" data-icon="call">call</span>
+</div>
+<input class="block w-full h-[52px] pl-11 pr-4 bg-surface-container-low border-none rounded-xl text-on-surface placeholder:text-outline focus:ring-2 focus:ring-secondary/20 transition-all text-sm" placeholder="+2547..." type="tel"/>
+</div>
+</div>
+<button class="w-full h-[52px] bg-secondary hover:bg-on-secondary-fixed-variant transition-all duration-300 rounded-xl flex items-center justify-center shadow-lg shadow-secondary/20">
+<span class="text-white font-bold tracking-wide">Log In</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="relative my-10 flex items-center">
+<div class="flex-grow border-t border-outline-variant/30"></div>
+<span class="flex-shrink mx-4 text-[10px] font-bold text-on-surface-variant/60 tracking-[0.2em] uppercase">New Member?</span>
+<div class="flex-grow border-t border-outline-variant/30"></div>
+</div>
+<!-- Register Section -->
+<button class="w-full h-[52px] border-2 border-dashed border-outline-variant rounded-xl flex items-center justify-center hover:bg-surface-container-low transition-all group">
+<span class="text-on-primary-fixed font-semibold text-sm group-hover:text-secondary transition-colors">Register Account</span>
+</button>
+</div>
+<!-- Policy Footer -->
+<div class="mt-8 px-4 text-center">
+<p class="text-[11px] leading-relaxed text-on-primary-container/80 max-w-xs mx-auto">
+                    By signing in, you agree to the <span class="text-secondary-fixed-dim font-medium cursor-pointer">Blessed Hope Borrowing Policy</span> and <span class="text-secondary-fixed-dim font-medium cursor-pointer">Terms of Grace</span>.
+                </p>
+</div>
+</div>
+</main>
+<!-- Visual Anchor: Library Decoration (Subtle) -->
+<div class="absolute bottom-12 right-12 hidden lg:block pointer-events-none opacity-20">
+<div class="flex gap-4 items-end">
+<div class="w-32 h-48 bg-surface-container-highest rounded-xl"></div>
+<div class="w-32 h-64 bg-surface-container-high rounded-xl"></div>
+<div class="w-32 h-56 bg-surface-container-highest rounded-xl"></div>
+</div>
+</div>
+</body></html>

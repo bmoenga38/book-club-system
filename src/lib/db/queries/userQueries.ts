@@ -1,17 +1,9 @@
-import "server-only";
-
-import { db } from "@/lib/db";
-import { users } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { getConvexClient } from "@/lib/convex";
+import { api } from "../../../../convex/_generated/api";
 
 export async function getUserByPhone(phone: string) {
-  const results = await db
-    .select()
-    .from(users)
-    .where(eq(users.phone, phone))
-    .limit(1);
-
-  return results[0] ?? null;
+  const client = getConvexClient();
+  return await client.query(api.users.getByPhone, { phone });
 }
 
 export async function createUser({
@@ -23,16 +15,10 @@ export async function createUser({
   name: string;
   churchId: string;
 }) {
-  const results = await db
-    .insert(users)
-    .values({
-      phone,
-      name,
-      churchId,
-      role: "member",
-      status: "pending_verification",
-    })
-    .returning();
-
-  return results[0];
+  const client = getConvexClient();
+  return await client.mutation(api.users.create, {
+    phone,
+    name,
+    churchId: churchId as any, // Convex ID from client
+  });
 }

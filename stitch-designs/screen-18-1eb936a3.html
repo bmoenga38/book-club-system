@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#e7e8e9",
+              "surface-container-lowest": "#ffffff",
+              "secondary-container": "#fed488",
+              "on-background": "#191c1d",
+              "on-tertiary-fixed-variant": "#5d420d",
+              "primary-fixed-dim": "#b9c6eb",
+              "on-secondary": "#ffffff",
+              "background": "#f8f9fa",
+              "surface-bright": "#f8f9fa",
+              "on-primary-fixed": "#0d1b37",
+              "on-secondary-fixed": "#261900",
+              "primary-fixed": "#d9e2ff",
+              "tertiary-container": "#372400",
+              "surface-tint": "#515e7e",
+              "outline": "#75777e",
+              "tertiary-fixed": "#ffdeac",
+              "on-primary": "#ffffff",
+              "secondary-fixed": "#ffdea5",
+              "outline-variant": "#c5c6ce",
+              "on-secondary-container": "#785a1a",
+              "on-secondary-fixed-variant": "#5d4201",
+              "on-tertiary-container": "#ac894e",
+              "secondary-fixed-dim": "#e9c176",
+              "surface-dim": "#d9dadb",
+              "primary-container": "#1a2744",
+              "on-primary-fixed-variant": "#3a4665",
+              "surface-container": "#edeeef",
+              "on-error-container": "#93000a",
+              "on-tertiary": "#ffffff",
+              "surface-container-highest": "#e1e3e4",
+              "tertiary": "#1d1100",
+              "error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#e9c080",
+              "on-surface": "#191c1d",
+              "inverse-primary": "#b9c6eb",
+              "surface": "#f8f9fa",
+              "on-surface-variant": "#45464d",
+              "inverse-surface": "#2e3132",
+              "secondary": "#775a19",
+              "surface-variant": "#e1e3e4",
+              "on-primary-container": "#828eb1",
+              "primary": "#04122e",
+              "surface-container-low": "#f3f4f5",
+              "on-error": "#ffffff",
+              "error": "#ba1a1a",
+              "inverse-on-surface": "#f0f1f2",
+              "on-tertiary-fixed": "#281900"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #04122e 0%, #1a2744 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f8f9fa] dark:bg-[#04122e] bg-opacity-90 backdrop-blur-xl">
+<div class="flex items-center justify-between px-6 h-16 w-full max-w-screen-xl mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#775a19] dark:text-[#ffdeac]" data-icon="menu_book">menu_book</span>
+<span class="text-sm font-bold tracking-[0.1em] uppercase text-[#775a19] dark:text-[#ffdeac]">BLESSED HOPE</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[11px] font-medium tracking-wider uppercase text-[#45464d] dark:text-[#adb5bd] hover:text-[#775a19] transition-colors" href="#">Home</a>
+<a class="text-[11px] font-medium tracking-wider uppercase text-[#45464d] dark:text-[#adb5bd] hover:text-[#775a19] transition-colors" href="#">Catalog</a>
+<a class="text-[11px] font-medium tracking-wider uppercase text-[#45464d] dark:text-[#adb5bd] hover:text-[#775a19] transition-colors" href="#">Loans</a>
+<a class="text-[11px] font-medium tracking-wider uppercase text-[#775a19] dark:text-[#ffdeac]" href="#">Support</a>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant/20">
+<img alt="Profile" data-alt="minimalist user avatar icon placeholder in a professional library application interface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdOs5Tvywa64J8fczlSZIwqQwu92dAD3u9eGtQ4kGO0tXDKerwriJKpYhPC1BxBImANyleBvkpclqON5LEFZzp3hn9qnYgY54cTI8oEHNeHDKT3-tysHuGhHE293jotF_0--BkEeejM1qQER8DnqqfA9fDgEQ8ZucC2INgqTur5EY6OaCPbRklgGx1O4at0X-omawxUycOImudL9eY0FLrJWXXXJja22sonze1P2yHALWgrRdFniH20dCUpSEgEmccl8Wpr1IBN0GW"/>
+</div>
+</div>
+<div class="bg-[#f1f3f5] dark:bg-[#1a2744] h-[1px] w-full"></div>
+</nav>
+<main class="pt-24 pb-32 px-6 max-w-screen-xl mx-auto">
+<!-- Header Section -->
+<section class="mb-20 text-center md:text-left max-w-2xl">
+<span class="text-[0.75rem] font-medium tracking-[0.1em] uppercase text-secondary mb-4 block">Need Assistance</span>
+<h1 class="text-5xl md:text-6xl font-headline font-extrabold tracking-[-0.02em] text-primary mb-6">How can we help?</h1>
+<p class="text-lg text-on-surface-variant leading-relaxed">Welcome to our digital sanctuary. Whether you're seeking a specific volume or navigating our digital aisles, we're here to guide your journey.</p>
+</section>
+<!-- Bento Grid Support Options -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+<!-- Contact Librarian (Primary Focus) -->
+<div class="md:col-span-7 bg-surface-container-lowest p-10 rounded-xl shadow-[0px_4px_20px_rgba(25,28,29,0.04)] flex flex-col justify-between border-t-4 border-secondary transition-all hover:translate-y-[-4px]">
+<div>
+<span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="support_agent">support_agent</span>
+<h2 class="text-3xl font-headline font-bold text-primary mb-4">Contact Librarian</h2>
+<p class="text-on-surface-variant mb-8 leading-relaxed max-w-md">Connect directly with our curatorial staff for personalized research assistance or collection inquiries.</p>
+</div>
+<div class="flex flex-wrap gap-4">
+<button class="hero-gradient text-white px-8 py-4 rounded-md font-medium flex items-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="chat" style="font-variation-settings: 'FILL' 1;">chat</span>
+                        WhatsApp Chat
+                    </button>
+<button class="border border-outline-variant/30 text-primary px-8 py-4 rounded-md font-medium flex items-center gap-2 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="call">call</span>
+                        Call Registry
+                    </button>
+</div>
+</div>
+<!-- Borrowing Policy -->
+<div class="md:col-span-5 bg-surface-container-lowest p-10 rounded-xl shadow-[0px_4px_20px_rgba(25,28,29,0.04)] group cursor-pointer border-l-4 border-primary-container transition-all hover:bg-primary-container hover:text-white">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6 group-hover:text-tertiary-fixed" data-icon="auto_stories">auto_stories</span>
+<h3 class="text-2xl font-headline font-bold mb-4">Borrowing Policy FAQ</h3>
+<p class="text-on-surface-variant group-hover:text-primary-fixed leading-relaxed mb-6">Understand our lending cycles, renewal processes, and fine-free philosophy.</p>
+<span class="text-secondary font-semibold group-hover:text-tertiary-fixed flex items-center gap-2">
+                    Review Policies <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</span>
+</div>
+<!-- App Issues -->
+<div class="md:col-span-4 bg-surface-container-low p-8 rounded-xl flex flex-col justify-center border border-outline-variant/10">
+<span class="material-symbols-outlined text-3xl text-primary mb-4" data-icon="settings_suggest">settings_suggest</span>
+<h3 class="text-xl font-headline font-bold text-primary mb-2">App Issues</h3>
+<p class="text-sm text-on-surface-variant mb-6">Encountering technical difficulties or synchronization errors?</p>
+<button class="text-primary font-bold text-xs uppercase tracking-widest border-b border-secondary w-fit pb-1 hover:border-primary transition-all">
+                    Report a bug
+                </button>
+</div>
+<!-- Visual Decorative Card -->
+<div class="md:col-span-8 relative overflow-hidden rounded-xl h-64 md:h-auto min-h-[300px]">
+<img alt="Library Interior" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 mix-blend-multiply" data-alt="atmospheric black and white photograph of a sunlit classical library with tall arched windows and rows of dark wooden bookshelves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1T7qFOHYoojXk31vWmtwMvu5BivQKWdcLP4PHpxH0HwbvXUJibnIGM3myntAgX5cB5smvHeDGp9Ei-TEpyOhUSXgUL7clb947Np4kMR0F2JzVGhaNtbgpVKp6lySfWaU9T62Fa44llh8kwO7n1Gm0txdkKnP3kZNnk7P4-vfWFhyrnMe8BJURORfMkWFXa4hqZzj5esIImJck5WtNFJ7NQJMTFqiqdVvOFKohwa6P2c4pvxOAgJAGLBSiIXLfVMw4CkV8OVSiVQks"/>
+<div class="absolute inset-0 hero-gradient opacity-60"></div>
+<div class="relative z-10 p-10 h-full flex flex-col justify-end">
+<p class="text-white text-2xl font-headline font-light italic max-w-sm">"The library is the only place where the mind can find true sanctuary."</p>
+</div>
+</div>
+</div>
+<!-- Navigation Redirects -->
+<section class="mt-24 pt-12 border-t border-outline-variant/20 flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="flex items-center gap-12">
+<a class="group flex items-center gap-3" href="#">
+<span class="material-symbols-outlined text-primary group-hover:translate-x-[-4px] transition-transform" data-icon="arrow_back">arrow_back</span>
+<div>
+<span class="block text-[10px] uppercase tracking-widest text-on-surface-variant">Return to</span>
+<span class="text-lg font-headline font-bold text-primary">Home Dashboard</span>
+</div>
+</a>
+<a class="group flex items-center gap-3" href="#">
+<span class="material-symbols-outlined text-primary group-hover:translate-x-[-4px] transition-transform" data-icon="account_circle">account_circle</span>
+<div>
+<span class="block text-[10px] uppercase tracking-widest text-on-surface-variant">Manage your</span>
+<span class="text-lg font-headline font-bold text-primary">Library Profile</span>
+</div>
+</a>
+</div>
+<div class="text-right">
+<p class="text-sm text-on-surface-variant">Standard Operating Hours</p>
+<p class="text-lg font-headline font-medium text-primary">Mon — Sat: 08:00 AM - 06:00 PM</p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<div class="md:hidden">
+<div class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-safe bg-[#ffffff] dark:bg-[#1a2744] z-50 rounded-t-xl shadow-[0px_-4px_20px_rgba(25,28,29,0.04)] border-t border-[#f1f3f5] dark:border-[#04122e]">
+<a class="flex flex-col items-center justify-center text-[#45464d] dark:text-[#adb5bd] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="home_max">home_max</span>
+<span class="text-[11px] font-medium tracking-wider font-['Inter'] uppercase mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#45464d] dark:text-[#adb5bd] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span class="text-[11px] font-medium tracking-wider font-['Inter'] uppercase mt-1">Catalog</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#45464d] dark:text-[#adb5bd] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="book_loader_revent">book</span>
+<span class="text-[11px] font-medium tracking-wider font-['Inter'] uppercase mt-1">Loans</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#775a19] dark:text-[#ffdeac] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#775a19] dark:after:bg-[#ffdeac] after:rounded-full active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support" style="font-variation-settings: 'FILL' 1;">contact_support</span>
+<span class="text-[11px] font-medium tracking-wider font-['Inter'] uppercase mt-1">Support</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#45464d] dark:text-[#adb5bd] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="person_2">person_2</span>
+<span class="text-[11px] font-medium tracking-wider font-['Inter'] uppercase mt-1">Profile</span>
+</a>
+</div>
+</div>
+</body></html>

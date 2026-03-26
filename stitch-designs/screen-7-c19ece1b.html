@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Library Catalog - The Sacred Archive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed": "#d8e2fe",
+                        "surface-dim": "#d8dadd",
+                        "surface-container-highest": "#e0e3e6",
+                        "on-primary-fixed-variant": "#3a4665",
+                        "primary-container": "#1a2744",
+                        "surface-bright": "#f7f9fc",
+                        "on-tertiary-container": "#848fa8",
+                        "on-primary-fixed": "#0d1b37",
+                        "on-secondary-container": "#755700",
+                        "outline-variant": "#c5c6ce",
+                        "on-tertiary-fixed-variant": "#3c475d",
+                        "tertiary-fixed-dim": "#bcc6e1",
+                        "secondary-fixed-dim": "#eec058",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#b9c6eb",
+                        "secondary-container": "#fece65",
+                        "secondary": "#795900",
+                        "on-secondary-fixed": "#261a00",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "background": "#f7f9fc",
+                        "tertiary": "#081327",
+                        "on-primary-container": "#828eb1",
+                        "inverse-surface": "#2d3133",
+                        "on-background": "#191c1e",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed-variant": "#5b4300",
+                        "surface-variant": "#e0e3e6",
+                        "inverse-primary": "#b9c6eb",
+                        "surface-tint": "#515e7e",
+                        "surface-container-low": "#f2f4f7",
+                        "secondary-fixed": "#ffdf9f",
+                        "surface": "#f7f9fc",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#101b2f",
+                        "tertiary-container": "#1d283d",
+                        "outline": "#75777e",
+                        "on-surface-variant": "#45464d",
+                        "primary-fixed": "#d9e2ff",
+                        "primary": "#04122e",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#eff1f4",
+                        "surface-container-high": "#e6e8eb",
+                        "surface-container": "#eceef1"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="docked w-full top-0 z-40 bg-[#f7f9fc] dark:bg-[#04122e]">
+<div class="flex items-center justify-between px-6 h-16 w-full">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 duration-200 text-[#1a2744] dark:text-[#ffdf9f] hover:bg-[#f2f4f7] dark:hover:bg-[#0d1b37] transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-inter text-lg md:text-xl font-bold tracking-tight text-[#1a2744] dark:text-[#ffdf9f]">Browse Library</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="active:scale-95 duration-200 text-slate-500 hover:bg-[#f2f4f7] p-2 rounded-full">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</div>
+<div class="bg-[#f2f4f7] dark:bg-[#0d1b37] h-[1px] w-full"></div>
+</header>
+<main class="flex-1 overflow-y-auto pb-24">
+<!-- Results Summary Section -->
+<section class="px-6 py-6 flex items-center justify-between bg-surface">
+<div class="flex flex-col">
+<span class="font-inter text-xs font-medium uppercase tracking-wider text-secondary">Catalog Archive</span>
+<h2 class="font-inter text-2xl font-bold text-on-primary-fixed">24 Books Found</h2>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-low border border-outline-variant/20 rounded-lg text-on-surface hover:bg-surface-container-high transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-sm">tune</span>
+<span class="text-sm font-semibold tracking-tight">Filter &amp; Sort</span>
+</button>
+</section>
+<!-- Library List -->
+<div class="px-6 space-y-6">
+<!-- Book Entry 1 -->
+<div class="group relative flex gap-5 bg-surface-container-lowest p-4 rounded-[20px] shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:shadow-[0px_12px_32px_rgba(25,28,30,0.08)] transition-all duration-300">
+<div class="w-24 h-36 flex-shrink-0 overflow-hidden rounded-lg shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Elegant classic book cover with gold foil lettering on deep blue leather texture in studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRIkIT9teZskz6V42ZdtdZqPQqkBg2Tep2udajpYo_VFonLzk_j-6dr9Q5sO9wQ-0DmlO-yiGC1Hjv3Ouj3iSxGSSeyPHJdE2053vdWpg0__aQWRBS8z4j_OGc2JB_I1YHO6c60XjDGMLekj3OD3RXvOZea9XexEPubJjZNP-YXDt073BJbWVjiOzwhGjHXOpQgJBP0uqI7M4UB5e27kLXXLg4Eb1Zvd1VCND0U_Ez13DzKIEtVGJ1GCdRADra1Vq2E6YrwbXMRKK0"/>
+</div>
+<div class="flex flex-col justify-center py-1">
+<span class="font-inter text-[10px] font-bold uppercase tracking-[0.1em] text-secondary mb-1">Spirit of Prophecy</span>
+<h3 class="font-inter text-lg font-bold text-on-primary-fixed leading-tight mb-1">The Great Controversy</h3>
+<p class="font-inter text-sm text-on-surface-variant font-medium mb-3">Ellen G. White</p>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-full bg-secondary-fixed px-2 py-0.5 text-[10px] font-bold text-on-secondary-fixed">AVAILABLE</span>
+<div class="h-1 w-24 bg-outline-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-3/4"></div>
+</div>
+</div>
+</div>
+<div class="absolute right-4 top-1/2 -translate-y-1/2">
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+<!-- Book Entry 2 -->
+<div class="group relative flex gap-5 bg-surface-container-lowest p-4 rounded-[20px] shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:shadow-[0px_12px_32px_rgba(25,28,30,0.08)] transition-all duration-300">
+<div class="w-24 h-36 flex-shrink-0 overflow-hidden rounded-lg shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Vintage textured book cover with ornate botanical illustrations and golden amber accents under warm light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa4EUw4YdazatsMN7JW4cF0Wd3WhkBhRVTk16xcnlML03zbKcbFjlv-XjhEU6mOAO8FLQ25mcQervahpZYcc-nMG3ZbhtEesH_1eZEEAhWtVxE1kdENJEV6WX-uTpECRGDOft0EiS4C6Iy_fYY2TKNFftyCYIXaKnYLFpLs7fQ5Y9ds64gsVoxoGl4pMkX65ncrxzeqHtGdrg4FalttbT7krIgZq6uZzTcqD89Q4AtZHaY2Ylsuv4oP3EGF4bwtWFufGJD0ACtwbGW"/>
+</div>
+<div class="flex flex-col justify-center py-1">
+<span class="font-inter text-[10px] font-bold uppercase tracking-[0.1em] text-secondary mb-1">Health &amp; Wellness</span>
+<h3 class="font-inter text-lg font-bold text-on-primary-fixed leading-tight mb-1">Ministry of Healing</h3>
+<p class="font-inter text-sm text-on-surface-variant font-medium mb-3">Ellen G. White</p>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-full bg-surface-container-highest px-2 py-0.5 text-[10px] font-bold text-on-surface-variant">ON LOAN</span>
+<div class="h-1 w-24 bg-outline-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-outline w-full"></div>
+</div>
+</div>
+</div>
+<div class="absolute right-4 top-1/2 -translate-y-1/2">
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+<!-- Book Entry 3 -->
+<div class="group relative flex gap-5 bg-surface-container-lowest p-4 rounded-[20px] shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:shadow-[0px_12px_32px_rgba(25,28,30,0.08)] transition-all duration-300">
+<div class="w-24 h-36 flex-shrink-0 overflow-hidden rounded-lg shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Minimalist book cover featuring a single gold leaf motif on a cream textured paper background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZsEilp6ZAgUf5RzobDzEBBpnRxMGloE6Hdran0iLqGTzWTE3Bkxqn-xSFZ65G910umIQTDKutU62WLr7YP6Ed05j1zKiKEzuP34CseYoUxZQnEOBK-SkwSUyB6tyws1hXfBU5Piz_-2ygmdM_83vcBytP7ikZsh1yQn7uDWi-hTU7oyiO0YorD34enXJ-oDN2MNxc-dnEPD5r6cNetb8v5K684w1vFj39QNjMW2wsbS1ViacPOmTx24LfJWZW8xBWNTijNM-QGsgb"/>
+</div>
+<div class="flex flex-col justify-center py-1">
+<span class="font-inter text-[10px] font-bold uppercase tracking-[0.1em] text-secondary mb-1">Christian Living</span>
+<h3 class="font-inter text-lg font-bold text-on-primary-fixed leading-tight mb-1">Steps to Christ</h3>
+<p class="font-inter text-sm text-on-surface-variant font-medium mb-3">Ellen G. White</p>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-full bg-secondary-fixed px-2 py-0.5 text-[10px] font-bold text-on-secondary-fixed">AVAILABLE</span>
+<div class="h-1 w-24 bg-outline-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-1/4"></div>
+</div>
+</div>
+</div>
+<div class="absolute right-4 top-1/2 -translate-y-1/2">
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+<!-- Book Entry 4 -->
+<div class="group relative flex gap-5 bg-surface-container-lowest p-4 rounded-[20px] shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:shadow-[0px_12px_32px_rgba(25,28,30,0.08)] transition-all duration-300">
+<div class="w-24 h-36 flex-shrink-0 overflow-hidden rounded-lg shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Scholarly book cover with deep navy fabric texture and elegant serif typography in silver and gold" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVbkaoNHxyVl4F2NsxitviGrerBsAUvE_nDgqawS4xBodcJWtFYrJSpj8PAYQKIz8MEvQw687CHK6eV6L0bGHlGFOxkxH1yNeFaw8YqAN7vqNUuZZtciIWXtdBFLzYnWLRpthvY-DCZ4WP4zgOGWIPRfKbja1VQU5AO5eFXGzY34VOUqAbyMFBflkZvFupC6E16akqAnQoM9RlOm8z1vjQtmpqiq-NvCPGS-t8NXO3d_ZSuMbFC_Tx1RB8glI9feJJW2tdL0Cmi8DQ"/>
+</div>
+<div class="flex flex-col justify-center py-1">
+<span class="font-inter text-[10px] font-bold uppercase tracking-[0.1em] text-secondary mb-1">Biblical Study</span>
+<h3 class="font-inter text-lg font-bold text-on-primary-fixed leading-tight mb-1">The Desire of Ages</h3>
+<p class="font-inter text-sm text-on-surface-variant font-medium mb-3">Ellen G. White</p>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-full bg-secondary-fixed px-2 py-0.5 text-[10px] font-bold text-on-secondary-fixed">AVAILABLE</span>
+<div class="h-1 w-24 bg-outline-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-1/2"></div>
+</div>
+</div>
+</div>
+<div class="absolute right-4 top-1/2 -translate-y-1/2">
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-[#1a2744]/80 dark:bg-[#04122e]/90 backdrop-blur-xl rounded-t-[20px] shadow-[0px_-12px_32px_rgba(25,28,30,0.06)]">
+<button class="flex flex-col items-center justify-center text-slate-300 dark:text-slate-400 px-4 py-1.5 hover:text-[#ffdf9f] transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">home</span>
+<span class="font-inter text-[10px] font-medium uppercase tracking-wider mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-[#ffdf9f] text-[#261a00] rounded-xl px-4 py-1.5 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-inter text-[10px] font-medium uppercase tracking-wider mt-1">Books</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-300 dark:text-slate-400 px-4 py-1.5 hover:text-[#ffdf9f] transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">import_contacts</span>
+<span class="font-inter text-[10px] font-medium uppercase tracking-wider mt-1">Loans</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-300 dark:text-slate-400 px-4 py-1.5 hover:text-[#ffdf9f] transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">person</span>
+<span class="font-inter text-[10px] font-medium uppercase tracking-wider mt-1">Profile</span>
+</button>
+</nav>
+<!-- Floating Action Button for Adding New Item (Contextual for Librarians/Admins) -->
+<button class="fixed right-6 bottom-28 w-14 h-14 rounded-full bg-primary-container text-secondary flex items-center justify-center shadow-xl hover:bg-primary transition-colors active:scale-95 duration-200 z-40">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</body></html>

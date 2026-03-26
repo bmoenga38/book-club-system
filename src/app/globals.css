@@ -7,7 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter, ui-sans-serif, system-ui, sans-serif);
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-serif: Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -48,72 +49,74 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 1rem;
+  /* Editorial Sanctuary — Vibrant Yellow Light */
+  --background: #FFFCF4;
+  --foreground: #2B2B2B;
+  --card: #FFFFFF;
+  --card-foreground: #2B2B2B;
+  --popover: #FFFFFF;
+  --popover-foreground: #2B2B2B;
+  --primary: #F7C700;
+  --primary-foreground: #3A2F1B;
+  --secondary: #F7F1DE;
+  --secondary-foreground: #3A2F1B;
+  --muted: #F7F1DE;
+  --muted-foreground: #888888;
+  --accent: #F7F1DE;
+  --accent-foreground: #3A2F1B;
+  --destructive: #C62828;
+  --border: #EDE8D5;
+  --input: #F7F1DE;
+  --ring: #D9A200;
+  --chart-1: #F7C700;
+  --chart-2: #E85A32;
+  --chart-3: #1FA774;
+  --chart-4: #D9A200;
+  --chart-5: #3A2F1B;
+  --sidebar: #3A2F1B;
+  --sidebar-foreground: #FFFCF4;
+  --sidebar-primary: #F7C700;
+  --sidebar-primary-foreground: #3A2F1B;
+  --sidebar-accent: #4A3F2B;
+  --sidebar-accent-foreground: #FFFCF4;
+  --sidebar-border: #4A3F2B;
+  --sidebar-ring: #F7C700;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Editorial Sanctuary — Cool Literary Ink Dark */
+  --background: #051029;
+  --foreground: #E0E0E0;
+  --card: #0F2444;
+  --card-foreground: #F1F1F1;
+  --popover: #0F2444;
+  --popover-foreground: #F1F1F1;
+  --primary: #F5C400;
+  --primary-foreground: #051029;
+  --secondary: #163050;
+  --secondary-foreground: #F1F1F1;
+  --muted: #0A1A3A;
+  --muted-foreground: #A4A4A4;
+  --accent: #163050;
+  --accent-foreground: #F1F1F1;
+  --destructive: #FF6B47;
+  --border: #1A3058;
+  --input: #163050;
+  --ring: #F5C400;
+  --chart-1: #F5C400;
+  --chart-2: #FF6B47;
+  --chart-3: #4ADE9F;
+  --chart-4: #A98000;
+  --chart-5: #F1F1F1;
+  --sidebar: #051029;
+  --sidebar-foreground: #F1F1F1;
+  --sidebar-primary: #F5C400;
+  --sidebar-primary-foreground: #051029;
+  --sidebar-accent: #163050;
+  --sidebar-accent-foreground: #F1F1F1;
+  --sidebar-border: #1A3058;
+  --sidebar-ring: #F5C400;
 }
 
 @layer base {
@@ -122,5 +125,45 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Space Grotesk", "Manrope", system-ui, sans-serif;
   }
+}
+
+/* Material Symbols */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* Sanctuary shadows */
+.sanctuary-shadow {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+.dark .sanctuary-shadow {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 196, 0, 0.05);
+}
+
+/* Glass nav */
+.glass-nav {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Yellow glow for dark mode focus */
+.dark .yellow-glow:focus {
+  box-shadow: 0 0 0 4px rgba(245, 196, 0, 0.25);
+}
+
+/* Progress bar glow in dark mode */
+.dark .progress-glow {
+  box-shadow: 0 0 12px rgba(245, 196, 0, 0.4);
+}
+
+/* Card lift on dark mode — subtle border glow */
+.dark .sanctuary-card {
+  border: 1px solid rgba(26, 48, 88, 0.6);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 196, 0, 0.03);
+}
+.sanctuary-card {
+  border: 1px solid rgba(237, 232, 213, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
 }

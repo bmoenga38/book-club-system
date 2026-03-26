@@ -14,10 +14,11 @@ export const credentialsProvider = Credentials({
     if (!user) return null;
 
     return {
-      id: user.id,
+      id: user._id,
       name: user.name,
       phone: user.phone,
       role: user.role as UserRole,
+      status: user.status as "pending_verification" | "active" | "suspended",
       churchId: user.churchId,
     };
   },

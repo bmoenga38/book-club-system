@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Sacred Archive - Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#f2f4f7",
+              "on-error": "#ffffff",
+              "secondary-container": "#fece65",
+              "on-primary-fixed": "#0d1b37",
+              "primary-container": "#1a2744",
+              "on-tertiary-fixed-variant": "#3c475d",
+              "on-tertiary": "#ffffff",
+              "surface-bright": "#f7f9fc",
+              "surface-tint": "#515e7e",
+              "surface-container-highest": "#e0e3e6",
+              "surface": "#f7f9fc",
+              "primary-fixed": "#d9e2ff",
+              "tertiary-fixed": "#d8e2fe",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#848fa8",
+              "error": "#ba1a1a",
+              "on-secondary-fixed-variant": "#5b4300",
+              "inverse-primary": "#b9c6eb",
+              "tertiary-fixed-dim": "#bcc6e1",
+              "error-container": "#ffdad6",
+              "surface-variant": "#e0e3e6",
+              "surface-dim": "#d8dadd",
+              "secondary-fixed": "#ffdf9f",
+              "surface-container-lowest": "#ffffff",
+              "tertiary": "#081327",
+              "on-primary-fixed-variant": "#3a4665",
+              "on-primary-container": "#828eb1",
+              "inverse-surface": "#2d3133",
+              "on-surface-variant": "#45464d",
+              "on-background": "#191c1e",
+              "on-secondary-fixed": "#261a00",
+              "surface-container-high": "#e6e8eb",
+              "inverse-on-surface": "#eff1f4",
+              "outline-variant": "#c5c6ce",
+              "on-tertiary-fixed": "#101b2f",
+              "surface-container": "#eceef1",
+              "background": "#f7f9fc",
+              "tertiary-container": "#1d283d",
+              "secondary": "#795900",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "primary": "#04122e",
+              "on-surface": "#191c1e",
+              "on-secondary-container": "#755700",
+              "secondary-fixed-dim": "#eec058",
+              "primary-fixed-dim": "#b9c6eb",
+              "outline": "#75777e"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1.25rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-[#f7f9fc] dark:bg-[#04122e] flex justify-between items-center px-6 py-4 w-full sticky top-0 z-30">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#1a2744] dark:text-[#ffdf9f]" data-icon="menu_book">menu_book</span>
+<h1 class="font-bold text-2xl tracking-tight text-[#1a2744] dark:text-[#ffdf9f]">The Sacred Archive</h1>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="Church Administrator" class="w-full h-full object-cover" data-alt="Close up portrait of a professional church administrator in a modern office setting with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAkwZiEoq3DzzFvzhHOSLZKWAr_RamyJ60JZrphYYUAR0sXCoTdc_h4GDxu-XFWgaWwe-Hk1lOpwrgUsElvfWoQfbqasrqdmnL513i1X8eTacWPTpsP6Y0a79pEOKPANXWoGbNgveBS7PIy3lvcKDGr4XgY12p2keZ9XhbWC1dgtQlH0xuHpFQd5TJty69iO3HTDZktHNkb0pBQDepCjkctpIhWqn99GBm1yX-zgFg810CUT9yEgmaHlTgUEvZqPz_NbmTw3SUO1IA"/>
+</div>
+</header>
+<main class="px-6 py-4 space-y-8">
+<!-- Welcome Section -->
+<section>
+<p class="font-medium text-xs uppercase tracking-widest text-secondary mb-1">Sanctuary Admin</p>
+<h2 class="text-3xl font-bold text-on-primary-fixed tracking-tight">Dashboard</h2>
+</section>
+<!-- Stats Grid (Top Section) -->
+<section class="grid grid-cols-2 gap-4">
+<!-- Card 1: Pending Requests -->
+<div class="relative overflow-hidden rounded-[16px] p-5 shadow-[0px_12px_32px_rgba(25,28,30,0.06)] bg-gradient-to-br from-[#1a2744] to-[#04122e] text-white">
+<span class="material-symbols-outlined absolute top-2 right-2 text-6xl opacity-20" data-icon="hourglass_empty">hourglass_empty</span>
+<div class="relative z-10">
+<p class="text-[10px] font-medium uppercase tracking-wider opacity-80">Pending Requests</p>
+<p class="text-4xl font-bold mt-2">3</p>
+</div>
+</div>
+<!-- Card 2: Active Loans -->
+<div class="relative overflow-hidden rounded-[16px] p-5 shadow-[0px_12px_32px_rgba(25,28,30,0.06)] bg-gradient-to-br from-[#2e7d32] to-[#1b5e20] text-white">
+<span class="material-symbols-outlined absolute top-2 right-2 text-6xl opacity-20" data-icon="sync">sync</span>
+<div class="relative z-10">
+<p class="text-[10px] font-medium uppercase tracking-wider opacity-80">Active Loans</p>
+<p class="text-4xl font-bold mt-2">12</p>
+</div>
+</div>
+<!-- Card 3: Overdue -->
+<div class="relative overflow-hidden rounded-[16px] p-5 shadow-[0px_12px_32px_rgba(25,28,30,0.06)] bg-gradient-to-br from-[#c62828] to-[#b71c1c] text-white">
+<span class="material-symbols-outlined absolute top-2 right-2 text-6xl opacity-20" data-icon="priority_high">priority_high</span>
+<div class="relative z-10">
+<p class="text-[10px] font-medium uppercase tracking-wider opacity-80">Overdue</p>
+<p class="text-4xl font-bold mt-2">5</p>
+</div>
+</div>
+<!-- Card 4: New Members -->
+<div class="relative overflow-hidden rounded-[16px] p-5 shadow-[0px_12px_32px_rgba(25,28,30,0.06)] bg-gradient-to-br from-[#ff8f00] to-[#ef6c00] text-white">
+<span class="material-symbols-outlined absolute top-2 right-2 text-6xl opacity-20" data-icon="person_add">person_add</span>
+<div class="relative z-10">
+<p class="text-[10px] font-medium uppercase tracking-wider opacity-80">New Members</p>
+<p class="text-4xl font-bold mt-2">8</p>
+</div>
+</div>
+</section>
+<!-- Quick Actions Section -->
+<section class="space-y-4">
+<header class="flex justify-between items-center">
+<h3 class="text-[10px] font-medium uppercase tracking-widest text-slate-500">QUICK ACTIONS</h3>
+<div class="h-[1px] flex-1 ml-4 bg-surface-container-highest"></div>
+</header>
+<div class="grid grid-cols-2 gap-4">
+<!-- Action 1: Issue Book -->
+<button class="flex flex-col items-center justify-center p-6 bg-surface-container-lowest border-2 border-dashed border-primary-container/30 rounded-[14px] hover:bg-surface-container-low transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-primary-container text-3xl mb-3 group-hover:scale-110 transition-transform" data-icon="add_shopping_cart">add_shopping_cart</span>
+<span class="text-sm font-semibold text-primary-container">Issue Book</span>
+</button>
+<!-- Action 2: Return Book -->
+<button class="flex flex-col items-center justify-center p-6 bg-surface-container-lowest border-2 border-dashed border-primary-container/30 rounded-[14px] hover:bg-surface-container-low transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-primary-container text-3xl mb-3 group-hover:scale-110 transition-transform" data-icon="assignment_return">assignment_return</span>
+<span class="text-sm font-semibold text-primary-container">Return Book</span>
+</button>
+<!-- Action 3: Reports -->
+<button class="flex flex-col items-center justify-center p-6 bg-surface-container-lowest border-2 border-dashed border-primary-container/30 rounded-[14px] hover:bg-surface-container-low transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-primary-container text-3xl mb-3 group-hover:scale-110 transition-transform" data-icon="assessment">assessment</span>
+<span class="text-sm font-semibold text-primary-container">Reports</span>
+</button>
+<!-- Action 4: Members -->
+<button class="flex flex-col items-center justify-center p-6 bg-surface-container-lowest border-2 border-dashed border-primary-container/30 rounded-[14px] hover:bg-surface-container-low transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-primary-container text-3xl mb-3 group-hover:scale-110 transition-transform" data-icon="group">group</span>
+<span class="text-sm font-semibold text-primary-container">Members</span>
+</button>
+</div>
+</section>
+<!-- Tonal Layering Section: Recent Activity -->
+<section class="bg-surface-container-low rounded-xl p-6 space-y-4">
+<h3 class="text-sm font-bold text-on-primary-fixed">Recent Archive Activity</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-4 bg-surface-container-lowest p-4 rounded-xl">
+<div class="w-10 h-14 bg-surface-container-highest rounded flex-shrink-0 overflow-hidden">
+<img alt="Book Cover" class="w-full h-full object-cover" data-alt="Close up of an antique leather bound book with gold leaf lettering on the spine resting on a wooden table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmI-62wxldfqTPf7lylpILxOuT05Kz066wI6gba71gCAIG-zpR7mXhksHiEJS0dYUU3UCp_nCItBdYpsgVm7s-pI4KIOTlQwyXAn6uI2SxbuTB9ckZLH_Eas03DALR4Z_F-ctG0YWf6DrGs7Cocw4Hre-ldchJw55QwOkWty2IdGg-b3jhz-hro7CMmut4QZ3gznZLj7y9T_Drwv726_HN-EizNo3Ydp-IQJE3F73sFore7IuhXkZNZcGFNNt4gXlnOLuhfmYvL3wf"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-semibold text-primary">The Path of Grace</p>
+<p class="text-xs text-slate-500">Issued to John Doe • 2m ago</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="arrow_forward_ios">arrow_forward_ios</span>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-4 rounded-xl">
+<div class="w-10 h-14 bg-surface-container-highest rounded flex-shrink-0 overflow-hidden">
+<img alt="Book Cover" class="w-full h-full object-cover" data-alt="Macro photography of an ancient religious scroll with intricate calligraphy and weathered parchment texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRy2a9fwtOks6iTs3uHBHwtYb-D4sLfsnFtf7VZg3sJlPdy2AMiom93JtRGqeQLFECQ6NIH6j5fOnTHjqz9IUOSvkmGUEqnw_ZbO9LLWC28Qq0FBCDqx1SHK2Kr6sPzU32ExNxjZsO4-khQbUTU5TYFE5acCoC99SRSJ4dF3yGD7lXkPhtFfbAwBHWECUXEu5KBbtImQn80sxA02cEUxcAbY6TOA2wtCsdUvl6-cf8EjqrmsUMbB2F5TImK9M7vDY9O45-e3l9c97s"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-semibold text-primary">Chronicles of the Elders</p>
+<p class="text-xs text-slate-500">Returned by Sarah W. • 1h ago</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="arrow_forward_ios">arrow_forward_ios</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-white/80 dark:bg-[#04122e]/80 backdrop-blur-xl rounded-t-[20px] shadow-[0px_-12px_32px_rgba(25,28,30,0.06)]">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-2 hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="text-[10px] font-medium uppercase tracking-tighter Inter">Home</span>
+</a>
+<!-- Loans -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-2 hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="import_export">import_export</span>
+<span class="text-[10px] font-medium uppercase tracking-tighter Inter">Loans</span>
+</a>
+<!-- Reports -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-2 hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="analytics">analytics</span>
+<span class="text-[10px] font-medium uppercase tracking-tighter Inter">Reports</span>
+</a>
+<!-- Admin (Active) -->
+<a class="flex flex-col items-center justify-center bg-[#f2f4f7] dark:bg-[#1a2744] text-[#1a2744] dark:text-[#ffdf9f] rounded-xl px-4 py-2 scale-98 active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="text-[10px] font-medium uppercase tracking-tighter Inter">Admin</span>
+</a>
+</nav>
+</body></html>

@@ -8,11 +8,14 @@ export enum UserRole {
   SUPER_ADMIN = "super_admin",
 }
 
+export type UserStatus = "pending_verification" | "active" | "suspended";
+
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
       role: UserRole;
+      status: UserStatus;
       churchId: string;
       name: string;
       phone: string;
@@ -21,6 +24,7 @@ declare module "next-auth" {
 
   interface User {
     role: UserRole;
+    status: UserStatus;
     churchId: string;
     phone: string;
   }
@@ -30,6 +34,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     userId: string;
     role: UserRole;
+    status: UserStatus;
     churchId: string;
   }
 }

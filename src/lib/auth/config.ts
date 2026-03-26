@@ -1,11 +1,11 @@
-import "server-only";
 import NextAuth from "next-auth";
 import { credentialsProvider } from "./credentials";
-import type { UserRole } from "@/types/auth";
+import type { UserRole, UserStatus } from "@/types/auth";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [credentialsProvider],
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
+  trustHost: true,
   pages: {
     signIn: "/login",
   },
@@ -14,6 +14,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.userId = user.id!;
         token.role = (user as { role: UserRole }).role;
+        token.status = (user as { status: UserStatus }).status;
         token.churchId = (user as { churchId: string }).churchId;
       }
       return token;
@@ -21,6 +22,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     session({ session, token }) {
       session.user.id = token.userId as string;
       session.user.role = token.role as UserRole;
+      session.user.status = token.status as UserStatus;
       session.user.churchId = token.churchId as string;
       return session;
     },

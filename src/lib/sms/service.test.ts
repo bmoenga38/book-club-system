@@ -11,9 +11,8 @@ describe("sendSms", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.stubGlobal("fetch", vi.fn());
-    process.env.SMSLEOPARD_API_KEY = "test-key";
-    process.env.SMSLEOPARD_API_SECRET = "test-secret";
-    process.env.SMSLEOPARD_SENDER_ID = "BOOKCLUB";
+    process.env.SMSLEOPARD_ACCESS_TOKEN = "dGVzdC1rZXk6dGVzdC1zZWNyZXQ=";
+    process.env.SMSLEOPARD_SENDER_ID = "SMS_Leopard";
   });
 
   afterEach(() => {
@@ -39,6 +38,7 @@ describe("sendSms", () => {
         method: "POST",
         headers: expect.objectContaining({
           "Content-Type": "application/json",
+          Authorization: "Basic dGVzdC1rZXk6dGVzdC1zZWNyZXQ=",
         }),
       })
     );
@@ -66,7 +66,7 @@ describe("sendSms", () => {
   });
 
   it("returns failure when env vars are missing", async () => {
-    delete process.env.SMSLEOPARD_API_KEY;
+    delete process.env.SMSLEOPARD_ACCESS_TOKEN;
 
     const result = await sendSms("+254712345678", "Test message");
 
@@ -81,9 +81,8 @@ describe("sendOtp", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.stubGlobal("fetch", vi.fn());
-    process.env.SMSLEOPARD_API_KEY = "test-key";
-    process.env.SMSLEOPARD_API_SECRET = "test-secret";
-    process.env.SMSLEOPARD_SENDER_ID = "BOOKCLUB";
+    process.env.SMSLEOPARD_ACCESS_TOKEN = "dGVzdC1rZXk6dGVzdC1zZWNyZXQ=";
+    process.env.SMSLEOPARD_SENDER_ID = "SMS_Leopard";
   });
 
   afterEach(() => {

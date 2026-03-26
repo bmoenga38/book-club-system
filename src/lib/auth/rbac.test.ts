@@ -30,6 +30,7 @@ describe("isPublicRoute", () => {
     expect(isPublicRoute("/books")).toBe(false);
     expect(isPublicRoute("/admin/dashboard")).toBe(false);
     expect(isPublicRoute("/profile")).toBe(false);
+    expect(isPublicRoute("/borrowings")).toBe(false);
   });
 });
 
@@ -40,12 +41,17 @@ describe("hasRouteAccess", () => {
     it("can access general app routes", () => {
       expect(hasRouteAccess(role, "/books")).toBe(true);
       expect(hasRouteAccess(role, "/profile")).toBe(true);
-      expect(hasRouteAccess(role, "/borrowing")).toBe(true);
+      expect(hasRouteAccess(role, "/borrowings")).toBe(true);
+      expect(hasRouteAccess(role, "/books/some-id")).toBe(true);
     });
 
     it("cannot access admin routes", () => {
+      expect(hasRouteAccess(role, "/admin")).toBe(false);
       expect(hasRouteAccess(role, "/admin/dashboard")).toBe(false);
       expect(hasRouteAccess(role, "/admin/members")).toBe(false);
+      expect(hasRouteAccess(role, "/admin/issue")).toBe(false);
+      expect(hasRouteAccess(role, "/admin/returns")).toBe(false);
+      expect(hasRouteAccess(role, "/admin/books/new")).toBe(false);
     });
 
     it("cannot access super admin routes", () => {
@@ -59,15 +65,25 @@ describe("hasRouteAccess", () => {
 
     it("can access general app routes", () => {
       expect(hasRouteAccess(role, "/books")).toBe(true);
+      expect(hasRouteAccess(role, "/profile")).toBe(true);
+      expect(hasRouteAccess(role, "/borrowings")).toBe(true);
     });
 
-    it("cannot access admin routes", () => {
-      expect(hasRouteAccess(role, "/admin/dashboard")).toBe(false);
+    it("can access issue, returns, and book management", () => {
+      expect(hasRouteAccess(role, "/admin/issue")).toBe(true);
+      expect(hasRouteAccess(role, "/admin/returns")).toBe(true);
+      expect(hasRouteAccess(role, "/admin/books/new")).toBe(true);
+      expect(hasRouteAccess(role, "/admin")).toBe(true);
+    });
+
+    it("cannot access church admin routes", () => {
       expect(hasRouteAccess(role, "/admin/members")).toBe(false);
+      expect(hasRouteAccess(role, "/admin/dashboard")).toBe(false);
     });
 
     it("cannot access super admin routes", () => {
       expect(hasRouteAccess(role, "/admin/churches")).toBe(false);
+      expect(hasRouteAccess(role, "/admin/roles")).toBe(false);
     });
   });
 
@@ -79,8 +95,13 @@ describe("hasRouteAccess", () => {
     });
 
     it("can access admin routes", () => {
+      expect(hasRouteAccess(role, "/admin")).toBe(true);
       expect(hasRouteAccess(role, "/admin/dashboard")).toBe(true);
       expect(hasRouteAccess(role, "/admin/members")).toBe(true);
+      expect(hasRouteAccess(role, "/admin/issue")).toBe(true);
+      expect(hasRouteAccess(role, "/admin/returns")).toBe(true);
+      expect(hasRouteAccess(role, "/admin/books/new")).toBe(true);
+      expect(hasRouteAccess(role, "/admin/reports")).toBe(true);
     });
 
     it("cannot access super admin routes", () => {
@@ -94,10 +115,14 @@ describe("hasRouteAccess", () => {
 
     it("can access all routes", () => {
       expect(hasRouteAccess(role, "/books")).toBe(true);
+      expect(hasRouteAccess(role, "/admin")).toBe(true);
       expect(hasRouteAccess(role, "/admin/dashboard")).toBe(true);
       expect(hasRouteAccess(role, "/admin/members")).toBe(true);
       expect(hasRouteAccess(role, "/admin/churches")).toBe(true);
       expect(hasRouteAccess(role, "/admin/roles")).toBe(true);
+      expect(hasRouteAccess(role, "/admin/issue")).toBe(true);
+      expect(hasRouteAccess(role, "/admin/returns")).toBe(true);
+      expect(hasRouteAccess(role, "/admin/reports")).toBe(true);
     });
   });
 
@@ -105,6 +130,7 @@ describe("hasRouteAccess", () => {
     it("allows any role to access public routes", () => {
       expect(hasRouteAccess(UserRole.MEMBER, "/login")).toBe(true);
       expect(hasRouteAccess(UserRole.MEMBER, "/api/auth/session")).toBe(true);
+      expect(hasRouteAccess(UserRole.MEMBER, "/")).toBe(true);
     });
   });
 });

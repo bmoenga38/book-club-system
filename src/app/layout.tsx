@@ -1,21 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { ConvexClientProvider } from "@/providers/ConvexClientProvider";
 import { SyncProvider } from "@/providers/SyncProvider";
 import { Toaster } from "sonner";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  title: "Book Club",
-  description: "SDA Church Library Management System",
+  title: "Blessed Hope Library",
+  description: "Blessed Hope SDA Church Library Management System",
   manifest: "/manifest.json",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1a365d",
+  themeColor: "#F7C700",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -28,15 +26,27 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider>
-          <AuthProvider>
-            <SyncProvider>
-              {children}
-              <Toaster />
-            </SyncProvider>
-          </AuthProvider>
-        </ThemeProvider>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body suppressHydrationWarning>
+        <ConvexClientProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              <SyncProvider>
+                {children}
+                <Toaster />
+              </SyncProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </ConvexClientProvider>
       </body>
     </html>
   );

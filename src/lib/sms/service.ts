@@ -9,11 +9,10 @@ export async function sendSms(
   phone: string,
   message: string
 ): Promise<ActionResult<{ messageId: string }>> {
-  const apiKey = process.env.SMSLEOPARD_API_KEY;
-  const apiSecret = process.env.SMSLEOPARD_API_SECRET;
+  const accessToken = process.env.SMSLEOPARD_ACCESS_TOKEN;
   const senderId = process.env.SMSLEOPARD_SENDER_ID;
 
-  if (!apiKey || !apiSecret || !senderId) {
+  if (!accessToken || !senderId) {
     return {
       success: false,
       error: {
@@ -28,7 +27,7 @@ export async function sendSms(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Basic ${Buffer.from(apiKey + ":" + apiSecret).toString("base64")}`,
+        Authorization: `Basic ${accessToken}`,
       },
       body: JSON.stringify({
         source: senderId,

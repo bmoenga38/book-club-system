@@ -1,14 +1,11 @@
 import "server-only";
 
-import { db } from "@/lib/db";
-import { otpCodes } from "@/lib/db/schema";
-import { eq, desc, gt, and } from "drizzle-orm";
+import { getConvexClient } from "@/lib/convex";
+import { api } from "../../../../convex/_generated/api";
 import { hash, compare } from "bcryptjs";
 import crypto from "crypto";
 
 const OTP_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
-const OTP_MAX_ATTEMPTS = 3;
-const OTP_LOCKOUT_MS = 15 * 60 * 1000; // 15 minutes
 const OTP_CODE_LENGTH = 6;
 const BCRYPT_ROUNDS = 10;
 
@@ -20,11 +17,11 @@ export async function createOtp(phone: string): Promise<string> {
 
   const hashedCode = await hash(code, BCRYPT_ROUNDS);
 
-  await db.insert(otpCodes).values({
+  const client = getConvexClient();
+  await client.mutation(api.otp.create, {
     phone,
     hashedCode,
-    expiresAt: new Date(Date.now() + OTP_EXPIRY_MS),
-    attempts: 0,
+    expiresAt: Date.now() + OTP_EXPIRY_MS,
   });
 
   return code;
@@ -34,16 +31,10 @@ export async function verifyOtp(
   phone: string,
   code: string
 ): Promise<{ valid: boolean; reason?: string }> {
-  const now = new Date();
+  const now = Date.now();
+  const client = getConvexClient();
 
-  const records = await db
-    .select()
-    .from(otpCodes)
-    .where(and(eq(otpCodes.phone, phone), gt(otpCodes.expiresAt, now)))
-    .orderBy(desc(otpCodes.createdAt))
-    .limit(1);
-
-  const record = records[0];
+  const record = await client.query(api.otp.getLatestValid, { phone, now });
 
   if (!record) {
     return { valid: false, reason: "OTP expired or not found" };
@@ -57,30 +48,19 @@ export async function verifyOtp(
 
   if (!isMatch) {
     const newAttempts = record.attempts + 1;
+    await client.mutation(api.otp.incrementAttempts, {
+      id: record._id,
+      newAttempts,
+    });
 
-    if (newAttempts >= OTP_MAX_ATTEMPTS) {
-      await db
-        .update(otpCodes)
-        .set({
-          attempts: newAttempts,
-          lockedUntil: new Date(Date.now() + OTP_LOCKOUT_MS),
-        })
-        .where(eq(otpCodes.id, record.id));
+    if (newAttempts >= 3) {
       return { valid: false, reason: "Too many attempts. Please wait 15 minutes." };
     }
-
-    await db
-      .update(otpCodes)
-      .set({ attempts: newAttempts })
-      .where(eq(otpCodes.id, record.id));
     return { valid: false, reason: "Invalid OTP" };
   }
 
   // Success — invalidate this OTP
-  await db
-    .update(otpCodes)
-    .set({ expiresAt: now })
-    .where(eq(otpCodes.id, record.id));
+  await client.mutation(api.otp.invalidate, { id: record._id, now });
 
   return { valid: true };
 }
@@ -88,16 +68,10 @@ export async function verifyOtp(
 export async function checkRateLimit(
   phone: string
 ): Promise<{ locked: boolean; reason?: string }> {
-  const now = new Date();
+  const now = Date.now();
+  const client = getConvexClient();
 
-  const records = await db
-    .select()
-    .from(otpCodes)
-    .where(eq(otpCodes.phone, phone))
-    .orderBy(desc(otpCodes.createdAt))
-    .limit(1);
-
-  const record = records[0];
+  const record = await client.query(api.otp.getLatest, { phone });
 
   if (!record) {
     return { locked: false };

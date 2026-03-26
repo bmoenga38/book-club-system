@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#191c1e",
+              "on-secondary": "#ffffff",
+              "secondary-fixed": "#ffdf9f",
+              "inverse-surface": "#2d3133",
+              "surface-container-highest": "#e0e3e6",
+              "on-tertiary-fixed-variant": "#3c475d",
+              "primary-fixed-dim": "#b9c6eb",
+              "surface": "#f7f9fc",
+              "on-secondary-fixed-variant": "#5b4300",
+              "tertiary-fixed-dim": "#bcc6e1",
+              "on-secondary-fixed": "#261a00",
+              "on-primary-fixed": "#0d1b37",
+              "on-error": "#ffffff",
+              "tertiary-container": "#1d283d",
+              "surface-bright": "#f7f9fc",
+              "outline-variant": "#c5c6ce",
+              "background": "#f7f9fc",
+              "surface-container-low": "#f2f4f7",
+              "on-primary-fixed-variant": "#3a4665",
+              "secondary-container": "#fece65",
+              "primary": "#04122e",
+              "tertiary": "#081327",
+              "error-container": "#ffdad6",
+              "inverse-primary": "#b9c6eb",
+              "primary-container": "#1a2744",
+              "secondary-fixed-dim": "#eec058",
+              "on-tertiary-fixed": "#101b2f",
+              "inverse-on-surface": "#eff1f4",
+              "secondary": "#795900",
+              "outline": "#75777e",
+              "on-primary": "#ffffff",
+              "on-surface-variant": "#45464d",
+              "on-error-container": "#93000a",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-container": "#755700",
+              "error": "#ba1a1a",
+              "surface-dim": "#d8dadd",
+              "on-tertiary": "#ffffff",
+              "surface-variant": "#e0e3e6",
+              "surface-container-high": "#e6e8eb",
+              "on-tertiary-container": "#848fa8",
+              "on-background": "#191c1e",
+              "surface-tint": "#515e7e",
+              "surface-container": "#eceef1",
+              "primary-fixed": "#d9e2ff",
+              "tertiary-fixed": "#d8e2fe",
+              "on-primary-container": "#828eb1"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- Top Navigation Bar -->
+<nav class="flex justify-between items-center w-full px-6 py-4 bg-gradient-to-b from-[#f7f9fc] to-[#f2f4f7] dark:from-[#04122e] dark:to-[#1a2744] sticky top-0 z-50">
+<div class="flex items-center gap-2 active:scale-95 duration-200 cursor-pointer">
+<span class="material-symbols-outlined text-[#1a2744] dark:text-[#f7f9fc]">arrow_back</span>
+<span class="font-['Inter'] font-bold text-2xl leading-tight text-[#1a2744] dark:text-[#f7f9fc]">Library</span>
+</div>
+<div class="active:scale-95 duration-200 cursor-pointer">
+<span class="material-symbols-outlined text-[#1a2744] dark:text-[#f7f9fc]">local_library</span>
+</div>
+</nav>
+<main class="px-6 space-y-8 mt-4">
+<!-- Hero Section -->
+<section class="relative h-[240px] w-full bg-gradient-to-br from-primary-container to-primary overflow-hidden flex flex-col justify-end p-8 rounded-[40px] shadow-lg">
+<!-- Decorative Circles -->
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
+<div class="absolute top-20 -left-10 w-32 h-32 bg-secondary-fixed/10 rounded-full blur-xl"></div>
+<!-- Category Tag -->
+<div class="absolute top-6 left-6 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/10">
+<span class="text-white text-[10px] font-bold tracking-widest uppercase">Devotional</span>
+</div>
+<!-- Content -->
+<div class="relative z-10 space-y-1">
+<h1 class="text-white text-3xl font-bold tracking-tight">Steps to Christ</h1>
+<p class="text-on-primary-container font-medium text-sm">by Ellen G. White</p>
+</div>
+<!-- Floating Decoration Image -->
+<div class="absolute right-6 bottom-0 w-32 h-44 transform translate-y-4 rotate-6 shadow-2xl rounded-lg overflow-hidden border-2 border-white/20">
+<img class="w-full h-full object-cover" data-alt="Close-up of a vintage book cover with gold embossed lettering on a deep blue textured fabric background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWlSPO5ll73TD6OoeFdEYAjknDI_E0z02eU7iKVUxcjEUlEKRG4qdce124UF6jkKldljW1rSl-HRqwDlrfPI2Ph5RydrVMOu4e_x-E-7JqHvHcr8_7p2DFMoCClID_xnOpJ2Y5S5wDKl1RIEN67Wctu3xgIVx2he2DaQfbh_9xPBHt_u2jMEOsAyYNO12mh-HDOgJ97mOdAZxJ9D_lrHO_Ny-U24iyHfU8-PrIE7jUS1z2EQi27eETEeoPKf1hrz-uvGf46iZqTDfp"/>
+</div>
+</section>
+<!-- Availability Bar -->
+<div class="flex items-center gap-3 bg-[#e8f5e9] px-5 py-4 rounded-xl">
+<div class="bg-green-600 rounded-full p-1 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-green-800 font-semibold text-sm">3 of 4 copies available</span>
+</div>
+<!-- About Section -->
+<section class="space-y-4">
+<div class="flex justify-between items-end">
+<h2 class="text-on-primary-fixed text-2xl font-bold">About the book</h2>
+<span class="text-secondary font-bold text-[10px] tracking-widest uppercase">Overview</span>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-[20px] shadow-[0px_12px_32px_rgba(25,28,30,0.06)]">
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                    A profound exploration of the path to spiritual fulfillment, this classic work details the practical steps one can take to cultivate a closer relationship with the Divine. From repentance to prayer, each chapter offers timeless wisdom for the seeking heart.
+                </p>
+</div>
+</section>
+<!-- Details Grid -->
+<section class="space-y-4">
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-5 rounded-[20px]">
+<span class="text-secondary text-[10px] font-bold tracking-widest uppercase block mb-1">Author</span>
+<p class="text-on-surface font-semibold text-sm">Ellen G. White</p>
+</div>
+<div class="bg-surface-container-low p-5 rounded-[20px]">
+<span class="text-secondary text-[10px] font-bold tracking-widest uppercase block mb-1">Copies</span>
+<p class="text-on-surface font-semibold text-sm">4 Total</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-5 rounded-[20px] flex justify-between items-center">
+<div>
+<span class="text-secondary text-[10px] font-bold tracking-widest uppercase block mb-1">ISBN Identifier</span>
+<p class="text-on-surface font-semibold text-sm">978-1234567890</p>
+</div>
+<span class="material-symbols-outlined text-outline">content_copy</span>
+</div>
+</section>
+<!-- Primary CTA -->
+<button class="w-full h-[52px] bg-secondary hover:opacity-90 transition-all active:scale-[0.98] rounded-xl flex items-center justify-center gap-3 text-white font-bold shadow-lg shadow-secondary/20">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">book_2</span>
+<span>Request to Borrow</span>
+</button>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-8 pt-4 bg-white/80 dark:bg-[#1a2744]/80 backdrop-blur-xl rounded-t-[20px] shadow-[0px_-12px_32px_rgba(25,28,30,0.06)]">
+<div class="flex flex-col items-center justify-center text-[#1a2744]/60 dark:text-[#f7f9fc]/60 px-4 py-1.5 active:scale-90 transition-transform cursor-pointer">
+<span class="material-symbols-outlined">book_2</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wider uppercase mt-1">Library</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#1a2744]/60 dark:text-[#f7f9fc]/60 px-4 py-1.5 active:scale-90 transition-transform cursor-pointer">
+<span class="material-symbols-outlined">search</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wider uppercase mt-1">Search</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#1a2744]/60 dark:text-[#f7f9fc]/60 px-4 py-1.5 active:scale-90 transition-transform cursor-pointer">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wider uppercase mt-1">Borrowed</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#1a2744]/60 dark:text-[#f7f9fc]/60 px-4 py-1.5 active:scale-90 transition-transform cursor-pointer">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wider uppercase mt-1">Profile</span>
+</div>
+</nav>
+</body></html>

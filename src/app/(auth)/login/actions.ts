@@ -6,6 +6,7 @@ import { sendOtpSchema } from "./schemas";
 import { checkRateLimit, createOtp } from "@/lib/db/queries/otpQueries";
 import { getUserByPhone } from "@/lib/db/queries/userQueries";
 import { sendOtp as sendOtpSms } from "@/lib/sms/service";
+import { signIn } from "@/lib/auth/config";
 
 export async function sendOtp(
   data: { phone: string }
@@ -58,4 +59,55 @@ export async function sendOtp(
   }
 
   return { success: true, data: { isExistingUser } };
+}
+
+// Quick login for returning users — no OTP needed
+export async function quickLogin(
+  data: { phone: string }
+): Promise<ActionResult<{ redirectTo: string }>> {
+  const parsed = sendOtpSchema.safeParse(data);
+
+  if (!parsed.success) {
+    const firstError = parsed.error.issues[0];
+    return {
+      success: false,
+      error: {
+        code: ErrorCode.VALIDATION_ERROR,
+        message: firstError?.message ?? "Invalid input",
+        field: firstError?.path[0]?.toString(),
+      },
+    };
+  }
+
+  const { phone } = parsed.data;
+
+  // Check if user exists
+  const existingUser = await getUserByPhone(phone);
+  if (!existingUser) {
+    return {
+      success: false,
+      error: {
+        code: ErrorCode.NOT_FOUND,
+        message: "No account found with this number. Please register first using OTP.",
+      },
+    };
+  }
+
+  // Sign in directly
+  try {
+    await signIn("credentials", {
+      phone,
+      redirect: false,
+    });
+  } catch {
+    return {
+      success: false,
+      error: {
+        code: ErrorCode.UNAUTHORIZED,
+        message: "Login failed. Please try again.",
+      },
+    };
+  }
+
+  return { success: true, data: { redirectTo: "/" } };
 }

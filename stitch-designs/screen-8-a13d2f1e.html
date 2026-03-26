@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Blessed Hope - Digital Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#e7e8e9",
+              "surface-container-lowest": "#ffffff",
+              "secondary-container": "#fed488",
+              "on-background": "#191c1d",
+              "on-tertiary-fixed-variant": "#5d420d",
+              "primary-fixed-dim": "#b9c6eb",
+              "on-secondary": "#ffffff",
+              "background": "#f8f9fa",
+              "surface-bright": "#f8f9fa",
+              "on-primary-fixed": "#0d1b37",
+              "on-secondary-fixed": "#261900",
+              "primary-fixed": "#d9e2ff",
+              "tertiary-container": "#372400",
+              "surface-tint": "#515e7e",
+              "outline": "#75777e",
+              "tertiary-fixed": "#ffdeac",
+              "on-primary": "#ffffff",
+              "secondary-fixed": "#ffdea5",
+              "outline-variant": "#c5c6ce",
+              "on-secondary-container": "#785a1a",
+              "on-secondary-fixed-variant": "#5d4201",
+              "on-tertiary-container": "#ac894e",
+              "secondary-fixed-dim": "#e9c176",
+              "surface-dim": "#d9dadb",
+              "primary-container": "#1a2744",
+              "on-primary-fixed-variant": "#3a4665",
+              "surface-container": "#edeeef",
+              "on-error-container": "#93000a",
+              "on-tertiary": "#ffffff",
+              "surface-container-highest": "#e1e3e4",
+              "tertiary": "#1d1100",
+              "error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#e9c080",
+              "on-surface": "#191c1d",
+              "inverse-primary": "#b9c6eb",
+              "surface": "#f8f9fa",
+              "on-surface-variant": "#45464d",
+              "inverse-surface": "#2e3132",
+              "secondary": "#775a19",
+              "surface-variant": "#e1e3e4",
+              "on-primary-container": "#828eb1",
+              "primary": "#04122e",
+              "surface-container-low": "#f3f4f5",
+              "on-error": "#ffffff",
+              "error": "#ba1a1a",
+              "inverse-on-surface": "#f0f1f2",
+              "on-tertiary-fixed": "#281900"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .cathedral-gradient {
+            background: linear-gradient(135deg, #04122e 0%, #1a2744 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#f8f9fa] bg-opacity-90 backdrop-blur-xl">
+<div class="flex items-center justify-between px-6 h-16 w-full max-w-screen-xl mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-2xl" data-icon="menu_book">menu_book</span>
+<h1 class="text-sm font-bold tracking-[0.1em] uppercase text-[#775a19]">BLESSED HOPE</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[11px] font-semibold tracking-wider uppercase text-[#775a19] transition-colors duration-300" href="#">Home</a>
+<a class="text-[11px] font-semibold tracking-wider uppercase text-[#45464d] hover:text-[#775a19] transition-colors duration-300" href="#">Catalog</a>
+<a class="text-[11px] font-semibold tracking-wider uppercase text-[#45464d] hover:text-[#775a19] transition-colors duration-300" href="#">Loans</a>
+<a class="text-[11px] font-semibold tracking-wider uppercase text-[#45464d] hover:text-[#775a19] transition-colors duration-300" href="#">Admin</a>
+</nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" data-icon="search">search</span>
+<div class="w-8 h-8 rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a professional man with a kind expression in a soft-lit architectural office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtNJqFdTtYNCd1scf9JOjyTNrxwYnrMURtvlLj2QqzqXz6jGji76hS8r6lwofDRmuGAMSWLaoNKFDw5LAj1O2VxVQeC0ogdWbfDglTOltlW0M-CHyCp2Qnf39oqrZFmL9IXo5wdG-XnyxGhIG2KFTZauUWCTjenC94bxHyRp7kOt2awCrPXI-iP8IogbxlbL50VJnf7Jq2qx9inbgX2JLUEQv1v6hRSJs96jZBFxqEpw40h6ZXkklbXlt5E1uaERKfcyqw25CI7jdo"/>
+</div>
+</div>
+</div>
+<div class="bg-[#f1f3f5] h-[1px] w-full"></div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-screen-xl mx-auto">
+<!-- Welcome Section -->
+<section class="mb-16">
+<p class="text-[0.75rem] font-medium tracking-[0.1em] uppercase text-secondary mb-2">The Digital Sanctuary</p>
+<h2 class="text-[3.5rem] font-extrabold tracking-[-0.02em] leading-tight text-primary">
+                Welcome back, <br/>Brian.
+            </h2>
+</section>
+<!-- Hero: Today's Spotlight -->
+<section class="relative mb-24 grid grid-cols-1 md:grid-cols-12 gap-0 overflow-hidden rounded-xl bg-primary-container shadow-2xl">
+<div class="md:col-span-7 p-10 md:p-16 flex flex-col justify-center cathedral-gradient text-white">
+<span class="inline-block px-3 py-1 bg-secondary text-[10px] font-bold tracking-widest uppercase rounded mb-6 w-fit">Today's Spotlight</span>
+<h3 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">The Path of Stillness</h3>
+<p class="text-on-primary-container text-lg mb-10 max-w-md leading-relaxed">Discover the profound beauty of silence in an age of noise. A modern guide to finding peace within the sanctuary of the mind.</p>
+<div class="flex flex-wrap gap-4">
+<button class="px-8 py-3 cathedral-gradient border border-secondary/30 rounded-md text-white font-semibold flex items-center gap-2 hover:bg-secondary transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="auto_stories">auto_stories</span>
+                        Read Now
+                    </button>
+<button class="px-8 py-3 bg-transparent border border-white/20 rounded-md text-white font-semibold hover:bg-white/10 transition-all">
+                        View Details
+                    </button>
+</div>
+</div>
+<div class="md:col-span-5 h-[400px] md:h-auto relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="A premium leather-bound spiritual book lying on a dark wooden table with soft morning light hitting the gold-leaf pages" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAe20Wf0w-LcCOyxZ65gYmgaBujBLBi8NuNasYm9HktKLsNp3i25dhBCbHK4lohpInGDTngrVohY5S9azL4-rh3BXdP9qi20oAPKxelqyiPlWjpEnKB4m3Jl9djReFhyTxYEX-V9r0ZeoMYCiN49JsrFecr7jRSNy3Nis5T5TyAJpRGMcY59zWgFdGyMix7J0Q8UkZ3TFWdVtDAIqZ1F9w6Ws7sA-rQxoRGHdLk5BfrxQHfG6qbvDqDvRfpZX-em8PSnSMxNvTietS"/>
+<div class="absolute inset-0 bg-gradient-to-r from-primary-container/40 to-transparent md:block hidden"></div>
+</div>
+</section>
+<!-- Quick Links: Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+<!-- Browse Books -->
+<a class="group relative p-8 bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(25,28,29,0.04)] hover:shadow-[0px_12px_40px_rgba(25,28,29,0.08)] transition-all flex flex-col items-start gap-6 border-b-2 border-transparent hover:border-secondary" href="#">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl" data-icon="library_books">library_books</span>
+</div>
+<div>
+<h4 class="text-xl font-bold mb-2">Browse Books</h4>
+<p class="text-on-surface-variant text-sm">Explore our curated collection of spiritual and classic literature.</p>
+</div>
+<span class="material-symbols-outlined text-secondary ml-auto opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<!-- My Borrowings -->
+<a class="group relative p-8 bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(25,28,29,0.04)] hover:shadow-[0px_12px_40px_rgba(25,28,29,0.08)] transition-all flex flex-col items-start gap-6 border-b-2 border-transparent hover:border-secondary" href="#">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl" data-icon="history_edu">history_edu</span>
+</div>
+<div>
+<h4 class="text-xl font-bold mb-2">My Borrowings</h4>
+<p class="text-on-surface-variant text-sm">Manage your active loans, track due dates, and view history.</p>
+</div>
+<span class="material-symbols-outlined text-secondary ml-auto opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<!-- My Profile -->
+<a class="group relative p-8 bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(25,28,29,0.04)] hover:shadow-[0px_12px_40px_rgba(25,28,29,0.08)] transition-all flex flex-col items-start gap-6 border-b-2 border-transparent hover:border-secondary" href="#">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl" data-icon="account_circle">account_circle</span>
+</div>
+<div>
+<h4 class="text-xl font-bold mb-2">My Profile</h4>
+<p class="text-on-surface-variant text-sm">Update your preferences, reading lists, and account settings.</p>
+</div>
+<span class="material-symbols-outlined text-secondary ml-auto opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</section>
+<!-- Recent Arrivals -->
+<section class="mb-24">
+<div class="flex items-end justify-between mb-8">
+<div>
+<p class="text-[0.75rem] font-medium tracking-[0.1em] uppercase text-secondary mb-1">Curation</p>
+<h3 class="text-3xl font-bold">New arrivals in the sanctuary</h3>
+</div>
+<a class="text-sm font-semibold text-primary underline decoration-secondary decoration-2 underline-offset-4 hover:text-secondary transition-colors" href="#">View All</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<!-- Book Card 1 -->
+<div class="flex flex-col gap-4 group">
+<div class="aspect-[3/4] rounded-sm overflow-hidden bg-surface-container-high shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close-up of an old vintage book cover with gold lettering on a red fabric texture in a dark library" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkYEhon6gqjHsvYDoRtqmOStWO7QujarcGZBr9hYHaPG1sLhgMeAGWy4OoUEDYCitWr4XivMnvRad3Ke6_dS0AwscFnZ6kmjX60wLKTu_XLMcO-3ePv-vD9f9gOXRVcq2Ds--2VGxc4UmVZGRd-2pTOeTfKmVHDcgXzefgP8Ud2IlrP0zebDuOu_saixYFzYfMSnKArLu1hPrm4ORtGvY1wXfdnT4b1mPzxhgXAi6hcEE9uYZMIGrdjU0VbcyWZ28EzOMx4ojp-82F"/>
+</div>
+<div>
+<h5 class="font-bold text-on-surface line-clamp-1">Ancient Wisdom</h5>
+<p class="text-on-surface-variant text-sm">Dr. Elias Thorne</p>
+</div>
+</div>
+<!-- Book Card 2 -->
+<div class="flex flex-col gap-4 group">
+<div class="aspect-[3/4] rounded-sm overflow-hidden bg-surface-container-high shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A pile of modern hardcover books stacked neatly in a minimalist bright white room with soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsavL1px-W4b8kG8LAjkYRD8eYYpbRKjLP8ZqpsD0vRp7nuFK22UTteTiu_tmGHecQe3rr3RrYSIgAFW_GKkRGGyzPvV2NiwmO4O9kgcVMcP-pg7SSAfIaYsuYZw6OJR7uG2eoTeKF0mJBD1Cnl_BFyfc-Upc2F3PhgaWqZdjGb8wYiwJyY5l8SQdTW2UDg00nnxyicidxR10s_JH_CNZkSMBcBAnrBC3XBzOjYvr_Q-jgJNZ2hg3qr5DrISVox00ohR-UUj4r1l00"/>
+</div>
+<div>
+<h5 class="font-bold text-on-surface line-clamp-1">The Morning Light</h5>
+<p class="text-on-surface-variant text-sm">Sarah Jenkins</p>
+</div>
+</div>
+<!-- Book Card 3 -->
+<div class="flex flex-col gap-4 group">
+<div class="aspect-[3/4] rounded-sm overflow-hidden bg-surface-container-high shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Macro photo of an open book showing textured paper and elegant typography in a sunlit reading nook" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_FOsG2JTUJ_xiqPPGnlaEEC29xmEkbd7GcoR3_70y7GzsOh9XG9f56vGgvCl02wBO6XDNMyHeF7LSN1TuAtzc636Jgrwe9CG-P1c_OhkQ_CgsyLKr2mfvprF1GM70GKbz7OcB1L4priDYPwU1ZMiQDUNoNaYNjEDdPIH7Us5leJhbtjtEH4l4Cp2cRM91XEu3Eq2YvEarBS9maygQP-BmN4Edm_IOk1ys7iEjFd0SWmhDTUfymt-GyaM6yp4m6Le2nrRSVIKJDLZZ"/>
+</div>
+<div>
+<h5 class="font-bold text-on-surface line-clamp-1">Sacred Spaces</h5>
+<p class="text-on-surface-variant text-sm">Thomas More</p>
+</div>
+</div>
+<!-- Book Card 4 -->
+<div class="flex flex-col gap-4 group">
+<div class="aspect-[3/4] rounded-sm overflow-hidden bg-surface-container-high shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A blue leather book resting on a stone surface in a cathedral-like setting with ethereal light rays" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDitBG7TckPdRAnK0hGwlVSXLDh5hAfCqflY5Vz74uyL1EwDt9dHO9yyEYRCWcqhCBLd59TmmSi4ui2UJbOm8KktF8QVqQo9feQ5wDfjLkKhgn39WpeMivL7p46o8h3oqP7AE6CKWGKlEHC1aIm5hQb6fMY1QLj189HNFgG4hwlw4d_aG8sTCTtsuXjrnkK8xeEm9kH9tX6L9f7FLVYIFRbgqnSfsYPjxCUXds0GDONjPHH9oMzc0GoanomrlqeVqdtq4hzFPjvFHUH"/>
+</div>
+<div>
+<h5 class="font-bold text-on-surface line-clamp-1">Grace Abounding</h5>
+<p class="text-on-surface-variant text-sm">C.L. Lewis</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full bg-[#ffffff] md:hidden flex justify-around items-center h-20 px-4 pb-safe shadow-[0px_-4px_20px_rgba(25,28,29,0.04)] z-50 rounded-t-xl border-t border-[#f1f3f5]">
+<a class="flex flex-col items-center justify-center text-[#775a19] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#775a19] after:rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="home_max">home_max</span>
+<span class="text-[11px] font-medium tracking-wider uppercase mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#45464d] hover:bg-[#f8f9fa] transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span class="text-[11px] font-medium tracking-wider uppercase mt-1">Catalog</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#45464d] hover:bg-[#f8f9fa] transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="book_loader_revent">book</span>
+<span class="text-[11px] font-medium tracking-wider uppercase mt-1">Loans</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#45464d] hover:bg-[#f8f9fa] transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="person_2">person_2</span>
+<span class="text-[11px] font-medium tracking-wider uppercase mt-1">Profile</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#45464d] hover:bg-[#f8f9fa] transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="text-[11px] font-medium tracking-wider uppercase mt-1">Admin</span>
+</a>
+</nav>
+<!-- Floating Action Button: Contextual -->
+<button class="fixed bottom-24 right-6 md:bottom-12 md:right-12 w-14 h-14 bg-secondary text-white rounded-xl shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined text-2xl" data-icon="add">add</span>
+</button>
+</body></html>

@@ -20,7 +20,12 @@ const ROUTE_PERMISSIONS: { pattern: RegExp; minRole: UserRole }[] = [
   // Church Admin (Evangelist) and above
   { pattern: /^\/(app\/)?admin\/members/, minRole: UserRole.CHURCH_ADMIN },
   { pattern: /^\/(app\/)?admin\/dashboard/, minRole: UserRole.CHURCH_ADMIN },
-  { pattern: /^\/(app\/)?admin/, minRole: UserRole.CHURCH_ADMIN },
+
+  // Assistant Librarian and above (issue, returns, book management)
+  { pattern: /^\/(app\/)?admin\/issue/, minRole: UserRole.ASSISTANT_LIBRARIAN },
+  { pattern: /^\/(app\/)?admin\/returns/, minRole: UserRole.ASSISTANT_LIBRARIAN },
+  { pattern: /^\/(app\/)?admin\/books/, minRole: UserRole.ASSISTANT_LIBRARIAN },
+  { pattern: /^\/(app\/)?admin/, minRole: UserRole.ASSISTANT_LIBRARIAN },
 
   // All authenticated users (Member and above)
   { pattern: /^\/(app\/)?/, minRole: UserRole.MEMBER },
