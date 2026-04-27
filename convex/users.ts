@@ -183,6 +183,79 @@ export const listByChurch = query({
   },
 });
 
+export const getMemberDetail = query({
+  args: { id: v.id("users") },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.id);
+    if (!user) return null;
+
+    // Get all borrowings for this user
+    const borrowings = await ctx.db
+      .query("borrowings")
+      .withIndex("by_member", (q) => q.eq("memberId", args.id))
+      .order("desc")
+      .collect();
+
+    // Enrich with book titles
+    const enrichedBorrowings = await Promise.all(
+      borrowings.map(async (b) => {
+        const book = await ctx.db.get(b.bookId);
+        return {
+          _id: b._id,
+          bookTitle: book?.title ?? "Unknown",
+          bookAuthor: book?.author ?? "",
+          status: b.status,
+          requestedAt: b.requestedAt,
+          issuedAt: b.issuedAt,
+          dueDate: b.dueDate,
+          returnedAt: b.returnedAt,
+          declineNote: b.declineNote,
+        };
+      })
+    );
+
+    // Calculate XP
+    const xpEvents = await ctx.db
+      .query("xpEvents")
+      .withIndex("by_user", (q) => q.eq("userId", args.id))
+      .collect();
+    const earnedXp = xpEvents.reduce((sum, e) => sum + e.points, 0);
+    const totalXp = earnedXp + (user.xpBalance ?? 0);
+
+    // Overdue count (all time)
+    const overdueCount = borrowings.filter(
+      (b) =>
+        b.status === "overdue" ||
+        (b.status === "returned" && b.returnedAt && b.dueDate && b.returnedAt > b.dueDate)
+    ).length;
+
+    // Overdues in last 6 months
+    const sixMonthsAgo = Date.now() - 180 * 24 * 60 * 60 * 1000;
+    const recentOverdueCount = borrowings.filter(
+      (b) =>
+        b.requestedAt > sixMonthsAgo &&
+        (b.status === "overdue" ||
+          (b.status === "returned" && b.returnedAt && b.dueDate && b.returnedAt > b.dueDate))
+    ).length;
+
+    // Church name
+    const church = await ctx.db.get(user.churchId);
+
+    return {
+      user: {
+        ...user,
+        churchName: church?.name ?? "Unknown",
+      },
+      borrowings: enrichedBorrowings,
+      totalXp,
+      overdueCount,
+      recentOverdueCount,
+      consecutiveOnTime: user.consecutiveOnTime ?? 0,
+      trustStatus: user.trustStatus ?? "new",
+    };
+  },
+});
+
 export const listPendingVerification = query({
   args: { churchId: v.id("churches") },
   handler: async (ctx, args) => {

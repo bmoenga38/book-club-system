@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 import withSerwistInit from "@serwist/next";
 
 const withSerwist = withSerwistInit({
@@ -7,6 +8,22 @@ const withSerwist = withSerwistInit({
   disable: process.env.NODE_ENV === "development",
 });
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  turbopack: {},
+};
 
-export default withSerwist(nextConfig);
+const sentryEnabled = !!process.env.NEXT_PUBLIC_SENTRY_DSN;
+
+const finalConfig = sentryEnabled
+  ? withSentryConfig(withSerwist(nextConfig), {
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      widenClientFileUpload: true,
+      tunnelRoute: "/monitoring",
+      silent: !process.env.CI,
+      disableSourceMapUpload: !process.env.SENTRY_AUTH_TOKEN,
+    })
+  : withSerwist(nextConfig);
+
+export default finalConfig;

@@ -13,40 +13,162 @@ import {
   BarChart3,
   MessageSquare,
 } from "lucide-react";
+import { useCallback } from "react";
 
 interface BoardReportsProps {
   churchId: string;
 }
 
+const FONT = { fontFamily: "'Space Grotesk', system-ui, sans-serif" };
+
+function downloadFile(content: string, filename: string, type: string) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function escCsv(val: string | number | undefined): string {
+  const s = String(val ?? "");
+  return s.includes(",") || s.includes('"') || s.includes("\n")
+    ? `"${s.replace(/"/g, '""')}"`
+    : s;
+}
+
 export function BoardReports({ churchId }: BoardReportsProps) {
   const cid = churchId as Id<"churches">;
   const summary = useQuery(api.reports.getMonthlySummary, { churchId: cid });
-  const popular = useQuery(api.reports.getPopularBooks, { churchId: cid, limit: 5 });
-  const underutilized = useQuery(api.reports.getUnderutilizedBooks, { churchId: cid, limit: 5 });
+  const popular = useQuery(api.reports.getPopularBooks, { churchId: cid, limit: 10 });
+  const underutilized = useQuery(api.reports.getUnderutilizedBooks, { churchId: cid, limit: 10 });
   const inventory = useQuery(api.reports.getInventoryStatus, { churchId: cid });
   const smsSpend = useQuery(api.reports.getSmsSpend, { churchId: cid });
 
   const isLoading = !summary || !popular || !inventory;
 
+  const buildCsvContent = useCallback(() => {
+    if (!summary || !popular || !inventory) return "";
+
+    const date = new Date().toLocaleDateString("en-KE", { year: "numeric", month: "long", day: "numeric" });
+    const lines: string[] = [];
+
+    // Header
+    lines.push("Blessed Hope SDA Church - Library Board Report");
+    lines.push(`Generated: ${date}`);
+    lines.push("");
+
+    // Monthly Summary
+    lines.push("=== MONTHLY SUMMARY (Last 30 Days) ===");
+    lines.push("Metric,Value");
+    lines.push(`Total Borrows,${summary.totalBorrows}`);
+    lines.push(`Returned,${summary.returned}`);
+    lines.push(`On-Time Rate,${summary.onTimeRate}%`);
+    lines.push(`Active Borrowers,${summary.uniqueBorrowers}`);
+    lines.push(`Currently Overdue,${summary.currentOverdue}`);
+    lines.push(`Active Loans,${summary.activeLoans}`);
+    lines.push("");
+
+    // Popular Books
+    lines.push("=== MOST POPULAR BOOKS ===");
+    lines.push("Rank,Title,Author,Borrow Count");
+    popular.forEach((b, i) => {
+      lines.push(`${i + 1},${escCsv(b.title)},${escCsv(b.author)},${b.borrowCount}`);
+    });
+    lines.push("");
+
+    // Underutilized
+    if (underutilized && underutilized.length > 0) {
+      lines.push("=== LEAST BORROWED BOOKS ===");
+      lines.push("Title,Author,Borrow Count");
+      underutilized.forEach((b) => {
+        lines.push(`${escCsv(b.title)},${escCsv(b.author)},${b.borrowCount}`);
+      });
+      lines.push("");
+    }
+
+    // Inventory
+    lines.push("=== INVENTORY STATUS ===");
+    lines.push("Metric,Value");
+    lines.push(`Unique Titles,${inventory.totalBooks}`);
+    lines.push(`Total Copies,${inventory.totalCopies}`);
+    lines.push(`Available,${inventory.availableCopies}`);
+    lines.push(`Borrowed,${inventory.borrowedCopies}`);
+    lines.push("");
+
+    if (inventory.categories.length > 0) {
+      lines.push("Category,Book Count");
+      inventory.categories.forEach((c) => {
+        lines.push(`${escCsv(c.name)},${c.count}`);
+      });
+      lines.push("");
+    }
+
+    // SMS
+    if (smsSpend) {
+      lines.push("=== SMS USAGE (Last 30 Days) ===");
+      lines.push("Metric,Value");
+      lines.push(`Messages Sent,${smsSpend.totalSent}`);
+      lines.push(`Estimated Cost (KES),${smsSpend.estimatedCostKes}`);
+    }
+
+    return lines.join("\n");
+  }, [summary, popular, underutilized, inventory, smsSpend]);
+
+  const handleExportCsv = () => {
+    const csv = buildCsvContent();
+    if (!csv) return;
+    const month = new Date().toISOString().slice(0, 7);
+    downloadFile(csv, `board-report-${month}.csv`, "text/csv;charset=utf-8");
+  };
+
+  const handleExportExcel = () => {
+    const csv = buildCsvContent();
+    if (!csv) return;
+    // Excel-compatible TSV with BOM for proper UTF-8 detection
+    const tsv = "\uFEFF" + csv.replace(/,/g, "\t");
+    const month = new Date().toISOString().slice(0, 7);
+    downloadFile(tsv, `board-report-${month}.xls`, "application/vnd.ms-excel;charset=utf-8");
+  };
+
   if (isLoading) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 px-4 sm:px-6 pt-6">
         {[1, 2, 3].map((i) => (
-          <Card key={i} className="animate-pulse">
-            <CardContent className="h-32 pt-6" />
-          </Card>
+          <div key={i} className="h-32 rounded-2xl bg-muted animate-pulse" />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
+      {/* Export Buttons */}
+      <div className="flex items-center gap-3">
+        <button
+          onClick={handleExportCsv}
+          className="flex items-center gap-2 px-4 py-2.5 bg-[#1a2744] dark:bg-[#F5C400] text-white dark:text-[#051029] rounded-xl text-sm font-bold active:scale-95 transition-transform hover:bg-[#04122e] dark:hover:bg-[#D9A200]"
+        >
+          <span className="material-symbols-outlined text-base">download</span>
+          Export CSV
+        </button>
+        <button
+          onClick={handleExportExcel}
+          className="flex items-center gap-2 px-4 py-2.5 bg-[#ffdf9f] dark:bg-[#F5C400]/20 text-[#261a00] dark:text-[#F5C400] rounded-xl text-sm font-bold active:scale-95 transition-transform hover:bg-[#eec058] dark:hover:bg-[#F5C400]/30 border border-[#795900]/20 dark:border-[#F5C400]/20"
+        >
+          <span className="material-symbols-outlined text-base">table_chart</span>
+          Export Excel
+        </button>
+      </div>
+
       {/* Monthly Summary */}
-      <Card>
+      <Card className="rounded-2xl border-border shadow-sm">
         <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2 text-base">
-            <BarChart3 className="h-4 w-4" />
+          <CardTitle className="flex items-center gap-2 text-base" style={FONT}>
+            <BarChart3 className="h-4 w-4 text-[#795900] dark:text-[#F5C400]" />
             Monthly Summary (Last 30 Days)
           </CardTitle>
         </CardHeader>
@@ -84,10 +206,10 @@ export function BoardReports({ churchId }: BoardReportsProps) {
       </Card>
 
       {/* Popular Books */}
-      <Card>
+      <Card className="rounded-2xl border-border shadow-sm">
         <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2 text-base">
-            <TrendingUp className="h-4 w-4" />
+          <CardTitle className="flex items-center gap-2 text-base" style={FONT}>
+            <TrendingUp className="h-4 w-4 text-[#795900] dark:text-[#F5C400]" />
             Most Popular Books
           </CardTitle>
         </CardHeader>
@@ -99,7 +221,7 @@ export function BoardReports({ churchId }: BoardReportsProps) {
               {popular.map((book, i) => (
                 <div key={book.bookId} className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
-                    <span className="w-5 text-center text-muted-foreground">{i + 1}</span>
+                    <span className="w-5 text-center text-muted-foreground font-bold">{i + 1}</span>
                     <div>
                       <p className="font-medium">{book.title}</p>
                       <p className="text-xs text-muted-foreground">{book.author}</p>
@@ -115,10 +237,10 @@ export function BoardReports({ churchId }: BoardReportsProps) {
 
       {/* Underutilized Books */}
       {underutilized && underutilized.length > 0 && (
-        <Card>
+        <Card className="rounded-2xl border-border shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <AlertTriangle className="h-4 w-4" />
+            <CardTitle className="flex items-center gap-2 text-base" style={FONT}>
+              <AlertTriangle className="h-4 w-4 text-[#795900] dark:text-[#F5C400]" />
               Least Borrowed Books
             </CardTitle>
           </CardHeader>
@@ -141,10 +263,10 @@ export function BoardReports({ churchId }: BoardReportsProps) {
       )}
 
       {/* Inventory Status */}
-      <Card>
+      <Card className="rounded-2xl border-border shadow-sm">
         <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2 text-base">
-            <BookOpen className="h-4 w-4" />
+          <CardTitle className="flex items-center gap-2 text-base" style={FONT}>
+            <BookOpen className="h-4 w-4 text-[#795900] dark:text-[#F5C400]" />
             Inventory Status
           </CardTitle>
         </CardHeader>
@@ -185,10 +307,10 @@ export function BoardReports({ churchId }: BoardReportsProps) {
 
       {/* SMS Spend */}
       {smsSpend && (
-        <Card>
+        <Card className="rounded-2xl border-border shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <MessageSquare className="h-4 w-4" />
+            <CardTitle className="flex items-center gap-2 text-base" style={FONT}>
+              <MessageSquare className="h-4 w-4 text-[#795900] dark:text-[#F5C400]" />
               SMS Usage (Last 30 Days)
             </CardTitle>
           </CardHeader>

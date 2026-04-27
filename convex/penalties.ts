@@ -124,8 +124,9 @@ export const processEscalations = internalMutation({
       }
     }
 
-    // Record all escalations and SMS logs
-    for (const sms of smsBatch) {
+    // Record all escalations, SMS logs, and schedule actual SMS sends
+    for (let i = 0; i < smsBatch.length; i++) {
+      const sms = smsBatch[i];
       await ctx.db.insert("penaltyEscalations", {
         borrowingId: sms.borrowingId as any,
         memberId: sms.memberId as any,
@@ -142,6 +143,12 @@ export const processEscalations = internalMutation({
         borrowingId: sms.borrowingId as any,
         churchId: sms.churchId as any,
         sentAt: now,
+      });
+
+      // Stagger SMS sends 1s apart to avoid burst limits
+      await ctx.scheduler.runAfter(i * 1000, internal.smsActions.sendSms, {
+        phone: sms.phone,
+        message: sms.message,
       });
     }
 

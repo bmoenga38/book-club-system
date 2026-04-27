@@ -6,7 +6,8 @@ import type { Id } from "../../../convex/_generated/dataModel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Check, X, Users } from "lucide-react";
+import { Check, X, Users, ChevronRight } from "lucide-react";
+import Link from "next/link";
 import { toast } from "sonner";
 import { useState } from "react";
 
@@ -119,17 +120,22 @@ export function MemberManagement({ churchId }: MemberManagementProps) {
           </div>
         ) : (
           activeMembers.map((member) => (
-            <Card key={member._id}>
-              <CardContent className="flex items-center justify-between pt-4">
-                <div>
-                  <p className="font-medium">{member.name}</p>
-                  <p className="text-sm text-muted-foreground">{member.phone}</p>
-                </div>
-                <Badge variant="outline" className="capitalize">
-                  {member.role.replace("_", " ")}
-                </Badge>
-              </CardContent>
-            </Card>
+            <Link key={member._id} href={`/admin/members/${member._id}`}>
+              <Card className="transition-colors hover:bg-muted/50">
+                <CardContent className="flex items-center justify-between pt-4">
+                  <div>
+                    <p className="font-medium">{member.name}</p>
+                    <p className="text-sm text-muted-foreground">{member.phone}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="capitalize">
+                      {member.role.replace("_", " ")}
+                    </Badge>
+                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))
         )}
       </div>

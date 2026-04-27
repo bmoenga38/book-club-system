@@ -7,6 +7,7 @@ import { checkRateLimit, createOtp } from "@/lib/db/queries/otpQueries";
 import { getUserByPhone } from "@/lib/db/queries/userQueries";
 import { sendOtp as sendOtpSms } from "@/lib/sms/service";
 import { signIn } from "@/lib/auth/config";
+import { checkLoginRateLimit, resetLoginRateLimit } from "@/lib/auth/rateLimit";
 
 export async function sendOtp(
   data: { phone: string }
@@ -27,7 +28,19 @@ export async function sendOtp(
 
   const { phone } = parsed.data;
 
-  // Check rate limit
+  // IP-level rate limit (in-memory, 5 attempts per 15 min)
+  const ipLimit = checkLoginRateLimit(`otp:${phone}`);
+  if (!ipLimit.allowed) {
+    return {
+      success: false,
+      error: {
+        code: ErrorCode.RATE_LIMITED,
+        message: ipLimit.message ?? "Too many attempts. Please wait.",
+      },
+    };
+  }
+
+  // Convex-level rate limit (persistent, 3 OTP attempts per code)
   const rateCheck = await checkRateLimit(phone);
   if (rateCheck.locked) {
     return {
@@ -81,6 +94,18 @@ export async function quickLogin(
 
   const { phone } = parsed.data;
 
+  // Rate limit quick login (5 attempts per 15 min per phone)
+  const limit = checkLoginRateLimit(`quick:${phone}`);
+  if (!limit.allowed) {
+    return {
+      success: false,
+      error: {
+        code: ErrorCode.RATE_LIMITED,
+        message: limit.message ?? "Too many login attempts. Please wait.",
+      },
+    };
+  }
+
   // Check if user exists
   const existingUser = await getUserByPhone(phone);
   if (!existingUser) {
@@ -108,6 +133,9 @@ export async function quickLogin(
       },
     };
   }
+
+  // Reset rate limit on successful login
+  resetLoginRateLimit(`quick:${phone}`);
 
   return { success: true, data: { redirectTo: "/" } };
 }

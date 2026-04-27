@@ -17,6 +17,64 @@ const adminLinks = [
   { href: "/admin", label: "Admin", icon: "admin_panel_settings" },
 ];
 
+function NavLink({
+  href,
+  label,
+  icon,
+  active,
+  variant,
+}: {
+  href: string;
+  label: string;
+  icon: string;
+  active: boolean;
+  variant: "bottom" | "sidebar";
+}) {
+  if (variant === "bottom") {
+    return (
+      <Link
+        href={href}
+        className={cn(
+          "flex flex-col items-center justify-center min-w-[48px] px-3 py-1.5 transition-all duration-150 active:scale-90 rounded-xl",
+          active
+            ? "bg-[#ffdf9f] dark:bg-[#F5C400] text-[#261a00] dark:text-[#051029]"
+            : "text-[#1A2744] dark:text-[#A4A4A4] hover:text-[#795900] dark:hover:text-[#F5C400]"
+        )}
+      >
+        <span
+          className="material-symbols-outlined text-[22px]"
+          style={active ? { fontVariationSettings: "'FILL' 1" } : undefined}
+        >
+          {icon}
+        </span>
+        <span className="text-[9px] font-semibold uppercase tracking-[0.04rem] mt-0.5">
+          {label}
+        </span>
+      </Link>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-150",
+        active
+          ? "bg-[#ffdf9f] dark:bg-[#F5C400] text-[#261a00] dark:text-[#051029]"
+          : "text-[#1A2744] dark:text-[#A4A4A4] hover:bg-muted/50 hover:text-[#795900] dark:hover:text-[#F5C400]"
+      )}
+    >
+      <span
+        className="material-symbols-outlined text-[22px]"
+        style={active ? { fontVariationSettings: "'FILL' 1" } : undefined}
+      >
+        {icon}
+      </span>
+      <span className="text-sm font-semibold">{label}</span>
+    </Link>
+  );
+}
+
 export function AppNav() {
   const pathname = usePathname();
   const { data: session } = useSession();
@@ -29,32 +87,28 @@ export function AppNav() {
   const links = isAdmin ? [...memberLinks, ...adminLinks] : memberLinks;
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 sm:px-4 pb-[env(safe-area-inset-bottom,8px)] pt-2 bg-white/90 dark:bg-[#0F2444]/90 backdrop-blur-xl shadow-[0px_-4px_20px_rgba(0,0,0,0.06)] dark:shadow-[0px_-4px_20px_rgba(0,0,0,0.3)] border-t border-border/50">
-      {links.map(({ href, label, icon }) => {
-        const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
-        return (
-          <Link
-            key={href}
-            href={href}
-            className={cn(
-              "flex flex-col items-center justify-center min-w-[48px] px-3 py-1.5 transition-all duration-150 active:scale-90 rounded-xl",
-              active
-                ? "bg-[#ffdf9f] dark:bg-[#F5C400] text-[#261a00] dark:text-[#051029]"
-                : "text-[#1A2744] dark:text-[#A4A4A4] hover:text-[#795900] dark:hover:text-[#F5C400]"
-            )}
-          >
-            <span
-              className="material-symbols-outlined text-[22px]"
-              style={active ? { fontVariationSettings: "'FILL' 1" } : undefined}
-            >
-              {icon}
-            </span>
-            <span className="text-[9px] font-semibold uppercase tracking-[0.04rem] mt-0.5">
-              {label}
-            </span>
-          </Link>
-        );
-      })}
-    </nav>
+    <>
+      {/* Mobile bottom nav */}
+      <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 sm:px-4 pb-[env(safe-area-inset-bottom,8px)] pt-2 bg-white/90 dark:bg-[#0F2444]/90 backdrop-blur-xl shadow-[0px_-4px_20px_rgba(0,0,0,0.06)] dark:shadow-[0px_-4px_20px_rgba(0,0,0,0.3)] border-t border-border/50">
+        {links.map(({ href, label, icon }) => {
+          const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+          return (
+            <NavLink key={href} href={href} label={label} icon={icon} active={active} variant="bottom" />
+          );
+        })}
+      </nav>
+
+      {/* Desktop sidebar nav */}
+      <aside className="hidden md:flex fixed left-0 top-0 h-full w-56 z-40 flex-col pt-16 bg-white/95 dark:bg-[#0F2444]/95 backdrop-blur-xl border-r border-border/50">
+        <div className="flex flex-col gap-1.5 px-3 py-4">
+          {links.map(({ href, label, icon }) => {
+            const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+            return (
+              <NavLink key={href} href={href} label={label} icon={icon} active={active} variant="sidebar" />
+            );
+          })}
+        </div>
+      </aside>
+    </>
   );
 }

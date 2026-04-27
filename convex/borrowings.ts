@@ -33,6 +33,38 @@ export const listByMember = query({
   },
 });
 
+export const listRecentActivity = query({
+  args: { churchId: v.id("churches"), limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const max = args.limit ?? 10;
+    const allBorrowings = await ctx.db
+      .query("borrowings")
+      .filter((q) => q.eq(q.field("churchId"), args.churchId))
+      .order("desc")
+      .collect();
+
+    const recent = allBorrowings.slice(0, max);
+
+    const enriched = await Promise.all(
+      recent.map(async (b) => {
+        const book = await ctx.db.get(b.bookId);
+        const member = await ctx.db.get(b.memberId);
+        return {
+          _id: b._id,
+          status: b.status,
+          bookTitle: book?.title ?? "Unknown",
+          memberName: member?.name ?? "Unknown",
+          createdAt: b._creationTime,
+          issuedAt: b.issuedAt,
+          returnedAt: b.returnedAt,
+          dueDate: b.dueDate,
+        };
+      })
+    );
+    return enriched;
+  },
+});
+
 export const listPendingByChurch = query({
   args: { churchId: v.id("churches") },
   handler: async (ctx, args) => {
@@ -232,6 +264,16 @@ export const approve = mutation({
       status: "approved",
       approvedAt: Date.now(),
     });
+
+    // Send approval SMS to member
+    const member = await ctx.db.get(borrowing.memberId);
+    if (member?.phone && book) {
+      const title = book.title.length > 60 ? book.title.slice(0, 57) + "..." : book.title;
+      await ctx.scheduler.runAfter(0, internal.smsActions.sendSms, {
+        phone: member.phone,
+        message: `Your request for '${title}' has been approved. Coordinate pickup.`,
+      });
+    }
   },
 });
 
@@ -249,6 +291,18 @@ export const decline = mutation({
       status: "declined",
       declineNote: args.note,
     });
+
+    // Send decline SMS to member
+    const member = await ctx.db.get(borrowing.memberId);
+    const book = await ctx.db.get(borrowing.bookId);
+    if (member?.phone) {
+      const title = book ? (book.title.length > 40 ? book.title.slice(0, 37) + "..." : book.title) : "the book";
+      const note = args.note ? ` ${args.note.slice(0, 50)}` : "";
+      await ctx.scheduler.runAfter(0, internal.smsActions.sendSms, {
+        phone: member.phone,
+        message: `Your request for '${title}' was declined.${note}`,
+      });
+    }
   },
 });
 

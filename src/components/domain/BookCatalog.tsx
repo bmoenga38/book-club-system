@@ -1,11 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import type { Id } from "../../../convex/_generated/dataModel";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { UserRole } from "@/types/auth";
+import { useOnlineStatus } from "@/lib/offline/useOnlineStatus";
+import {
+  cacheBooks,
+  getCachedBooks,
+  getCachedCategories,
+  type CachedBook,
+} from "@/lib/offline/catalogCache";
+import { FilterSortModal } from "./FilterSortModal";
 
 interface BookCatalogProps {
   churchId: string;
@@ -31,19 +40,103 @@ function getCover(title: string) {
 
 const FONT = { fontFamily: "'Space Grotesk', system-ui, sans-serif" };
 
+type SortBy = "title" | "author" | "availability" | "publicationDate";
+
 export function BookCatalog({ churchId, userRole }: BookCatalogProps) {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>();
   const [showFilters, setShowFilters] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [sortBy, setSortBy] = useState<SortBy>("title");
+  const [availableOnly, setAvailableOnly] = useState(false);
+  const isOnline = useOnlineStatus();
 
-  const books = useQuery(api.books.list, {
+  // Offline cache state
+  const [cachedBooks, setCachedBooks] = useState<CachedBook[] | null>(null);
+  const [cachedCategories, setCachedCategories] = useState<string[] | null>(null);
+  const [isOfflineMode, setIsOfflineMode] = useState(false);
+
+  // Live Convex queries — always subscribe but use cache when offline
+  const liveBooks = useQuery(api.books.list, {
     churchId: churchId as Id<"churches">,
     search: search || undefined,
     category: selectedCategory,
   });
-  const categories = useQuery(api.books.getCategories, {
+  const liveCategories = useQuery(api.books.getCategories, {
     churchId: churchId as Id<"churches">,
   });
+
+  // Cache books when we get live data
+  useEffect(() => {
+    if (liveBooks && isOnline) {
+      const toCache: CachedBook[] = liveBooks.map((b) => ({
+        _id: b._id,
+        title: b.title,
+        author: b.author,
+        category: b.category,
+        description: b.description,
+        isbn: b.isbn,
+        publisher: b.publisher,
+        totalCopies: b.totalCopies,
+        availableCopies: b.availableCopies,
+        churchId,
+      }));
+      // Only cache the full unfiltered list
+      if (!search && !selectedCategory) {
+        cacheBooks(toCache, churchId).catch(() => {});
+      }
+    }
+  }, [liveBooks, isOnline, churchId, search, selectedCategory]);
+
+  // Load from cache when offline
+  useEffect(() => {
+    if (!isOnline) {
+      setIsOfflineMode(true);
+      getCachedBooks(churchId, { search: search || undefined, category: selectedCategory })
+        .then(setCachedBooks)
+        .catch(() => setCachedBooks([]));
+      getCachedCategories(churchId)
+        .then(setCachedCategories)
+        .catch(() => setCachedCategories([]));
+    } else {
+      setIsOfflineMode(false);
+    }
+  }, [isOnline, churchId, search, selectedCategory]);
+
+  // Use live data when online, cached when offline
+  const rawBooks = isOfflineMode ? cachedBooks : liveBooks;
+  const categories = isOfflineMode ? cachedCategories : liveCategories;
+
+  // Apply client-side sorting and filtering
+  const books = useMemo(() => {
+    if (rawBooks === undefined) return undefined;
+    if (rawBooks === null || rawBooks.length === 0) return rawBooks ?? [];
+    let filtered = [...rawBooks];
+
+    // Available only filter
+    if (availableOnly) {
+      filtered = filtered.filter((b) => b.availableCopies > 0);
+    }
+
+    // Sorting
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case "title":
+          return a.title.localeCompare(b.title);
+        case "author":
+          return a.author.localeCompare(b.author);
+        case "availability":
+          return b.availableCopies - a.availableCopies;
+        case "publicationDate":
+          return a.title.localeCompare(b.title); // fallback since no pub date field
+        default:
+          return 0;
+      }
+    });
+
+    return filtered;
+  }, [rawBooks, sortBy, availableOnly]);
 
   const isAdmin =
     userRole === UserRole.CHURCH_ADMIN || userRole === UserRole.SUPER_ADMIN || userRole === UserRole.ASSISTANT_LIBRARIAN;
@@ -114,6 +207,14 @@ export function BookCatalog({ churchId, userRole }: BookCatalogProps) {
         </div>
       )}
 
+      {/* Offline banner */}
+      {isOfflineMode && (
+        <div className="mx-4 sm:mx-6 mt-3 flex items-center gap-2 px-4 py-2.5 bg-[#ffdf9f] dark:bg-[#F5C400]/20 rounded-xl text-[#261a00] dark:text-[#F5C400]">
+          <span className="material-symbols-outlined text-base">cloud_off</span>
+          <span className="text-xs font-semibold">Browsing offline — availability may be outdated</span>
+        </div>
+      )}
+
       {/* Results Summary */}
       <section className="px-4 sm:px-6 py-5 flex items-center justify-between">
         <div className="flex flex-col">
@@ -121,7 +222,7 @@ export function BookCatalog({ churchId, userRole }: BookCatalogProps) {
           <h2 className="text-xl sm:text-2xl font-bold text-foreground" style={FONT}>{total} Books Found</h2>
         </div>
         <button
-          onClick={() => setShowFilters(!showFilters)}
+          onClick={() => setShowFilterModal(true)}
           className="flex items-center gap-2 px-3 py-2 bg-muted border border-border rounded-lg text-foreground hover:bg-accent transition-colors active:scale-95 duration-200"
         >
           <span className="material-symbols-outlined text-sm">tune</span>
@@ -172,7 +273,7 @@ export function BookCatalog({ churchId, userRole }: BookCatalogProps) {
             {books.map((book) => {
               const ok = book.availableCopies > 0;
               return (
-                <Link key={book._id} href={`/books/${book._id}`}>
+                <div key={book._id} onClick={() => router.push(`/books/${book._id}`)} className="cursor-pointer">
                   <div className="group relative flex gap-4 bg-card p-3 sm:p-4 rounded-2xl border border-border hover:border-[#795900]/30 dark:hover:border-[#F5C400]/30 shadow-sm hover:shadow-md transition-all duration-200">
                     {/* Book Cover */}
                     <div className={`w-20 sm:w-24 h-28 sm:h-36 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br ${getCover(book.title)} flex items-center justify-center`}>
@@ -184,7 +285,13 @@ export function BookCatalog({ churchId, userRole }: BookCatalogProps) {
                         <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#795900] dark:text-[#F5C400] mb-1">{book.category}</span>
                       )}
                       <h3 className="text-base sm:text-lg font-bold text-foreground leading-tight mb-0.5 line-clamp-2" style={FONT}>{book.title}</h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground font-medium mb-2 truncate">{book.author}</p>
+                      <Link
+                        href={`/books/author/${encodeURIComponent(book.author)}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-xs sm:text-sm text-muted-foreground font-medium mb-2 truncate hover:text-[#795900] dark:hover:text-[#F5C400] transition-colors"
+                      >
+                        {book.author}
+                      </Link>
                       <div className="flex items-center gap-2">
                         <span
                           className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wide ${
@@ -208,12 +315,25 @@ export function BookCatalog({ churchId, userRole }: BookCatalogProps) {
                       <span className="material-symbols-outlined text-muted-foreground/40 group-hover:text-[#795900] dark:group-hover:text-[#F5C400] transition-colors">chevron_right</span>
                     </div>
                   </div>
-                </Link>
+                </div>
               );
             })}
           </div>
         )}
       </main>
+
+      {/* Filter & Sort Modal */}
+      <FilterSortModal
+        open={showFilterModal}
+        onClose={() => setShowFilterModal(false)}
+        categories={categories ?? []}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        availableOnly={availableOnly}
+        onAvailableOnlyChange={setAvailableOnly}
+      />
     </div>
   );
 }

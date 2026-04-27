@@ -17,6 +17,7 @@ import type * as otp from "../otp.js";
 import type * as penalties from "../penalties.js";
 import type * as reports from "../reports.js";
 import type * as seed from "../seed.js";
+import type * as smsActions from "../smsActions.js";
 import type * as users from "../users.js";
 import type * as xpEvents from "../xpEvents.js";
 
@@ -36,6 +37,7 @@ declare const fullApi: ApiFromModules<{
   penalties: typeof penalties;
   reports: typeof reports;
   seed: typeof seed;
+  smsActions: typeof smsActions;
   users: typeof users;
   xpEvents: typeof xpEvents;
 }>;

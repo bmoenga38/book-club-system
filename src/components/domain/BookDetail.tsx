@@ -76,7 +76,7 @@ export function BookDetail({ bookId, userId, userRole, userStatus, churchId }: B
           {/* Content */}
           <div className="relative z-10 space-y-1">
             <h1 className="text-white text-3xl font-bold tracking-tight" style={FONT}>{book.title}</h1>
-            <p className="text-[#828eb1] font-medium text-sm">by {book.author}</p>
+            <Link href={`/books/author/${encodeURIComponent(book.author)}`} className="text-[#828eb1] font-medium text-sm hover:text-[#ffdf9f] transition-colors">by {book.author}</Link>
           </div>
           {/* Floating book cover */}
           <div className={`absolute right-6 bottom-0 w-32 h-44 transform translate-y-4 rotate-6 shadow-2xl rounded-lg overflow-hidden border-2 border-white/20 bg-gradient-to-br ${getCover(book.title)} flex items-center justify-center`}>
@@ -114,7 +114,7 @@ export function BookDetail({ bookId, userId, userRole, userStatus, churchId }: B
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-[#f2f4f7] p-5 rounded-[20px]">
               <span className="text-[#795900] text-[10px] font-bold tracking-widest uppercase block mb-1">Author</span>
-              <p className="text-[#191c1e] font-semibold text-sm">{book.author}</p>
+              <Link href={`/books/author/${encodeURIComponent(book.author)}`} className="text-[#191c1e] font-semibold text-sm hover:text-[#795900] transition-colors">{book.author}</Link>
             </div>
             <div className="bg-[#f2f4f7] p-5 rounded-[20px]">
               <span className="text-[#795900] text-[10px] font-bold tracking-widest uppercase block mb-1">Copies</span>

@@ -14,7 +14,9 @@ export default function MainLayout({
       <AppHeader />
       <OfflineBanner />
       <PendingVerificationBanner />
-      <div className="mx-auto w-full max-w-lg flex-1 pb-20">{children}</div>
+      <div className="md:ml-56 flex-1">
+        <div className="mx-auto w-full max-w-lg md:max-w-4xl flex-1 pb-20 md:pb-6 md:pt-2 px-0 md:px-6">{children}</div>
+      </div>
       <AppNav />
       <InstallPrompt />
     </div>
