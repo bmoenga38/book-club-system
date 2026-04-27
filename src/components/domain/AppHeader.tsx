@@ -26,7 +26,8 @@ export function AppHeader() {
   return (
     <header className="sticky top-0 z-50 w-full h-14 bg-[#1A2744] dark:bg-[#0A1A3A] shadow-md flex justify-between items-center px-4 sm:px-6 md:pl-[15.5rem]">
       <div className="flex items-center gap-2.5">
-        <span className="material-symbols-outlined text-[#ffdf9f] dark:text-[#F5C400] text-xl">menu_book</span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo.svg" alt="Bookclub" className="w-8 h-8 rounded-md" />
         <div className="flex flex-col">
           <span className="text-white font-bold text-sm leading-tight tracking-tight" style={FONT}>
             The Sacred Archive

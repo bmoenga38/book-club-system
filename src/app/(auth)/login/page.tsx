@@ -11,10 +11,9 @@ export default function LoginPage() {
       >
         {/* Icon/Logo Section */}
         <div className="mb-6 flex flex-col items-center">
-          <div className="w-12 h-12 bg-[#ffdf9f] rounded-full flex items-center justify-center mb-4">
-            <span className="material-symbols-outlined text-[#261a00] text-2xl">
-              menu_book
-            </span>
+          <div className="w-16 h-16 rounded-2xl overflow-hidden mb-4 shadow-lg">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.svg" alt="Bookclub" className="w-full h-full" />
           </div>
           <h1
             className="text-[#0d1b37] font-bold text-[28px] leading-tight tracking-tight"
