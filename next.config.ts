@@ -22,7 +22,9 @@ const finalConfig = sentryEnabled
       widenClientFileUpload: true,
       tunnelRoute: "/monitoring",
       silent: !process.env.CI,
-      disableSourceMapUpload: !process.env.SENTRY_AUTH_TOKEN,
+      sourcemaps: {
+        disable: !process.env.SENTRY_AUTH_TOKEN,
+      },
     })
   : withSerwist(nextConfig);
 
