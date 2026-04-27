@@ -38,47 +38,47 @@ export default async function HomePage() {
 
       {/* Library Services */}
       <section className="space-y-4">
-        <h2 className="text-[#191c1e] font-bold text-lg tracking-tight px-1" style={FONT}>Library Services</h2>
+        <h2 className="text-[#191c1e] dark:text-[#F5C400] font-bold text-lg tracking-tight px-1" style={FONT}>Library Services</h2>
         <div className="space-y-3">
           {/* Browse Books */}
           <Link href="/books" className="block">
-            <div className="w-full group flex items-center p-4 bg-white rounded-[16px] shadow-[0px_12px_32px_rgba(25,28,30,0.06)] active:scale-[0.98] transition-all duration-200 text-left">
-              <div className="w-12 h-12 rounded-full bg-[#1a2744]/10 flex items-center justify-center mr-4">
-                <span className="material-symbols-outlined text-[#1a2744]">library_books</span>
+            <div className="w-full group flex items-center p-4 bg-white dark:bg-[#0F2444] rounded-[16px] shadow-[0px_12px_32px_rgba(25,28,30,0.06)] dark:shadow-[0px_8px_24px_rgba(0,0,0,0.4)] dark:border dark:border-[#1A3058]/50 active:scale-[0.98] transition-all duration-200 text-left">
+              <div className="w-12 h-12 rounded-full bg-[#1a2744]/10 dark:bg-[#F5C400]/15 flex items-center justify-center mr-4">
+                <span className="material-symbols-outlined text-[#1a2744] dark:text-[#F5C400]">library_books</span>
               </div>
               <div className="flex-1">
-                <h3 className="text-[#191c1e] font-bold text-base">Browse Books</h3>
-                <p className="text-[#45464d] text-xs font-medium">Explore our catalog</p>
+                <h3 className="text-[#191c1e] dark:text-white font-bold text-base">Browse Books</h3>
+                <p className="text-[#45464d] dark:text-[#A4A4A4] text-xs font-medium">Explore our catalog</p>
               </div>
-              <span className="material-symbols-outlined text-[#c5c6ce] group-hover:text-[#1a2744] transition-colors">chevron_right</span>
+              <span className="material-symbols-outlined text-[#c5c6ce] dark:text-[#A4A4A4] group-hover:text-[#1a2744] dark:group-hover:text-[#F5C400] transition-colors">chevron_right</span>
             </div>
           </Link>
 
           {/* My Borrowings */}
           <Link href="/borrowings" className="block">
-            <div className="w-full group flex items-center p-4 bg-white rounded-[16px] shadow-[0px_12px_32px_rgba(25,28,30,0.06)] active:scale-[0.98] transition-all duration-200 text-left">
-              <div className="w-12 h-12 rounded-full bg-[#fece65]/20 flex items-center justify-center mr-4">
-                <span className="material-symbols-outlined text-[#795900]">import_contacts</span>
+            <div className="w-full group flex items-center p-4 bg-white dark:bg-[#0F2444] rounded-[16px] shadow-[0px_12px_32px_rgba(25,28,30,0.06)] dark:shadow-[0px_8px_24px_rgba(0,0,0,0.4)] dark:border dark:border-[#1A3058]/50 active:scale-[0.98] transition-all duration-200 text-left">
+              <div className="w-12 h-12 rounded-full bg-[#fece65]/20 dark:bg-[#F5C400]/15 flex items-center justify-center mr-4">
+                <span className="material-symbols-outlined text-[#795900] dark:text-[#F5C400]">import_contacts</span>
               </div>
               <div className="flex-1">
-                <h3 className="text-[#191c1e] font-bold text-base">My Borrowings</h3>
-                <p className="text-[#45464d] text-xs font-medium">Manage your loans</p>
+                <h3 className="text-[#191c1e] dark:text-white font-bold text-base">My Borrowings</h3>
+                <p className="text-[#45464d] dark:text-[#A4A4A4] text-xs font-medium">Manage your loans</p>
               </div>
-              <span className="material-symbols-outlined text-[#c5c6ce] group-hover:text-[#795900] transition-colors">chevron_right</span>
+              <span className="material-symbols-outlined text-[#c5c6ce] dark:text-[#A4A4A4] group-hover:text-[#795900] dark:group-hover:text-[#F5C400] transition-colors">chevron_right</span>
             </div>
           </Link>
 
           {/* My Profile */}
           <Link href="/profile" className="block">
-            <div className="w-full group flex items-center p-4 bg-white rounded-[16px] shadow-[0px_12px_32px_rgba(25,28,30,0.06)] active:scale-[0.98] transition-all duration-200 text-left">
-              <div className="w-12 h-12 rounded-full bg-[#d8e2fe]/30 flex items-center justify-center mr-4">
-                <span className="material-symbols-outlined text-[#081327]">person</span>
+            <div className="w-full group flex items-center p-4 bg-white dark:bg-[#0F2444] rounded-[16px] shadow-[0px_12px_32px_rgba(25,28,30,0.06)] dark:shadow-[0px_8px_24px_rgba(0,0,0,0.4)] dark:border dark:border-[#1A3058]/50 active:scale-[0.98] transition-all duration-200 text-left">
+              <div className="w-12 h-12 rounded-full bg-[#d8e2fe]/30 dark:bg-[#F5C400]/15 flex items-center justify-center mr-4">
+                <span className="material-symbols-outlined text-[#081327] dark:text-[#F5C400]">person</span>
               </div>
               <div className="flex-1">
-                <h3 className="text-[#191c1e] font-bold text-base">My Profile</h3>
-                <p className="text-[#45464d] text-xs font-medium">Account settings</p>
+                <h3 className="text-[#191c1e] dark:text-white font-bold text-base">My Profile</h3>
+                <p className="text-[#45464d] dark:text-[#A4A4A4] text-xs font-medium">Account settings</p>
               </div>
-              <span className="material-symbols-outlined text-[#c5c6ce] group-hover:text-[#081327] transition-colors">chevron_right</span>
+              <span className="material-symbols-outlined text-[#c5c6ce] dark:text-[#A4A4A4] group-hover:text-[#081327] dark:group-hover:text-[#F5C400] transition-colors">chevron_right</span>
             </div>
           </Link>
         </div>
@@ -87,11 +87,11 @@ export default async function HomePage() {
       {/* Today's Spotlight */}
       <section className="space-y-4">
         <div className="flex justify-between items-center px-1">
-          <h2 className="text-[#191c1e] font-bold text-lg tracking-tight" style={FONT}>Today&apos;s Spotlight</h2>
-          <Link href="/books" className="text-[#795900] font-bold text-xs uppercase tracking-wider">View All</Link>
+          <h2 className="text-[#191c1e] dark:text-[#F5C400] font-bold text-lg tracking-tight" style={FONT}>Today&apos;s Spotlight</h2>
+          <Link href="/books" className="text-[#795900] dark:text-[#F5C400] font-bold text-xs uppercase tracking-wider">View All</Link>
         </div>
         <Link href="/books" className="block">
-          <div className="bg-[#f2f4f7] rounded-[20px] p-5 flex gap-5 items-center">
+          <div className="bg-[#f2f4f7] dark:bg-[#0F2444] dark:border dark:border-[#1A3058]/50 rounded-[20px] p-5 flex gap-5 items-center">
             <div className="w-24 h-36 flex-shrink-0 shadow-lg shadow-black/20 rounded-md overflow-hidden transform -rotate-2 hover:rotate-0 transition-transform duration-300 bg-gradient-to-br from-[#1a2744] to-[#2a4582] flex items-center justify-center">
               <span className="material-symbols-outlined text-[40px] text-[#ffdf9f]/30">menu_book</span>
             </div>
@@ -99,12 +99,12 @@ export default async function HomePage() {
               <div className="px-2 py-0.5 bg-[#ffdf9f] w-fit rounded-full mb-1">
                 <span className="text-[#261a00] text-[8px] font-extrabold uppercase tracking-widest">New Arrival</span>
               </div>
-              <h3 className="text-[#191c1e] font-bold text-lg leading-tight" style={FONT}>Explore Collection</h3>
-              <p className="text-[#45464d] text-xs italic">Blessed Hope Library</p>
+              <h3 className="text-[#191c1e] dark:text-white font-bold text-lg leading-tight" style={FONT}>Explore Collection</h3>
+              <p className="text-[#45464d] dark:text-[#A4A4A4] text-xs italic">Blessed Hope Library</p>
               <div className="mt-3 flex items-center gap-2">
-                <span className="material-symbols-outlined text-[#795900] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                <span className="text-[#191c1e] font-bold text-xs">Curated</span>
-                <span className="text-[#75777e] text-[10px]">&#8226; Spirituality</span>
+                <span className="material-symbols-outlined text-[#795900] dark:text-[#F5C400] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                <span className="text-[#191c1e] dark:text-white font-bold text-xs">Curated</span>
+                <span className="text-[#75777e] dark:text-[#A4A4A4] text-[10px]">&#8226; Spirituality</span>
               </div>
             </div>
           </div>

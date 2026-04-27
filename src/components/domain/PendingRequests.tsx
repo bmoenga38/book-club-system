@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Check, X, Inbox } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
+import { formatError } from "@/lib/errors/formatError";
 
 interface PendingRequestsProps {
   churchId: string;
@@ -39,7 +40,7 @@ export function PendingRequests({ churchId }: PendingRequestsProps) {
       });
       toast.success("Request approved");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to approve");
+      toast.error(formatError(error, "Failed to approve"));
     } finally {
       setProcessingId(null);
     }
@@ -56,7 +57,7 @@ export function PendingRequests({ churchId }: PendingRequestsProps) {
       });
       toast.success("Book approved and issued");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to issue");
+      toast.error(formatError(error, "Failed to issue"));
     } finally {
       setProcessingId(null);
     }
@@ -71,7 +72,7 @@ export function PendingRequests({ churchId }: PendingRequestsProps) {
       });
       toast.success("Request declined");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to decline");
+      toast.error(formatError(error, "Failed to decline"));
     } finally {
       setProcessingId(null);
     }

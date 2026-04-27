@@ -10,6 +10,7 @@ import { Check, X, Users, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useState } from "react";
+import { formatError } from "@/lib/errors/formatError";
 
 interface MemberManagementProps {
   churchId: string;
@@ -34,7 +35,7 @@ export function MemberManagement({ churchId }: MemberManagementProps) {
       });
       toast.success("Member verified");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed");
+      toast.error(formatError(error, "Failed"));
     } finally {
       setProcessingId(null);
     }
@@ -49,7 +50,7 @@ export function MemberManagement({ churchId }: MemberManagementProps) {
       });
       toast.success("Member rejected");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed");
+      toast.error(formatError(error, "Failed"));
     } finally {
       setProcessingId(null);
     }

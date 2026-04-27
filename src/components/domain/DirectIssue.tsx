@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, BookOpen, User, Check } from "lucide-react";
 import { toast } from "sonner";
+import { formatError } from "@/lib/errors/formatError";
 
 interface DirectIssueProps {
   churchId: string;
@@ -56,7 +57,7 @@ export function DirectIssue({ churchId }: DirectIssueProps) {
       setMemberSearch("");
       setBookSearch("");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to issue");
+      toast.error(formatError(error, "Failed to issue"));
     } finally {
       setIssuing(false);
     }

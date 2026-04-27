@@ -19,6 +19,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import { toast } from "sonner";
+import { formatError } from "@/lib/errors/formatError";
 
 export function ChurchManagement() {
   const stats = useQuery(api.churches.getAggregateStats);
@@ -42,7 +43,7 @@ export function ChurchManagement() {
       toast.success("Church created");
       setShowForm(false);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed");
+      toast.error(formatError(error, "Failed"));
     } finally {
       setSubmitting(false);
     }

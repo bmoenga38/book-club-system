@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
 import withSerwistInit from "@serwist/next";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+
+// Hook OpenNext into local dev so Cloudflare bindings work in next dev
+initOpenNextCloudflareForDev();
 
 const withSerwist = withSerwistInit({
   swSrc: "src/sw.ts",

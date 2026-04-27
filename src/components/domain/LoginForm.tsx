@@ -7,6 +7,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { sendOtpSchema, type SendOtpInput } from "@/app/(auth)/login/schemas";
 import { sendOtp, quickLogin } from "@/app/(auth)/login/actions";
+import { formatError } from "@/lib/errors/formatError";
 
 export function LoginForm() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export function LoginForm() {
         const mode = result.data.isExistingUser ? "login" : "register";
         router.push(`/verify?phone=${encodeURIComponent(data.phone)}&mode=${mode}`);
       } else {
-        toast.error(result.error.message);
+        toast.error(formatError(result.error.message));
       }
     } finally {
       setIsLoading(false);
@@ -55,7 +56,7 @@ export function LoginForm() {
         router.push(result.data.redirectTo);
         router.refresh();
       } else {
-        toast.error(result.error.message);
+        toast.error(formatError(result.error.message));
       }
     } finally {
       setIsLoading(false);

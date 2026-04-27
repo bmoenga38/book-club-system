@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { UserRole } from "@/types/auth";
 import type { UserStatus } from "@/types/auth";
 import { useState } from "react";
+import { formatError } from "@/lib/errors/formatError";
 
 interface BookDetailProps { bookId: string; userId: string; userRole: string; userStatus: UserStatus; churchId: string; }
 
@@ -43,7 +44,7 @@ export function BookDetail({ bookId, userId, userRole, userStatus, churchId }: B
     try {
       await requestBorrow({ bookId: bookId as Id<"books">, memberId: userId as Id<"users">, churchId: churchId as Id<"churches"> });
       toast.success("Borrow request submitted!");
-    } catch (e) { toast.error(e instanceof Error ? e.message : "Failed"); }
+    } catch (e) { toast.error(formatError(e, "Failed")); }
     finally { setRequesting(false); }
   }
 

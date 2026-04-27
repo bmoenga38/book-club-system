@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { formatError } from "@/lib/errors/formatError";
 
 interface BookFormProps {
   churchId: string;
@@ -80,9 +81,7 @@ export function BookForm({ churchId, book }: BookFormProps) {
         router.push(`/books/${id}`);
       }
     } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Failed to save book"
-      );
+      toast.error(formatError(error, "Failed to save book"));
     } finally {
       setSubmitting(false);
     }

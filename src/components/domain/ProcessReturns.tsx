@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { BookOpen, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
+import { formatError } from "@/lib/errors/formatError";
 
 interface ProcessReturnsProps {
   churchId: string;
@@ -40,7 +41,7 @@ export function ProcessReturns({ churchId }: ProcessReturnsProps) {
         toast.success("Book returned (late — no XP awarded)");
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to process return");
+      toast.error(formatError(error, "Failed to process return"));
     } finally {
       setProcessingId(null);
     }

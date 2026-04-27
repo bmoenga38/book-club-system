@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { verifyOtpSchema, type VerifyOtpInput } from "@/app/(auth)/verify/schemas";
 import { verifyOtp } from "@/app/(auth)/verify/actions";
 import { sendOtp } from "@/app/(auth)/login/actions";
+import { formatError } from "@/lib/errors/formatError";
 
 interface VerifyFormProps {
   phone: string;
@@ -46,7 +47,7 @@ export function VerifyForm({ phone, mode, defaultChurchId }: VerifyFormProps) {
         router.push(result.data.redirectTo);
         router.refresh();
       } else {
-        toast.error(result.error.message);
+        toast.error(formatError(result.error.message));
       }
     } finally {
       setIsLoading(false);
@@ -60,7 +61,7 @@ export function VerifyForm({ phone, mode, defaultChurchId }: VerifyFormProps) {
       if (result.success) {
         toast.success("New OTP sent");
       } else {
-        toast.error(result.error.message);
+        toast.error(formatError(result.error.message));
       }
     } finally {
       setIsResending(false);

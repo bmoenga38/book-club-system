@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { AlertTriangle, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
+import { formatError } from "@/lib/errors/formatError";
 
 interface OverdueListProps {
   churchId: string;
@@ -27,7 +28,7 @@ export function OverdueList({ churchId }: OverdueListProps) {
       await markReturned({ borrowingId: borrowingId as Id<"borrowings"> });
       toast.success("Book marked as returned");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed");
+      toast.error(formatError(error, "Failed"));
     } finally {
       setProcessingId(null);
     }
